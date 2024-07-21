@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-namespace Unity.Mathematics.Editor
+namespace calco.Editor
 {
     [CustomPropertyDrawer(typeof(quaternion))]
     class QuaternionDrawer : PostNormalizedVectorDrawer

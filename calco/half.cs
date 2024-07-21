@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using Unity.IL2CPP.CompilerServices;
 
-namespace Unity.Mathematics
+namespace calco
 {
     [Il2CppEagerStaticClassConstruction]
     public static class halfc

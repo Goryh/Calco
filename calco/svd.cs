@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using Unity.IL2CPP.CompilerServices;
 
-namespace Unity.Mathematics
+namespace calco
 {
     // SVD algorithm as described in:
     // Computing the singular value decomposition of 3x3 matrices with minimal branching and elementary floating point operations,

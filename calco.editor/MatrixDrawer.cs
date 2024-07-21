@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using UnityEditor;
 using UnityEngine;
 
-namespace Unity.Mathematics.Editor
+namespace calco.Editor
 {
     [CustomPropertyDrawer(typeof(bool2x2)), CustomPropertyDrawer(typeof(bool2x3)), CustomPropertyDrawer(typeof(bool2x4))]
     [CustomPropertyDrawer(typeof(bool3x2)), CustomPropertyDrawer(typeof(bool3x3)), CustomPropertyDrawer(typeof(bool3x4))]

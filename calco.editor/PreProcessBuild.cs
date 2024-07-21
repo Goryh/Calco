@@ -7,7 +7,7 @@ using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 #endif
 
-namespace Unity.Mathematics
+namespace calco
 {
 	public class CppMathIncludePreProcessBuild : IPreprocessBuildWithReport
 	{
@@ -25,7 +25,7 @@ namespace Unity.Mathematics
 				}
 				else
 				{
-					var pchCppPath = Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/Unity.Mathematics/Unity.Mathematics/pch-cpp.hpp").Replace('\\','/');
+					var pchCppPath = Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/pch-cpp.hpp").Replace('\\','/');
 					var addlArgs = $"--additional-cpp=\"{pchCppPath}\"";
 					PlayerSettings.SetAdditionalIl2CppArgs(addlArgs);
 				}
@@ -38,7 +38,7 @@ namespace Unity.Mathematics
 			else if( report.summary.platform == BuildTarget.Android )
 			{
 				// the only way to properly include the cppMath.h file is to reference to its base location as on the temporal location it will be available with a delay so some files won't find it
-				var pchCppPath = Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/Unity.Mathematics/Unity.Mathematics/pch-cpp.hpp").Replace('\\','/');
+				var pchCppPath = Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/pch-cpp.hpp").Replace('\\','/');
 				var addlArgs = $"--additional-cpp=\"{pchCppPath}\"";
 				PlayerSettings.SetAdditionalIl2CppArgs(addlArgs);
 			}
@@ -63,15 +63,15 @@ namespace Unity.Mathematics
 
 			string destPath = path + "/Il2CppOutputProject/Source/il2cppOutput/";
 
-			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/Unity.Mathematics/Unity.Mathematics/pch-cpp.hpp").Replace('\\','/'),
+			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/pch-cpp.hpp").Replace('\\','/'),
 																																	destPath + "pch-cpp.hpp", true);
-			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/Unity.Mathematics/Unity.Mathematics/cppMath.h").Replace('\\','/'), 
+			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/cppMath.h").Replace('\\','/'), 
 																																	destPath + "cppMath.h", true);
-			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/Unity.Mathematics/Unity.Mathematics/vecILMath.h").Replace('\\','/'),
+			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/vecILMath.h").Replace('\\','/'),
 																																	destPath + "vecILMath.h", true);
-			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/Unity.Mathematics/Unity.Mathematics/vecMath.h").Replace('\\','/'),
+			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/vecMath.h").Replace('\\','/'),
 																																	destPath + "vecMath.h", true);
-			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/Unity.Mathematics/Unity.Mathematics/vecMathNeon.h").Replace('\\','/'),
+			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/vecMathNeon.h").Replace('\\','/'),
 																																	destPath + "vecMathNeon.h", true);
 		}
 #endif

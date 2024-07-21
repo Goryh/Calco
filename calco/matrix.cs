@@ -1,9 +1,9 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Unity.IL2CPP.CompilerServices;
-using static Unity.Mathematics.math;
+using static calco.math;
 
-namespace Unity.Mathematics
+namespace calco
 {
     public partial struct float2x2
     {
@@ -1611,7 +1611,7 @@ namespace Unity.Mathematics
         {
             float scaleSq = 0.333333f * (math.lengthsq(m.c0) + math.lengthsq(m.c1) + math.lengthsq(m.c2));
             if (scaleSq < svd.k_EpsilonNormal)
-                return Mathematics.float3ax3c.zero;
+                return float3ax3c.zero;
 
             var scaleInv = math.rsqrt(scaleSq);
             float3ax3 ms = mulScale(m, scaleInv);

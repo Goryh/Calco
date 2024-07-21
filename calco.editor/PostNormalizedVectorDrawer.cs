@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
 
-namespace Unity.Mathematics.Editor
+namespace calco.Editor
 {
     [CustomPropertyDrawer(typeof(PostNormalizeAttribute))]
     class PostNormalizedVectorDrawer : PrimitiveVectorDrawer

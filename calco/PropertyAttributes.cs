@@ -1,4 +1,4 @@
-﻿namespace Unity.Mathematics
+﻿namespace calco
 {
     public class PostNormalizeAttribute : UnityEngine.PropertyAttribute {}
 

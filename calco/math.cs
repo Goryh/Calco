@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using Unity.IL2CPP.CompilerServices;
 using Unity.Burst;
 
-namespace Unity.Mathematics
+namespace calco
 {
     /// <summary>
     /// A static class to contain various math functions and constants.
@@ -6247,7 +6247,7 @@ namespace Unity.Mathematics
         /// <remarks>
         /// Some finite vectors a and b could generate a non-finite result. This is most likely when a's components
         /// are very large (close to Single.MaxValue) or when b's components are very small (close to FLT_MIN_NORMAL).
-        /// In these cases, you can call <see cref="projectsafe(Unity.Mathematics.float2,Unity.Mathematics.float2,Unity.Mathematics.float2)"/>
+        /// In these cases, you can call <see cref="projectsafe(calco.float2,calco.float2,calco.float2)"/>
         /// which will use a given default value if the result is not finite.
         /// </remarks>
         /// <param name="a">Vector to project.</param>
@@ -6265,7 +6265,7 @@ namespace Unity.Mathematics
         /// <remarks>
         /// Some finite vectors a and b could generate a non-finite result. This is most likely when a's components
         /// are very large (close to Single.MaxValue) or when b's components are very small (close to FLT_MIN_NORMAL).
-        /// In these cases, you can call <see cref="projectsafe(Unity.Mathematics.float3,Unity.Mathematics.float3,Unity.Mathematics.float3)"/>
+        /// In these cases, you can call <see cref="projectsafe(calco.float3,calco.float3,calco.float3)"/>
         /// which will use a given default value if the result is not finite.
         /// </remarks>
         /// <param name="a">Vector to project.</param>
@@ -6289,7 +6289,7 @@ namespace Unity.Mathematics
         /// <remarks>
         /// Some finite vectors a and b could generate a non-finite result. This is most likely when a's components
         /// are very large (close to Single.MaxValue) or when b's components are very small (close to FLT_MIN_NORMAL).
-        /// In these cases, you can call <see cref="projectsafe(Unity.Mathematics.float4,Unity.Mathematics.float4,Unity.Mathematics.float4)"/>
+        /// In these cases, you can call <see cref="projectsafe(calco.float4,calco.float4,calco.float4)"/>
         /// which will use a given default value if the result is not finite.
         /// </remarks>
         /// <param name="a">Vector to project.</param>
@@ -6307,7 +6307,7 @@ namespace Unity.Mathematics
         /// <remarks>
         /// This function performs extra checks to see if the result of projecting a onto b is finite. If you know that
         /// your inputs will generate a finite result or you don't care if the result is finite, then you can call
-        /// <see cref="project(Unity.Mathematics.float2,Unity.Mathematics.float2)"/> instead which is faster than this
+        /// <see cref="project(calco.float2,calco.float2)"/> instead which is faster than this
         /// function.
         /// </remarks>
         /// <param name="a">Vector to project.</param>
@@ -6328,7 +6328,7 @@ namespace Unity.Mathematics
         /// <remarks>
         /// This function performs extra checks to see if the result of projecting a onto b is finite. If you know that
         /// your inputs will generate a finite result or you don't care if the result is finite, then you can call
-        /// <see cref="project(Unity.Mathematics.float3,Unity.Mathematics.float3)"/> instead which is faster than this
+        /// <see cref="project(calco.float3,calco.float3)"/> instead which is faster than this
         /// function.
         /// </remarks>
         /// <param name="a">Vector to project.</param>
@@ -6357,7 +6357,7 @@ namespace Unity.Mathematics
         /// <remarks>
         /// This function performs extra checks to see if the result of projecting a onto b is finite. If you know that
         /// your inputs will generate a finite result or you don't care if the result is finite, then you can call
-        /// <see cref="project(Unity.Mathematics.float4,Unity.Mathematics.float4)"/> instead which is faster than this
+        /// <see cref="project(calco.float4,calco.float4)"/> instead which is faster than this
         /// function.
         /// </remarks>
         /// <param name="a">Vector to project.</param>
@@ -6378,7 +6378,7 @@ namespace Unity.Mathematics
         /// <remarks>
         /// Some finite vectors a and b could generate a non-finite result. This is most likely when a's components
         /// are very large (close to Double.MaxValue) or when b's components are very small (close to DBL_MIN_NORMAL).
-        /// In these cases, you can call <see cref="projectsafe(Unity.Mathematics.double2,Unity.Mathematics.double2,Unity.Mathematics.double2)"/>
+        /// In these cases, you can call <see cref="projectsafe(calco.double2,calco.double2,calco.double2)"/>
         /// which will use a given default value if the result is not finite.
         /// </remarks>
         /// <param name="a">Vector to project.</param>
@@ -6396,7 +6396,7 @@ namespace Unity.Mathematics
         /// <remarks>
         /// Some finite vectors a and b could generate a non-finite result. This is most likely when a's components
         /// are very large (close to Double.MaxValue) or when b's components are very small (close to DBL_MIN_NORMAL).
-        /// In these cases, you can call <see cref="projectsafe(Unity.Mathematics.double3,Unity.Mathematics.double3,Unity.Mathematics.double3)"/>
+        /// In these cases, you can call <see cref="projectsafe(calco.double3,calco.double3,calco.double3)"/>
         /// which will use a given default value if the result is not finite.
         /// </remarks>
         /// <param name="a">Vector to project.</param>
@@ -6414,7 +6414,7 @@ namespace Unity.Mathematics
         /// <remarks>
         /// Some finite vectors a and b could generate a non-finite result. This is most likely when a's components
         /// are very large (close to Double.MaxValue) or when b's components are very small (close to DBL_MIN_NORMAL).
-        /// In these cases, you can call <see cref="projectsafe(Unity.Mathematics.double4,Unity.Mathematics.double4,Unity.Mathematics.double4)"/>
+        /// In these cases, you can call <see cref="projectsafe(calco.double4,calco.double4,calco.double4)"/>
         /// which will use a given default value if the result is not finite.
         /// </remarks>
         /// <param name="a">Vector to project.</param>
@@ -6432,7 +6432,7 @@ namespace Unity.Mathematics
         /// <remarks>
         /// This function performs extra checks to see if the result of projecting a onto b is finite. If you know that
         /// your inputs will generate a finite result or you don't care if the result is finite, then you can call
-        /// <see cref="project(Unity.Mathematics.double2,Unity.Mathematics.double2)"/> instead which is faster than this
+        /// <see cref="project(calco.double2,calco.double2)"/> instead which is faster than this
         /// function.
         /// </remarks>
         /// <param name="a">Vector to project.</param>
@@ -6453,7 +6453,7 @@ namespace Unity.Mathematics
         /// <remarks>
         /// This function performs extra checks to see if the result of projecting a onto b is finite. If you know that
         /// your inputs will generate a finite result or you don't care if the result is finite, then you can call
-        /// <see cref="project(Unity.Mathematics.double3,Unity.Mathematics.double3)"/> instead which is faster than this
+        /// <see cref="project(calco.double3,calco.double3)"/> instead which is faster than this
         /// function.
         /// </remarks>
         /// <param name="a">Vector to project.</param>
@@ -6474,7 +6474,7 @@ namespace Unity.Mathematics
         /// <remarks>
         /// This function performs extra checks to see if the result of projecting a onto b is finite. If you know that
         /// your inputs will generate a finite result or you don't care if the result is finite, then you can call
-        /// <see cref="project(Unity.Mathematics.double4,Unity.Mathematics.double4)"/> instead which is faster than this
+        /// <see cref="project(calco.double4,calco.double4)"/> instead which is faster than this
         /// function.
         /// </remarks>
         /// <param name="a">Vector to project.</param>

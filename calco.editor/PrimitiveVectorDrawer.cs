@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Unity.Mathematics.Editor
+namespace calco.Editor
 {
     [CustomPropertyDrawer(typeof(bool2)), CustomPropertyDrawer(typeof(bool3)), CustomPropertyDrawer(typeof(bool4))]
     [CustomPropertyDrawer(typeof(double2)), CustomPropertyDrawer(typeof(double3)), CustomPropertyDrawer(typeof(double4))]

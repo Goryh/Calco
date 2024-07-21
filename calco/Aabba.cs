@@ -1,9 +1,9 @@
 using System;
 using System.Runtime.CompilerServices;
 using Unity.IL2CPP.CompilerServices;
-using static Unity.Mathematics.math;
+using static calco.math;
 
-namespace Unity.Mathematics
+namespace calco
 {
 	[Il2CppEagerStaticClassConstruction]
 	public ref struct Aabba
@@ -271,7 +271,7 @@ namespace Unity.Mathematics
 			float3a halfExtentsInB = abs(x) + abs(y) + abs(z);
 			float3a centerInB = transform(transf, aabb.center);
 
-			return Mathematics.Aabba.CreateFromCenterAndHalfExtents(centerInB, halfExtentsInB);
+			return Aabba.CreateFromCenterAndHalfExtents(centerInB, halfExtentsInB);
 		}
 
 		public static Aabba transform(in float4x4 transf, in Aabba aabb)
@@ -282,7 +282,7 @@ namespace Unity.Mathematics
 						halfExt.y * abs(transf.c1.xyza) + 
 						halfExt.z * abs(transf.c2.xyza);
 
-			return Mathematics.Aabba.CreateFromCenterAndHalfExtents(center, halfExt);
+			return Aabba.CreateFromCenterAndHalfExtents(center, halfExt);
 		}
 
 		public static Aabba transform(in float3ax3 transf, in Aabba aabb)
@@ -292,7 +292,7 @@ namespace Unity.Mathematics
 						halfExt.y * abs(transf.c1) + 
 						halfExt.z * abs(transf.c2);
 
-			return Mathematics.Aabba.CreateFromCenterAndHalfExtents(aabb.center, halfExt);
+			return Aabba.CreateFromCenterAndHalfExtents(aabb.center, halfExt);
 		}
 	}
 }

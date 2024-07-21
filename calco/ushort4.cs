@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 #pragma warning disable 0660, 0661
 
-namespace Unity.Mathematics
+namespace calco
 {
     [DebuggerTypeProxy(typeof(ushort4.DebuggerProxy))]
     [System.Serializable]

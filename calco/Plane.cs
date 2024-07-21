@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Unity.IL2CPP.CompilerServices;
 
-namespace Unity.Mathematics
+namespace calco
 {
 	/// <summary>
 	/// A plane represented by a normal vector and a distance along the normal from the origin.

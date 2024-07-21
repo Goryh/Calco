@@ -1,7 +1,7 @@
 using Unity.IL2CPP.CompilerServices;
-using static Unity.Mathematics.math;
+using static calco.math;
 
-namespace Unity.Mathematics
+namespace calco
 {
     /// <summary>
     /// A static class containing noise functions.

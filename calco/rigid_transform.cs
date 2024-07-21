@@ -2,9 +2,9 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Unity.IL2CPP.CompilerServices;
-using static Unity.Mathematics.math;
+using static calco.math;
 
-namespace Unity.Mathematics
+namespace calco
 {
     [Il2CppEagerStaticClassConstruction]
     public static class RigidTransformc

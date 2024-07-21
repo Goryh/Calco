@@ -2,9 +2,9 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Unity.IL2CPP.CompilerServices;
-using static Unity.Mathematics.math;
+using static calco.math;
 
-namespace Unity.Mathematics
+namespace calco
 {
     [Il2CppEagerStaticClassConstruction]
     public static class quaternionc
@@ -618,7 +618,7 @@ namespace Unity.Mathematics
         {
             float4 x = q.value;
             float len = dot(x, x);
-            return quaternion(select(Mathematics.quaternionc.identity.value, x * rsqrt(len), len > FLT_MIN_NORMAL));
+            return quaternion(select(quaternionc.identity.value, x * rsqrt(len), len > FLT_MIN_NORMAL));
         }
 
         /// <summary>

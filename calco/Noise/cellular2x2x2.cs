@@ -4,9 +4,9 @@
 // See LICENSE file for details.
 // https://github.com/stegu/webgl-noise
 
-using static Unity.Mathematics.math;
+using static calco.math;
 
-namespace Unity.Mathematics
+namespace calco
 {
     public static partial class noise
     {

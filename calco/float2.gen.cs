@@ -13,7 +13,7 @@ using Unity.IL2CPP.CompilerServices;
 
 #pragma warning disable 0660, 0661
 
-namespace Unity.Mathematics
+namespace calco
 {
     [Il2CppEagerStaticClassConstruction]
     public static class float2c

@@ -1,10 +1,10 @@
 using System;
 using System.Runtime.CompilerServices;
-using static Unity.Mathematics.math;
+using static calco.math;
 using System.Diagnostics;
 using Unity.IL2CPP.CompilerServices;
 
-namespace Unity.Mathematics
+namespace calco
 {
     /// <summary>
     /// Random Number Generator based on xorshift.

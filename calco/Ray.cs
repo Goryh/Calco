@@ -1,9 +1,9 @@
 using System;
 using System.Runtime.CompilerServices;
 using Unity.IL2CPP.CompilerServices;
-using static Unity.Mathematics.math;
+using static calco.math;
 
-namespace Unity.Mathematics
+namespace calco
 {
 	[Serializable]
 	[Il2CppEagerStaticClassConstruction]

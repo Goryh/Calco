@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Unity.IL2CPP.CompilerServices;
 
-namespace Unity.Mathematics
+namespace calco
 {
     partial class math
     {
