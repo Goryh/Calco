@@ -171,17 +171,15 @@ namespace calco
         public static float4 mul(in float4 a, in float4x4 b)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathFloat4MulFloat4x4(in a, in b, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4MulFloat4x4(in a, in b, out var res);
+            return res;
+        #else
             return float4(
                 a.x * b.c0.x + a.y * b.c0.y + a.z * b.c0.z + a.w * b.c0.w,
                 a.x * b.c1.x + a.y * b.c1.y + a.z * b.c1.z + a.w * b.c1.w,
                 a.x * b.c2.x + a.y * b.c2.y + a.z * b.c2.z + a.w * b.c2.w,
                 a.x * b.c3.x + a.y * b.c3.y + a.z * b.c3.z + a.w * b.c3.w);
+        #endif
         }
 
         /// <summary>Returns the float2 column vector result of a matrix multiplication between a float2x2 matrix and a float2 column vector.</summary>
@@ -611,13 +609,11 @@ namespace calco
         public static float4 mul(in float4x4 a, in float4 b)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathFloat4x4MulFloat4(in a, in b, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4x4MulFloat4(in a, in b, out var res);
+            return res;
+        #else
             return a.c0 * b.x + a.c1 * b.y + a.c2 * b.z + a.c3 * b.w;
+        #endif
         }
 
         /// <summary>Returns the float4x2 matrix result of a matrix multiplication between a float4x4 matrix and a float4x2 matrix.</summary>

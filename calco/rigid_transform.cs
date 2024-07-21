@@ -326,6 +326,11 @@ namespace calco
 
     public static partial class math
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        static extern void vecILMathRigidTransformInverse(in RigidTransform t, out RigidTransform res);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        static extern void vecILMathRigidTransformMul(in RigidTransform a, in RigidTransform b, out RigidTransform res);
+
         /// <summary>Returns a RigidTransform constructed from a rotation represented by a unit quaternion and a translation represented by a float3 vector.</summary>
         /// <param name="rot">The quaternion rotation.</param>
         /// <param name="pos">The translation vector.</param>
@@ -346,9 +351,6 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RigidTransform RigidTransform(in float4x4 transform) { return new RigidTransform(transform); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        static extern void vecILMathRigidTransformInverse(in RigidTransform t, out RigidTransform res);
-
         /// <summary>Returns the inverse of a RigidTransform.</summary>
         /// <param name="t">The RigidTransform to invert.</param>
         /// <returns>The inverse RigidTransform.</returns>
@@ -356,19 +358,14 @@ namespace calco
         public static RigidTransform inverse(in RigidTransform t)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathRigidTransformInverse(in t, out var res);
-                return res;
-            }
-        #endif
+            vecILMathRigidTransformInverse(in t, out var res);
+            return res;
+        #else
             quaternion invRotation = inverse(t.rot);
             var invTranslation = mul(invRotation, -t.posa);
             return new RigidTransform(invRotation, invTranslation);
+        #endif
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        static extern void vecILMathRigidTransformMul(in RigidTransform a, in RigidTransform b, out RigidTransform res);
 
         /// <summary>Returns the result of transforming the RigidTransform b by the RigidTransform a.</summary>
         /// <param name="a">The RigidTransform on the left.</param>
@@ -378,13 +375,11 @@ namespace calco
         public static RigidTransform mul(in RigidTransform a, in RigidTransform b)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathRigidTransformMul(in a, in b, out var res);
-                return res;
-            }
-        #endif
+            vecILMathRigidTransformMul(in a, in b, out var res);
+            return res;
+        #else
             return new RigidTransform(mul(a.rot, b.rot), mul(a.rot, b.posa) + a.posa);
+        #endif
         }
 
         /// <summary>Returns the result of transforming a float4 homogeneous coordinate by a RigidTransform.</summary>

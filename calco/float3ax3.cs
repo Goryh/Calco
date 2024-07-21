@@ -99,16 +99,14 @@ namespace calco
 		public static float3ax3 transpose(in float3ax3 m)
 		{
 		 #if ENABLE_IL2CPP
-			if( !IsBurstEnabled() )
-			{
-				vecILMathFloat3ax3Transpose(in m, out var res);
-				return res;
-			}
-		#endif
+			vecILMathFloat3ax3Transpose(in m, out var res);
+			return res;
+        #else
 			return float3ax3(
 				float3(m.c0.x, m.c0.y, m.c0.z),
 				float3(m.c1.x, m.c1.y, m.c1.z),
 				float3(m.c2.x, m.c2.y, m.c2.z));
+        #endif
 		}
 
 		/// <summary>Returns the float3x3 full inverse of a float3x3 matrix.</summary>
@@ -117,12 +115,9 @@ namespace calco
 		public static float3ax3 inverse(in float3ax3 m)
 		{
 		 #if ENABLE_IL2CPP
-			if( !IsBurstEnabled() )
-			{
-				vecILMathFloat3ax3Inverse(in m, out var res);
-				return res;
-			}
-		#endif
+			vecILMathFloat3ax3Inverse(in m, out var res);
+			return res;
+        #else
 			float3 c0 = m.c0;
 			float3 c1 = m.c1;
 			float3 c2 = m.c2;
@@ -137,6 +132,7 @@ namespace calco
 
 			float rcpDet = 1.0f / csum(t0.zxy * m0);
 			return float3ax3(m0, m1, m2) * rcpDet;
+        #endif
 		}
 
 		/// <summary>Returns the determinant of a float3x3 matrix.</summary>

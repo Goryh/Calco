@@ -294,6 +294,9 @@ namespace calco
 
 	public static partial class math
 	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+		static extern void vecILMathRigidTransformMulPlane(in RigidTransform t, in Plane3d p, out Plane3d res);
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Plane3d Plane3d(float coefficientA, float coefficientB, float coefficientC, float coefficientD) => new Plane3d(coefficientA, coefficientB, coefficientC, coefficientD);
 
@@ -309,21 +312,16 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Plane3d Plane3d(in float3a vector1InPlane, in float3a vector2InPlane, in float3a pointInPlane) => new Plane3d(vector1InPlane, vector2InPlane, pointInPlane);
 
-		[MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-		static extern void vecILMathRigidTransformMulPlane(in RigidTransform t, in Plane3d p, out Plane3d res);
-
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Plane3d transform(in RigidTransform transf, in Plane3d p)
 		{
 		#if ENABLE_IL2CPP
-			if( !IsBurstEnabled() )
-			{
-				vecILMathRigidTransformMulPlane(in transf, in p, out var res);
-				return res;
-			}
-		#endif
+			vecILMathRigidTransformMulPlane(in transf, in p, out var res);
+			return res;
+        #else
 			var normal = rotate(in transf, p.normal);
 			return new Plane3d(normal, normal * -p.distance + transf.posa);
+        #endif
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

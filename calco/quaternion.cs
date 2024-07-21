@@ -29,6 +29,8 @@ namespace calco
         static extern void vecILQuatFromFloat3ax3(in float3ax3 m, out quaternion res);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         static extern void vecILQuatFromFloat4x4(in float4x4 m, out quaternion res);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        static extern void vecILMathQuatFromAxisAngle(in float3a axis, float angle, out quaternion q);
 
         /// <summary>Constructs a quaternion from four float values.</summary>
         /// <param name="x">The quaternion x component.</param>
@@ -54,33 +56,27 @@ namespace calco
         public quaternion(in float3ax3 m)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILQuatFromFloat3ax3(in m, out this);
-                return;
-            }
-            else
+            vecILQuatFromFloat3ax3(in m, out this);
+        #else
+            float3 u = m.c0;
+            float3 v = m.c1;
+            float3 w = m.c2;
+
+            uint u_sign = (asuint(u.x) & 0x80000000);
+            float t = v.y + asfloat(asuint(w.z) ^ u_sign);
+            uint4 u_mask = uint4((int)u_sign >> 31);
+            uint4 t_mask = uint4(asint(t) >> 31);
+
+            float tr = 1.0f + abs(u.x);
+
+            uint4 sign_flips = uint4(0x00000000, 0x80000000, 0x80000000, 0x80000000) ^ (u_mask & uint4(0x00000000, 0x80000000, 0x00000000, 0x80000000)) ^ (t_mask & uint4(0x80000000, 0x80000000, 0x80000000, 0x00000000));
+
+            value = float4(tr, u.y, w.x, v.z) + asfloat(asuint(float4(t, v.x, u.z, w.y)) ^ sign_flips);   // +---, +++-, ++-+, +-++
+
+            value = asfloat((asuint(value) & ~u_mask) | (asuint(value.zwxy) & u_mask));
+            value = asfloat((asuint(value.wzyx) & ~t_mask) | (asuint(value) & t_mask));
+            value = normalize(value);
         #endif
-            {
-                float3 u = m.c0;
-                float3 v = m.c1;
-                float3 w = m.c2;
-
-                uint u_sign = (asuint(u.x) & 0x80000000);
-                float t = v.y + asfloat(asuint(w.z) ^ u_sign);
-                uint4 u_mask = uint4((int)u_sign >> 31);
-                uint4 t_mask = uint4(asint(t) >> 31);
-
-                float tr = 1.0f + abs(u.x);
-
-                uint4 sign_flips = uint4(0x00000000, 0x80000000, 0x80000000, 0x80000000) ^ (u_mask & uint4(0x00000000, 0x80000000, 0x00000000, 0x80000000)) ^ (t_mask & uint4(0x80000000, 0x80000000, 0x80000000, 0x00000000));
-
-                value = float4(tr, u.y, w.x, v.z) + asfloat(asuint(float4(t, v.x, u.z, w.y)) ^ sign_flips);   // +---, +++-, ++-+, +-++
-
-                value = asfloat((asuint(value) & ~u_mask) | (asuint(value.zwxy) & u_mask));
-                value = asfloat((asuint(value.wzyx) & ~t_mask) | (asuint(value) & t_mask));
-                value = normalize(value);
-            }
         }
 
         /// <summary>Constructs a unit quaternion from an orthonormal float4x4 matrix.</summary>
@@ -88,38 +84,29 @@ namespace calco
         public quaternion(in float4x4 m)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILQuatFromFloat4x4(in m, out this);
-                return;
-            }
-            else
+            vecILQuatFromFloat4x4(in m, out this);
+        #else
+            float4 u = m.c0;
+            float4 v = m.c1;
+            float4 w = m.c2;
+
+            uint u_sign = (asuint(u.x) & 0x80000000);
+            float t = v.y + asfloat(asuint(w.z) ^ u_sign);
+            uint4 u_mask = uint4((int)u_sign >> 31);
+            uint4 t_mask = uint4(asint(t) >> 31);
+
+            float tr = 1.0f + abs(u.x);
+
+            uint4 sign_flips = uint4(0x00000000, 0x80000000, 0x80000000, 0x80000000) ^ (u_mask & uint4(0x00000000, 0x80000000, 0x00000000, 0x80000000)) ^ (t_mask & uint4(0x80000000, 0x80000000, 0x80000000, 0x00000000));
+
+            value = float4(tr, u.y, w.x, v.z) + asfloat(asuint(float4(t, v.x, u.z, w.y)) ^ sign_flips);   // +---, +++-, ++-+, +-++
+
+            value = asfloat((asuint(value) & ~u_mask) | (asuint(value.zwxy) & u_mask));
+            value = asfloat((asuint(value.wzyx) & ~t_mask) | (asuint(value) & t_mask));
+
+            value = normalize(value);
         #endif
-            {
-                float4 u = m.c0;
-                float4 v = m.c1;
-                float4 w = m.c2;
-
-                uint u_sign = (asuint(u.x) & 0x80000000);
-                float t = v.y + asfloat(asuint(w.z) ^ u_sign);
-                uint4 u_mask = uint4((int)u_sign >> 31);
-                uint4 t_mask = uint4(asint(t) >> 31);
-
-                float tr = 1.0f + abs(u.x);
-
-                uint4 sign_flips = uint4(0x00000000, 0x80000000, 0x80000000, 0x80000000) ^ (u_mask & uint4(0x00000000, 0x80000000, 0x00000000, 0x80000000)) ^ (t_mask & uint4(0x80000000, 0x80000000, 0x80000000, 0x00000000));
-
-                value = float4(tr, u.y, w.x, v.z) + asfloat(asuint(float4(t, v.x, u.z, w.y)) ^ sign_flips);   // +---, +++-, ++-+, +-++
-
-                value = asfloat((asuint(value) & ~u_mask) | (asuint(value.zwxy) & u_mask));
-                value = asfloat((asuint(value.wzyx) & ~t_mask) | (asuint(value) & t_mask));
-
-                value = normalize(value);
-            }
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        static extern void vecILMathQuatFromAxisAngle(in float3a axis, float angle, out quaternion q);
 
         /// <summary>
         /// Returns a quaternion representing a rotation around a unit axis by an angle in radians.
@@ -132,14 +119,12 @@ namespace calco
         public static quaternion AxisAngle(in float3a axis, float angle)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathQuatFromAxisAngle(in axis, angle, out var res);
-                return res;
-            }
-        #endif
+            vecILMathQuatFromAxisAngle(in axis, angle, out var res);
+            return res;
+        #else
             sincos(0.5f * angle, out float sina, out float cosa);
             return quaternion(float4(axis * sina, cosa));
+        #endif
         }
 
         /// <summary>
@@ -513,6 +498,13 @@ namespace calco
 
     public static partial class math
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        static extern void vecILMathQuaternionInverse(in quaternion q, out quaternion res);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        static extern void vecILMathQuaternionMul(in quaternion a, in quaternion b, out quaternion res);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        static extern void vecILMathQuaternionMulFloat3a(in quaternion q, in float3a v, out float3a res);
+
         /// <summary>Returns a quaternion constructed from four float values.</summary>
         /// <param name="x">The x component of the quaternion.</param>
         /// <param name="y">The y component of the quaternion.</param>
@@ -549,9 +541,6 @@ namespace calco
             return quaternion(q.value * float4(-1.0f, -1.0f, -1.0f, 1.0f));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        static extern void vecILMathQuaternionInverse(in quaternion q, out quaternion res);
-
        /// <summary>Returns the inverse of a quaternion value.</summary>
        /// <param name="q">The quaternion to invert.</param>
        /// <returns>The quaternion inverse of the input quaternion.</returns>
@@ -559,14 +548,12 @@ namespace calco
         public static quaternion inverse(in quaternion q)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathQuaternionInverse(in q, out var res);
-                return res;
-            }
-        #endif
+            vecILMathQuaternionInverse(in q, out var res);
+            return res;
+        #else
             float4 x = q.value;
             return quaternion(rcp(dot(x, x)) * x * float4(-1.0f, -1.0f, -1.0f, 1.0f));
+        #endif
         }
 
         /// <summary>Returns the dot product of two quaternions.</summary>
@@ -686,9 +673,6 @@ namespace calco
             return quaternion(float4(q.value.xyz * s, 0.5f * log(q_len_sq)));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        static extern void vecILMathQuaternionMul(in quaternion a, in quaternion b, out quaternion res);
-
         /// <summary>Returns the result of transforming the quaternion b by the quaternion a.</summary>
         /// <param name="a">The quaternion on the left.</param>
         /// <param name="b">The quaternion on the right.</param>
@@ -697,17 +681,12 @@ namespace calco
         public static quaternion mul(in quaternion a, in quaternion b)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathQuaternionMul(in a, in b, out var res);
-                return res;
-            }
-        #endif
+            vecILMathQuaternionMul(in a, in b, out var res);
+            return res;
+        #else
             return quaternion(a.value.wwww * b.value + (a.value.xyzx * b.value.wwwx + a.value.yzxy * b.value.zxyy) * float4(1.0f, 1.0f, 1.0f, -1.0f) - a.value.zxyz * b.value.yzxz);
+        #endif
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        static extern void vecILMathQuaternionMulFloat3a(in quaternion q, in float3a v, out float3a res);
 
         /// <summary>Returns the result of transforming a vector by a quaternion.</summary>
         /// <param name="q">The quaternion transformation.</param>
@@ -717,14 +696,12 @@ namespace calco
         public static float3a mul(in quaternion q, in float3a v)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathQuaternionMulFloat3a(in q, in v, out var res);
-                return res;
-            }
-        #endif
+            vecILMathQuaternionMulFloat3a(in q, in v, out var res);
+            return res;
+        #else
             float3a t = 2 * cross(q.value.xyza, v);
             return v + q.value.w * t + cross(q.value.xyza, t);
+        #endif
         }
 
         /// <summary>Returns the result of rotating a vector by a unit quaternion.</summary>

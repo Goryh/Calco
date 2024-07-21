@@ -535,6 +535,9 @@ namespace calco
 
     public static partial class math
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        static extern void vecILMathFloat3x3Inverse(in float3x3 m, out float3x3 res);
+
         /// <summary>Returns a float3x3 matrix constructed from three float3 vectors.</summary>
         /// <param name="c0">The matrix column c0 will be set to this value.</param>
         /// <param name="c1">The matrix column c1 will be set to this value.</param>
@@ -630,21 +633,15 @@ namespace calco
                 v.c2.x, v.c2.y, v.c2.z);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        static extern void vecILMathFloat3x3Inverse(in float3x3 m, out float3x3 res);
-
         /// <summary>Returns the float3x3 full inverse of a float3x3 matrix.</summary>
         /// <param name="m">Matrix to invert.</param>
         /// <returns>The inverted matrix.</returns>
         public static float3x3 inverse(float3x3 m)
         {
          #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathFloat3x3Inverse(in m, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3x3Inverse(in m, out var res);
+            return res;
+        #else
             float3 c0 = m.c0;
             float3 c1 = m.c1;
             float3 c2 = m.c2;
@@ -659,6 +656,7 @@ namespace calco
 
             float rcpDet = 1.0f / csum(t0.zxy * m0);
             return float3x3(m0, m1, m2) * rcpDet;
+        #endif
         }
 
         /// <summary>Returns the determinant of a float3x3 matrix.</summary>

@@ -565,6 +565,11 @@ namespace calco
 
     public static partial class math
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        static extern void vecILMathFloat4x4Transpose(in float4x4 m, out float4x4 res);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        static extern void vecILMathFloat4x4Inverse(in float4x4 m, out float4x4 res);
+
         /// <summary>Returns a float4x4 matrix constructed from four float4 vectors.</summary>
         /// <param name="c0">The matrix column c0 will be set to this value.</param>
         /// <param name="c1">The matrix column c1 will be set to this value.</param>
@@ -684,11 +689,6 @@ namespace calco
             return (a.c0 * b.x + a.c1 * b.y + a.c2 * b.z + a.c3 * b.w);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        static extern void vecILMathFloat4x4Transpose(in float4x4 m, out float4x4 res);
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        static extern void vecILMathFloat4x4Inverse(in float4x4 m, out float4x4 res);
-
         /// <summary>Return the float4x4 transpose of a float4x4 matrix.</summary>
         /// <param name="v">Value to transpose.</param>
         /// <returns>Transposed value.</returns>
@@ -696,17 +696,15 @@ namespace calco
         public static float4x4 transpose(in float4x4 m)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathFloat4x4Transpose(in m, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4x4Transpose(in m, out var res);
+            return res;
+        #else
             return float4x4(
                 m.c0.x, m.c0.y, m.c0.z, m.c0.w,
                 m.c1.x, m.c1.y, m.c1.z, m.c1.w,
                 m.c2.x, m.c2.y, m.c2.z, m.c2.w,
                 m.c3.x, m.c3.y, m.c3.z, m.c3.w);
+        #endif
         }
 
         /// <summary>Returns the float4x4 full inverse of a float4x4 matrix.</summary>
@@ -716,12 +714,9 @@ namespace calco
         public static float4x4 inverse(float4x4 m)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathFloat4x4Inverse(in m, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4x4Inverse(in m, out var res);
+            return res;
+        #else
             // faster for both Mono and IL2CPP
             return ((UnityEngine.Matrix4x4)m).inverse;
 /*
@@ -784,6 +779,7 @@ namespace calco
             res.c3 = minors3 * rcp_denom_ppnn;
             return res;
 */
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
@@ -796,12 +792,9 @@ namespace calco
         public static float4x4 fastinverse(in float4x4 m)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathFloat4x4LinearTransformInverse(in m, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4x4LinearTransformInverse(in m, out var res);
+            return res;
+        #else
             float4 c0 = m.c0;
             float4 c1 = m.c1;
             float4 c2 = m.c2;
@@ -822,6 +815,7 @@ namespace calco
             pos.w = 1.0f;
 
             return float4x4(r0, r1, r2, pos);
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
@@ -834,12 +828,9 @@ namespace calco
         public static float4x4 fastnoscaleinverse(in float4x4 m)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathFloat4x4LinearTransformNoScaleInverse(in m, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4x4LinearTransformNoScaleInverse(in m, out var res);
+            return res;
+        #else
             float4 c0 = m.c0;
             float4 c1 = m.c1;
             float4 c2 = m.c2;
@@ -860,6 +851,7 @@ namespace calco
             pos.w = 1.0f;
 
             return float4x4(r0, r1, r2, pos);
+        #endif
         }
 
         /// <summary>Returns the determinant of a float4x4 matrix.</summary>

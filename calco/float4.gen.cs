@@ -167,16 +167,13 @@ namespace calco
         public float4(in float3a xyz, float w)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aToFloat4(in xyz, w, out this);
-                return;
-            }
-        #endif
+            vecILMathFloat3aToFloat4(in xyz, w, out this);
+        #else
             this.x = xyz.x;
             this.y = xyz.y;
             this.z = xyz.z;
             this.w = w;
+        #endif
         }
 
         /// <summary>Constructs a float4 vector from a float4 vector.</summary>
@@ -381,13 +378,11 @@ namespace calco
         public static float4 operator * (in float4 lhs, in float4 rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4Mul4(in lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4Mul4(in lhs, in rhs, out var res);
+            return res;
+        #else
             return new float4 (lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z, lhs.w * rhs.w);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise multiplication operation on a float4 vector and a float value.</summary>
@@ -405,13 +400,11 @@ namespace calco
         public static float4 operator * (float lhs, in float4 rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4Mul(lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4Mul(lhs, in rhs, out var res);
+            return res;
+        #else
             return new float4 (lhs * rhs.x, lhs * rhs.y, lhs * rhs.z, lhs * rhs.w);
+        #endif
         }
 
 
@@ -423,13 +416,11 @@ namespace calco
         public static float4 operator + (in float4 lhs, in float4 rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4Add4(in lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4Add4(in lhs, in rhs, out var res);
+            return res;
+        #else
             return new float4 (lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise addition operation on a float4 vector and a float value.</summary>
@@ -447,13 +438,11 @@ namespace calco
         public static float4 operator + (float lhs, in float4 rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4Add(lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4Add(lhs, in rhs, out var res);
+            return res;
+        #else
             return new float4 (lhs + rhs.x, lhs + rhs.y, lhs + rhs.z, lhs + rhs.w);
+        #endif
         }
 
 
@@ -465,13 +454,11 @@ namespace calco
         public static float4 operator - (in float4 lhs, in float4 rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4Sub4(in lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4Sub4(in lhs, in rhs, out var res);
+            return res;
+        #else
             return new float4 (lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z, lhs.w - rhs.w);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise subtraction operation on a float4 vector and a float value.</summary>
@@ -482,13 +469,11 @@ namespace calco
         public static float4 operator - (in float4 lhs, float rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4SubF(in lhs, rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4SubF(in lhs, rhs, out var res);
+            return res;
+        #else
             return new float4 (lhs.x - rhs, lhs.y - rhs, lhs.z - rhs, lhs.w - rhs);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise subtraction operation on a float value and a float4 vector.</summary>
@@ -499,13 +484,11 @@ namespace calco
         public static float4 operator - (float lhs, in float4 rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4Sub(lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4Sub(lhs, in rhs, out var res);
+            return res;
+        #else
             return new float4 (lhs - rhs.x, lhs - rhs.y, lhs - rhs.z, lhs - rhs.w);
+        #endif
         }
 
 
@@ -517,13 +500,11 @@ namespace calco
         public static float4 operator / (in float4 lhs, in float4 rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4Div4(in lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4Div4(in lhs, in rhs, out var res);
+            return res;
+        #else
             return new float4 (lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z, lhs.w / rhs.w);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise division operation on a float4 vector and a float value.</summary>
@@ -534,13 +515,11 @@ namespace calco
         public static float4 operator / (in float4 lhs, float rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4DivF(in lhs, rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4DivF(in lhs, rhs, out var res);
+            return res;
+        #else
             return new float4 (lhs.x / rhs, lhs.y / rhs, lhs.z / rhs, lhs.w / rhs);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise division operation on a float value and a float4 vector.</summary>
@@ -551,13 +530,11 @@ namespace calco
         public static float4 operator / (float lhs, in float4 rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4Div(lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4Div(lhs, in rhs, out var res);
+            return res;
+        #else
             return new float4 (lhs / rhs.x, lhs / rhs.y, lhs / rhs.z, lhs / rhs.w);
+        #endif
         }
 
 
@@ -692,13 +669,11 @@ namespace calco
         public static float4 operator - (in float4 val)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4Neg(in val, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat4Neg(in val, out var res);
+            return res;
+        #else
             return new float4 (-val.x, -val.y, -val.z, -val.w);
+        #endif
         }
 
 
@@ -4067,22 +4042,8 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 float4(in UnityEngine.Vector3 xyz, float w) { return new float4(in xyz, w); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        static extern void vecILMathFloat3aToFloat4(in float3a xyz, float w, out float4 res);
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 float4(in float3a xyz, float w)
-        {
-        // a workaround for the Burst compiler to not call the float4 constructor with 'alien' classes as it might go crazy sometimes
-        #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aToFloat4(in xyz, w, out float4 res);
-                return res;
-            }
-        #endif
-            return new float4(xyz.x, xyz.y, xyz.z, w);
-        }
+        public static float4 float4(in float3a xyz, float w) { return new float4(xyz, w); }
 
         /// <summary>Returns a float4 vector constructed from a float4 vector.</summary>
         /// <param name="xyzw">The constructed vector's xyzw components will be set to this value.</param>

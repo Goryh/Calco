@@ -93,16 +93,13 @@ namespace calco
         public float3a(in float4 xyz)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4ToFloat3a(in xyz, out this);
-                return;
-            }
-        #endif
+            vecILMathFloat4ToFloat3a(in xyz, out this);
+        #else
             this.x = xyz.x;
             this.y = xyz.y;
             this.z = xyz.z;
             this.pad = xyz.w;
+        #endif
         }
 
         /// <summary>Constructs a float3a vector from a single float value by assigning it to every component.</summary>
@@ -111,70 +108,57 @@ namespace calco
         public float3a(float v)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloatToFloat3a(v, out this);
-            }
-            else
+            vecILMathFloatToFloat3a(v, out this);
+        #else
+            this.x = v;
+            this.y = v;
+            this.z = v;
+            this.pad = 0;
         #endif
-            {
-                this.x = v;
-                this.y = v;
-                this.z = v;
-                this.pad = 0;
-            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator float3(in float3a v)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aToFloat3(in v, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aToFloat3(in v, out var res);
+            return res;
+        #else
             return new float3(v.x, v.y, v.z);
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator float3a(in float3 v)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3ToFloat3a(in v, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3ToFloat3a(in v, out var res);
+            return res;
+        #else
             return new float3a(new float4(v, 0));
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator UnityEngine.Vector3(in float3a v)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aToVector3(in v, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aToVector3(in v, out var res);
+            return res;
+        #else
             return new UnityEngine.Vector3(v.x, v.y, v.z);
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator float3a(in UnityEngine.Vector3 v)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathVector3ToFloat3a(in v, out var res);
-                return res;
-            }
-        #endif
+            vecILMathVector3ToFloat3a(in v, out var res);
+            return res;
+        #else
             return new float3a(v.x, v.y, v.z);
+        #endif
         }
 
         /// <summary>Implicitly converts a single float value to a float3a vector by assigning it to every component.</summary>
@@ -191,13 +175,11 @@ namespace calco
         public static float3a operator * (in float3a lhs, in float3a rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aMul3a(in lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aMul3a(in lhs, in rhs, out var res);
+            return res;
+        #else
             return new float3a (lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise multiplication operation on a float3a vector and a float value.</summary>
@@ -215,13 +197,11 @@ namespace calco
         public static float3a operator * (float lhs, in float3a rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aMul(lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aMul(lhs, in rhs, out var res);
+            return res;
+        #else
             return new float3a (lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
+        #endif
         }
 
 
@@ -233,13 +213,11 @@ namespace calco
         public static float3a operator + (in float3a lhs, in float3a rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aAdd3a(in lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aAdd3a(in lhs, in rhs, out var res);
+            return res;
+        #else
             return new float3a (lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise addition operation on a float3a vector and a float value.</summary>
@@ -257,13 +235,11 @@ namespace calco
         public static float3a operator + (float lhs, in float3a rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aAdd(lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aAdd(lhs, in rhs, out var res);
+            return res;
+        #else
             return new float3a (lhs + rhs.x, lhs + rhs.y, lhs + rhs.z);
+        #endif
         }
 
 
@@ -275,13 +251,11 @@ namespace calco
         public static float3a operator - (in float3a lhs, in float3a rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aSub3a(in lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aSub3a(in lhs, in rhs, out var res);
+            return res;
+        #else
             return new float3a (lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise subtraction operation on a float3a vector and a float value.</summary>
@@ -292,13 +266,11 @@ namespace calco
         public static float3a operator - (in float3a lhs, float rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aSubF(in lhs, rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aSubF(in lhs, rhs, out var res);
+            return res;
+        #else
             return new float3a (lhs.x - rhs, lhs.y - rhs, lhs.z - rhs);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise subtraction operation on a float value and a float3a vector.</summary>
@@ -309,13 +281,11 @@ namespace calco
         public static float3a operator - (float lhs, in float3a rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aSub(lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aSub(lhs, in rhs, out var res);
+            return res;
+        #else
             return new float3a (lhs - rhs.x, lhs - rhs.y, lhs - rhs.z);
+        #endif
         }
 
 
@@ -327,13 +297,11 @@ namespace calco
         public static float3a operator / (in float3a lhs, in float3a rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aDiv3a(in lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aDiv3a(in lhs, in rhs, out var res);
+            return res;
+        #else
             return new float3a (lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise division operation on a float3a vector and a float value.</summary>
@@ -344,13 +312,11 @@ namespace calco
         public static float3a operator / (in float3a lhs, float rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aDivF(in lhs, rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aDivF(in lhs, rhs, out var res);
+            return res;
+        #else
             return new float3a (lhs.x / rhs, lhs.y / rhs, lhs.z / rhs);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise division operation on a float value and a float3a vector.</summary>
@@ -361,13 +327,11 @@ namespace calco
         public static float3a operator / (float lhs, in float3a rhs)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aDiv(lhs, in rhs, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aDiv(lhs, in rhs, out var res);
+            return res;
+        #else
             return new float3a (lhs / rhs.x, lhs / rhs.y, lhs / rhs.z);
+        #endif
         }
 
 
@@ -502,13 +466,11 @@ namespace calco
         public static float3a operator - (in float3a val)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3aNeg(in val, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aNeg(in val, out var res);
+            return res;
+        #else
             return new float3a (-val.x, -val.y, -val.z);
+        #endif
         }
 
 

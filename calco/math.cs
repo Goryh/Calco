@@ -12,18 +12,6 @@ namespace calco
     [Il2CppEagerStaticClassConstruction]
     public static partial class math
     {
-        [BurstDiscard]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void SetIfBurstDisabled(ref bool b) => b = false;
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static public bool IsBurstEnabled()
-        {
-            var b = true;
-            SetIfBurstDisabled(ref b);
-            return b;
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathFloat3Dot(in float3 a, in float3 b);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathFloat3aDot(in float3a a, in float3a b);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathFloat4Dot(in float4 a, in float4 b);
@@ -1112,13 +1100,11 @@ namespace calco
         public static float3a min(in float3a x, in float3a y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathMin3a(in y, in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathMin3a(in y, in x, out var res);
+            return res;
+        #else
             return new float3a(min(x.x, y.x), min(x.y, y.y), min(x.z, y.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise minimum of two float4 vectors.</summary>
@@ -1129,13 +1115,11 @@ namespace calco
         public static float4 min(in float4 x, in float4 y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathMin4(in y, in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathMin4(in y, in x, out var res);
+            return res;
+        #else
             return new float4(min(x.x, y.x), min(x.y, y.y), min(x.z, y.z), min(x.w, y.w));
+        #endif
         }
 
 
@@ -1290,13 +1274,11 @@ namespace calco
         public static float3a max(in float3a x, in float3a y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathMax3a(in y, in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathMax3a(in y, in x, out var res);
+            return res;
+        #else
             return new float3a(max(x.x, y.x), max(x.y, y.y), max(x.z, y.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise maximum of two float4 vectors.</summary>
@@ -1307,13 +1289,11 @@ namespace calco
         public static float4 max(in float4 x, in float4 y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathMax4(in y, in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathMax4(in y, in x, out var res);
+            return res;
+        #else
             return new float4(max(x.x, y.x), max(x.y, y.y), max(x.z, y.z), max(x.w, y.w));
+        #endif
         }
 
 
@@ -2199,13 +2179,11 @@ namespace calco
         public static float3a abs(in float3a x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathAbs3a(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathAbs3a(in x, out var res);
+            return res;
+        #else
             return asfloat(asuint(x) & 0x7FFFFFFF);
+        #endif
         }
 
         /// <summary>Returns the componentwise absolute value of a float4 vector.</summary>
@@ -2215,13 +2193,11 @@ namespace calco
         public static float4 abs(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathAbs4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathAbs4(in x, out var res);
+            return res;
+        #else
             return asfloat(asuint(x) & 0x7FFFFFFF);
+        #endif
         }
 
 
@@ -2328,34 +2304,32 @@ namespace calco
         public static float dot(in float3 x, in float3 y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathFloat3Dot(in x, in y);
-        #endif
+            return vecILMathFloat3Dot(in x, in y);
+        #else
             return x.x * y.x + x.y * y.y + x.z * y.z;
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float dot(in UnityEngine.Vector3 x, in UnityEngine.Vector3 y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                var vx = float3a(x);
-                var vy = float3a(y);
-                return vecILMathFloat3aDot(in vx, in vy);
-            }
-        #endif
+            var vx = float3a(x);
+            var vy = float3a(y);
+            return vecILMathFloat3aDot(in vx, in vy);
+        #else
             return x.x * y.x + x.y * y.y + x.z * y.z;
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float dot(in float3a x, in float3a y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathFloat3aDot(in x, in y);
-        #endif
+            return vecILMathFloat3aDot(in x, in y);
+        #else
             return x.x * y.x + x.y * y.y + x.z * y.z;
+        #endif
         }
 
         /// <summary>Returns the dot product of two float4 vectors.</summary>
@@ -2366,10 +2340,10 @@ namespace calco
         public static float dot(in float4 x, in float4 y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathFloat4Dot(in x, in y);
-        #endif
+            return vecILMathFloat4Dot(in x, in y);
+        #else
             return x.x * y.x + x.y * y.y + x.z * y.z + x.w * y.w;
+        #endif
         }
 
         /// <summary>Returns the dot product of two double values. Equivalent to multiplication.</summary>
@@ -2408,10 +2382,10 @@ namespace calco
         public static float tan(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathTan(x);
-        #endif
+            return vecILMathTan(x);
+        #else
             return systemMathTan(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise tangent of a float2 vector.</summary>
@@ -2421,13 +2395,11 @@ namespace calco
         public static float2 tan(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathTan2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathTan2(in x, out var res);
+            return res;
+        #else
             return new float2(tan(x.x), tan(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise tangent of a float3 vector.</summary>
@@ -2437,13 +2409,11 @@ namespace calco
         public static float3 tan(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathTan3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathTan3(in x, out var res);
+            return res;
+        #else
             return new float3(tan(x.x), tan(x.y), tan(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise tangent of a float4 vector.</summary>
@@ -2453,13 +2423,11 @@ namespace calco
         public static float4 tan(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathTan4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathTan4(in x, out var res);
+            return res;
+        #else
             return new float4(tan(x.x), tan(x.y), tan(x.z), tan(x.w));
+        #endif
         }
 
 
@@ -2495,10 +2463,10 @@ namespace calco
         public static float tanh(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return cppMathTanh(x);
-        #endif
+            return cppMathTanh(x);
+        #else
             return systemMathTanh(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise hyperbolic tangent of a float2 vector.</summary>
@@ -2552,10 +2520,10 @@ namespace calco
         public static float atan(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathATan(x);
-        #endif
+            return vecILMathATan(x);
+        #else
             return systemMathAtan(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise arctangent of a float2 vector.</summary>
@@ -2565,13 +2533,11 @@ namespace calco
         public static float2 atan(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathATan_2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathATan_2(in x, out var res);
+            return res;
+        #else
             return new float2(atan(x.x), atan(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise arctangent of a float3 vector.</summary>
@@ -2581,13 +2547,11 @@ namespace calco
         public static float3 atan(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathATan_3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathATan_3(in x, out var res);
+            return res;
+        #else
             return new float3(atan(x.x), atan(x.y), atan(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise arctangent of a float4 vector.</summary>
@@ -2597,13 +2561,11 @@ namespace calco
         public static float4 atan(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathATan_4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathATan_4(in x, out var res);
+            return res;
+        #else
             return new float4(atan(x.x), atan(x.y), atan(x.z), atan(x.w));
+        #endif
         }
 
 
@@ -2642,10 +2604,10 @@ namespace calco
         public static float atan2(float y, float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathATan2(y, x);
-        #endif
+            return vecILMathATan2(y, x);
+        #else
             return systemMathAtan2(y, x);
+        #endif
         }
 
         /// <summary>Returns the componentwise 2-argument arctangent of a pair of floats2 vectors.</summary>
@@ -2656,13 +2618,11 @@ namespace calco
         public static float2 atan2(in float2 y, in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathATan2_2(in y, in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathATan2_2(in y, in x, out var res);
+            return res;
+        #else
             return new float2(atan2(y.x, x.x), atan2(y.y, x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise 2-argument arctangent of a pair of floats3 vectors.</summary>
@@ -2673,13 +2633,11 @@ namespace calco
         public static float3 atan2(in float3 y, in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathATan2_3(in y, in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathATan2_3(in y, in x, out var res);
+            return res;
+        #else
             return new float3(atan2(y.x, x.x), atan2(y.y, x.y), atan2(y.z, x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise 2-argument arctangent of a pair of floats4 vectors.</summary>
@@ -2690,13 +2648,11 @@ namespace calco
         public static float4 atan2(in float4 y, in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathATan2_4(in y, in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathATan2_4(in y, in x, out var res);
+            return res;
+        #else
             return new float4(atan2(y.x, x.x), atan2(y.y, x.y), atan2(y.z, x.z), atan2(y.w, x.w));
+        #endif
         }
 
 
@@ -2735,13 +2691,11 @@ namespace calco
         public static float2 cos(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathCos2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathCos2(in x, out var res);
+            return res;
+        #else
             return new float2(cos(x.x), cos(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise cosine of a float3 vector.</summary>
@@ -2751,13 +2705,11 @@ namespace calco
         public static float3 cos(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathCos3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathCos3(in x, out var res);
+            return res;
+        #else
             return new float3(cos(x.x), cos(x.y), cos(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise cosine of a float4 vector.</summary>
@@ -2767,13 +2719,11 @@ namespace calco
         public static float4 cos(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathCos4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathCos4(in x, out var res);
+            return res;
+        #else
             return new float4(cos(x.x), cos(x.y), cos(x.z), cos(x.w));
+        #endif
         }
 
         /// <summary>Returns the cosine of a double value.</summary>
@@ -2808,10 +2758,10 @@ namespace calco
         public static float cosprecise(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathCosPrecise(x);
-        #endif
+            return vecILMathCosPrecise(x);
+        #else
             return systemMathCosPrecise(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise cosine of a float2 vector.</summary>
@@ -2819,13 +2769,11 @@ namespace calco
         public static float2 cosprecise(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathCosPrecise2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathCosPrecise2(in x, out var res);
+            return res;
+        #else
             return new float2(cosprecise(x.x), cosprecise(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise cosine of a float3 vector.</summary>
@@ -2833,13 +2781,11 @@ namespace calco
         public static float3 cosprecise(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathCosPrecise3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathCosPrecise3(in x, out var res);
+            return res;
+        #else
             return new float3(cosprecise(x.x), cosprecise(x.y), cosprecise(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise cosine of a float4 vector.</summary>
@@ -2847,13 +2793,11 @@ namespace calco
         public static float4 cosprecise(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathCosPrecise4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathCosPrecise4(in x, out var res);
+            return res;
+        #else
             return new float4(cosprecise(x.x), cosprecise(x.y), cosprecise(x.z), cosprecise(x.w));
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2864,10 +2808,10 @@ namespace calco
         public static float cosh(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return cppMathCosh(x);
-        #endif
+            return cppMathCosh(x);
+        #else
             return systemMathCosh(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise hyperbolic cosine of a float2 vector.</summary>
@@ -2921,10 +2865,10 @@ namespace calco
         public static float acos(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathACos(x);
-        #endif
+            return vecILMathACos(x);
+        #else
             return systemMathAcos(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise arccosine of a float2 vector.</summary>
@@ -2934,13 +2878,11 @@ namespace calco
         public static float2 acos(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathACos2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathACos2(in x, out var res);
+            return res;
+        #else
             return new float2(acos(x.x), acos(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise arccosine of a float3 vector.</summary>
@@ -2950,13 +2892,11 @@ namespace calco
         public static float3 acos(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathACos3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathACos3(in x, out var res);
+            return res;
+        #else
             return new float3(acos(x.x), acos(x.y), acos(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise arccosine of a float4 vector.</summary>
@@ -2966,13 +2906,11 @@ namespace calco
         public static float4 acos(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathACos4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathACos4(in x, out var res);
+            return res;
+        #else
             return new float4(acos(x.x), acos(x.y), acos(x.z), acos(x.w));
+        #endif
         }
 
 
@@ -3009,13 +2947,13 @@ namespace calco
         public static float sininrange025(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathSininrange025(x);
-        #endif
+            return vecILMathSininrange025(x);
+        #else
             float x2 = x * x;
             return    ChebyshevConstant1 * x 
                     + ChebyshevConstant2 * x2 * x
                     + ChebyshevConstant3 * x2 * x2 * x;
+        #endif
         }
 
         // Chebyshev approximation, max error 6.86E-5 in range +-2PI
@@ -3023,9 +2961,8 @@ namespace calco
         public static float sin(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathSin(x);
-        #endif
+            return vecILMathSin(x);
+        #else
             x *= INVPI2;
             x += 0.25f;
             x -= (int)x;
@@ -3038,6 +2975,7 @@ namespace calco
                 x = 0.5f - x;
 
             return sininrange025(x);
+        #endif
         }
 
         // slightly faster version of sin for the range [0; 2PI]
@@ -3060,12 +2998,8 @@ namespace calco
         public static void sincos(float x, out float s, out float c)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSinCos(x, out s, out c);
-                return;
-            }
-        #endif
+            vecILMathSinCos(x, out s, out c);
+        #else
             x *= INVPI2;
             x += 0.25f;
             x -= (int)x;
@@ -3087,6 +3021,7 @@ namespace calco
                 cx = 0.5f - cx;
 
             c = sininrange025(cx);
+        #endif
         }
 
         // Chebyshev approximation, max error 6.86E-5 in range +-2PI
@@ -3094,10 +3029,10 @@ namespace calco
         public static float cos(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathCos(x);
-        #endif
+            return vecILMathCos(x);
+        #else
             return sin(x + PIHALF);
+        #endif
         }
 
         // slightly faster version of cos for the range [0; 2PI]
@@ -3111,13 +3046,11 @@ namespace calco
         public static float2 sin(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSin2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathSin2(in x, out var res);
+            return res;
+        #else
             return new float2(sin(x.x), sin(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise sine of a float3 vector.</summary>
@@ -3127,13 +3060,11 @@ namespace calco
         public static float3 sin(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSin3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathSin3(in x, out var res);
+            return res;
+        #else
             return new float3(sin(x.x), sin(x.y), sin(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise sine of a float4 vector.</summary>
@@ -3143,13 +3074,11 @@ namespace calco
         public static float4 sin(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSin4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathSin4(in x, out var res);
+            return res;
+        #else
             return new float4(sin(x.x), sin(x.y), sin(x.z), sin(x.w));
+        #endif
         }
 
         /// <summary>Returns the sine of a double value.</summary>
@@ -3184,10 +3113,10 @@ namespace calco
         public static float sinprecise(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathSinPrecise(x);
-        #endif
+            return vecILMathSinPrecise(x);
+        #else
             return systemMathSinPrecise(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise sine of a float2 vector.</summary>
@@ -3195,13 +3124,11 @@ namespace calco
         public static float2 sinprecise(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSinPrecise2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathSinPrecise2(in x, out var res);
+            return res;
+        #else
             return new float2(sinprecise(x.x), sinprecise(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise sine of a float3 vector.</summary>
@@ -3209,13 +3136,11 @@ namespace calco
         public static float3 sinprecise(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSinPrecise3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathSinPrecise3(in x, out var res);
+            return res;
+        #else
             return new float3(sinprecise(x.x), sinprecise(x.y), sinprecise(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise sine of a float4 vector.</summary>
@@ -3223,13 +3148,11 @@ namespace calco
         public static float4 sinprecise(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSinPrecise4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathSinPrecise4(in x, out var res);
+            return res;
+        #else
             return new float4(sinprecise(x.x), sinprecise(x.y), sinprecise(x.z), sinprecise(x.w));
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3240,10 +3163,10 @@ namespace calco
         public static float sinh(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return cppMathSinh(x);
-        #endif
+            return cppMathSinh(x);
+        #else
             return systemMathSinh(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise hyperbolic sine of a float2 vector.</summary>
@@ -3297,10 +3220,10 @@ namespace calco
         public static float asin(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathASin(x);
-        #endif
+            return vecILMathASin(x);
+        #else
             return systemMathAsin(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise arcsine of a float2 vector.</summary>
@@ -3310,13 +3233,11 @@ namespace calco
         public static float2 asin(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathASin2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathASin2(in x, out var res);
+            return res;
+        #else
             return new float2(asin(x.x), asin(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise arcsine of a float3 vector.</summary>
@@ -3326,13 +3247,11 @@ namespace calco
         public static float3 asin(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathASin3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathASin3(in x, out var res);
+            return res;
+        #else
             return new float3(asin(x.x), asin(x.y), asin(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise arcsine of a float4 vector.</summary>
@@ -3342,13 +3261,11 @@ namespace calco
         public static float4 asin(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathASin4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathASin4(in x, out var res);
+            return res;
+        #else
             return new float4(asin(x.x), asin(x.y), asin(x.z), asin(x.w));
+        #endif
         }
 
 
@@ -3384,10 +3301,10 @@ namespace calco
         public static float floor(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathFloor(x);
-        #endif
+            return vecILMathFloor(x);
+        #else
             return systemMathFloor(x);
+        #endif
         }
 
         /// <summary>Returns the result of rounding each component of a float2 vector value down to the nearest value less or equal to the original value.</summary>
@@ -3397,13 +3314,11 @@ namespace calco
         public static float2 floor(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathFloor2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloor2(in x, out var res);
+            return res;
+        #else
             return new float2(floor(x.x), floor(x.y));
+        #endif
         }
 
         /// <summary>Returns the result of rounding each component of a float3 vector value down to the nearest value less or equal to the original value.</summary>
@@ -3413,26 +3328,22 @@ namespace calco
         public static float3 floor(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathFloor3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloor3(in x, out var res);
+            return res;
+        #else
             return new float3(floor(x.x), floor(x.y), floor(x.z));
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a floor(in float3a x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathFloor3a(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloor3a(in x, out var res);
+            return res;
+        #else
             return new float3a(floor(x.x), floor(x.y), floor(x.z));
+        #endif
         }
 
         /// <summary>Returns the result of rounding each component of a float4 vector value down to the nearest value less or equal to the original value.</summary>
@@ -3442,13 +3353,11 @@ namespace calco
         public static float4 floor(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathFloor4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloor4(in x, out var res);
+            return res;
+        #else
             return new float4(floor(x.x), floor(x.y), floor(x.z), floor(x.w));
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3507,10 +3416,10 @@ namespace calco
         public static float ceil(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathCeil(x);
-        #endif
+            return vecILMathCeil(x);
+        #else
             return systemMathCeil(x);
+        #endif
         }
 
         /// <summary>Returns the result of rounding each component of a float2 vector value up to the nearest value greater or equal to the original value.</summary>
@@ -3520,13 +3429,11 @@ namespace calco
         public static float2 ceil(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathCeil2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathCeil2(in x, out var res);
+            return res;
+        #else
             return new float2(ceil(x.x), ceil(x.y));
+        #endif
         }
 
         /// <summary>Returns the result of rounding each component of a float3 vector value up to the nearest value greater or equal to the original value.</summary>
@@ -3536,26 +3443,22 @@ namespace calco
         public static float3 ceil(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathCeil3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathCeil3(in x, out var res);
+            return res;
+        #else
             return new float3(ceil(x.x), ceil(x.y), ceil(x.z));
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a ceil(in float3a x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathCeil3a(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathCeil3a(in x, out var res);
+            return res;
+        #else
             return new float3a(ceil(x.x), ceil(x.y), ceil(x.z));
+        #endif
         }
 
         /// <summary>Returns the result of rounding each component of a float4 vector value up to the nearest value greater or equal to the original value.</summary>
@@ -3565,13 +3468,11 @@ namespace calco
         public static float4 ceil(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathCeil4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathCeil4(in x, out var res);
+            return res;
+        #else
             return new float4(ceil(x.x), ceil(x.y), ceil(x.z), ceil(x.w));
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3612,10 +3513,10 @@ namespace calco
         public static float round(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathRound(x);
-        #endif
+            return vecILMathRound(x);
+        #else
             return floor(x + 0.5f);
+        #endif
         }
 
         /// <summary>Returns the result of rounding each component of a float2 vector value to the nearest integral value.</summary>
@@ -3625,13 +3526,11 @@ namespace calco
         public static float2 round(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathRound2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathRound2(in x, out var res);
+            return res;
+        #else
             return new float2(round(x.x), round(x.y));
+        #endif
         }
 
         /// <summary>Returns the result of rounding each component of a float3 vector value to the nearest integral value.</summary>
@@ -3641,26 +3540,22 @@ namespace calco
         public static float3 round(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathRound3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathRound3(in x, out var res);
+            return res;
+        #else
             return new float3(round(x.x), round(x.y), round(x.z));
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a round(in float3a x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathRound3a(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathRound3a(in x, out var res);
+            return res;
+        #else
             return new float3a(round(x.x), round(x.y), round(x.z));
+        #endif
         }
 
         /// <summary>Returns the result of rounding each component of a float4 vector value to the nearest integral value.</summary>
@@ -3670,13 +3565,11 @@ namespace calco
         public static float4 round(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathRound4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathRound4(in x, out var res);
+            return res;
+        #else
             return new float4(round(x.x), round(x.y), round(x.z), round(x.w));
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3739,10 +3632,10 @@ namespace calco
         public static float trunc(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathTrunc(x);
-        #endif
+            return vecILMathTrunc(x);
+        #else
             return systemMathTrunc(x);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise truncation of a float2 value to an integral float2 value.</summary>
@@ -3752,13 +3645,11 @@ namespace calco
         public static float2 trunc(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathTrunc2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathTrunc2(in x, out var res);
+            return res;
+        #else
             return new float2(trunc(x.x), trunc(x.y));
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise truncation of a float3 value to an integral float3 value.</summary>
@@ -3768,26 +3659,22 @@ namespace calco
         public static float3 trunc(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathTrunc3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathTrunc3(in x, out var res);
+            return res;
+        #else
             return new float3(trunc(x.x), trunc(x.y), trunc(x.z));
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a trunc(in float3a x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathTrunc3a(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathTrunc3a(in x, out var res);
+            return res;
+        #else
             return new float3a(trunc(x.x), trunc(x.y), trunc(x.z));
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise truncation of a float4 value to an integral float4 value.</summary>
@@ -3797,13 +3684,11 @@ namespace calco
         public static float4 trunc(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathTrunc4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathTrunc4(in x, out var res);
+            return res;
+        #else
             return new float4(trunc(x.x), trunc(x.y), trunc(x.z), trunc(x.w));
+        #endif
         }
 
 
@@ -4032,10 +3917,10 @@ namespace calco
         public static float pow(float x, float y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() ) 
-                return vecILMathPow(x, y);
-        #endif
+            return vecILMathPow(x, y);
+        #else
             return systemMathPow(x, y);
+        #endif
         }
 
         /// <summary>Returns the componentwise result of raising x to the power y.</summary>
@@ -4046,13 +3931,11 @@ namespace calco
         public static float2 pow(in float2 x, in float2 y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathPow2(in x, in y, out var res);
-                return res;
-            }
-        #endif
+            vecILMathPow2(in x, in y, out var res);
+            return res;
+        #else
             return new float2(pow(x.x, y.x), pow(x.y, y.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise result of raising x to the power y.</summary>
@@ -4063,13 +3946,11 @@ namespace calco
         public static float3 pow(in float3 x, in float3 y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathPow3(in x, in y, out var res);
-                return res;
-            }
-        #endif
+            vecILMathPow3(in x, in y, out var res);
+            return res;
+        #else
             return new float3(pow(x.x, y.x), pow(x.y, y.y), pow(x.z, y.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise result of raising x to the power y.</summary>
@@ -4080,13 +3961,11 @@ namespace calco
         public static float4 pow(in float4 x, in float4 y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathPow4(in x, in y, out var res);
-                return res;
-            }
-        #endif
+            vecILMathPow4(in x, in y, out var res);
+            return res;
+        #else
             return new float4(pow(x.x, y.x), pow(x.y, y.y), pow(x.z, y.z), pow(x.w, y.w));
+        #endif
         }
 
 
@@ -4127,10 +4006,10 @@ namespace calco
         public static float exp(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathExp(x);
-        #endif
+            return vecILMathExp(x);
+        #else
             return systemMathExp(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise base-e exponential of x.</summary>
@@ -4140,13 +4019,11 @@ namespace calco
         public static float2 exp(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathExp_2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathExp_2(in x, out var res);
+            return res;
+        #else
             return new float2(exp(x.x), exp(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise base-e exponential of x.</summary>
@@ -4156,13 +4033,11 @@ namespace calco
         public static float3 exp(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathExp_3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathExp_3(in x, out var res);
+            return res;
+        #else
             return new float3(exp(x.x), exp(x.y), exp(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise base-e exponential of x.</summary>
@@ -4172,13 +4047,11 @@ namespace calco
         public static float4 exp(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathExp_4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathExp_4(in x, out var res);
+            return res;
+        #else
             return new float4(exp(x.x), exp(x.y), exp(x.z), exp(x.w));
+        #endif
         }
 
 
@@ -4215,10 +4088,10 @@ namespace calco
         public static float exp2(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathExp2(x);
-        #endif
+            return vecILMathExp2(x);
+        #else
             return systemMathExp2(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise base-2 exponential of x.</summary>
@@ -4228,13 +4101,11 @@ namespace calco
         public static float2 exp2(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathExp2_2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathExp2_2(in x, out var res);
+            return res;
+        #else
             return new float2(exp2(x.x), exp2(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise base-2 exponential of x.</summary>
@@ -4244,13 +4115,11 @@ namespace calco
         public static float3 exp2(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathExp2_3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathExp2_3(in x, out var res);
+            return res;
+        #else
             return new float3(exp2(x.x), exp2(x.y), exp2(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise base-2 exponential of x.</summary>
@@ -4260,13 +4129,11 @@ namespace calco
         public static float4 exp2(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathExp2_4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathExp2_4(in x, out var res);
+            return res;
+        #else
             return new float4(exp2(x.x), exp2(x.y), exp2(x.z), exp2(x.w));
+        #endif
         }
 
         /// <summary>Returns the base-2 exponential of x.</summary>
@@ -4302,10 +4169,10 @@ namespace calco
         public static float exp10(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathExp10(x);
-        #endif
+            return vecILMathExp10(x);
+        #else
             return systemMathExp10(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise base-10 exponential of x.</summary>
@@ -4315,13 +4182,11 @@ namespace calco
         public static float2 exp10(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathExp10_2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathExp10_2(in x, out var res);
+            return res;
+        #else
             return new float2(exp10(x.x), exp10(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise base-10 exponential of x.</summary>
@@ -4331,13 +4196,11 @@ namespace calco
         public static float3 exp10(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathExp10_3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathExp10_3(in x, out var res);
+            return res;
+        #else
             return new float3(exp10(x.x), exp10(x.y), exp10(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise base-10 exponential of x.</summary>
@@ -4347,13 +4210,11 @@ namespace calco
         public static float4 exp10(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathExp10_4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathExp10_4(in x, out var res);
+            return res;
+        #else
             return new float4(exp10(x.x), exp10(x.y), exp10(x.z), exp10(x.w));
+        #endif
         }
 
 
@@ -4390,10 +4251,10 @@ namespace calco
         public static float log(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathLog(x);
-        #endif
+            return vecILMathLog(x);
+        #else
             return systemMathLog(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise natural logarithm of a float2 vector.</summary>
@@ -4403,13 +4264,11 @@ namespace calco
         public static float2 log(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathLog_2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathLog_2(in x, out var res);
+            return res;
+        #else
             return new float2(log(x.x), log(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise natural logarithm of a float3 vector.</summary>
@@ -4419,13 +4278,11 @@ namespace calco
         public static float3 log(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathLog_3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathLog_3(in x, out var res);
+            return res;
+        #else
             return new float3(log(x.x), log(x.y), log(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise natural logarithm of a float4 vector.</summary>
@@ -4435,13 +4292,11 @@ namespace calco
         public static float4 log(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathLog_4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathLog_4(in x, out var res);
+            return res;
+        #else
             return new float4(log(x.x), log(x.y), log(x.z), log(x.w));
+        #endif
         }
 
 
@@ -4478,10 +4333,10 @@ namespace calco
         public static float log2(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathLog2(x);
-        #endif
+            return vecILMathLog2(x);
+        #else
             return systemMathLog2(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise base-2 logarithm of a float2 vector.</summary>
@@ -4491,13 +4346,11 @@ namespace calco
         public static float2 log2(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathLog2_2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathLog2_2(in x, out var res);
+            return res;
+        #else
             return new float2(log2(x.x), log2(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise base-2 logarithm of a float3 vector.</summary>
@@ -4507,13 +4360,11 @@ namespace calco
         public static float3 log2(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathLog2_3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathLog2_3(in x, out var res);
+            return res;
+        #else
             return new float3(log2(x.x), log2(x.y), log2(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise base-2 logarithm of a float4 vector.</summary>
@@ -4523,13 +4374,11 @@ namespace calco
         public static float4 log2(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathLog2_4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathLog2_4(in x, out var res);
+            return res;
+        #else
             return new float4(log2(x.x), log2(x.y), log2(x.z), log2(x.w));
+        #endif
         }
 
 
@@ -4566,10 +4415,10 @@ namespace calco
         public static float log10(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathLog10(x);
-        #endif
+            return vecILMathLog10(x);
+        #else
             return systemMathLog10(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise base-10 logarithm of a float2 vector.</summary>
@@ -4579,13 +4428,11 @@ namespace calco
         public static float2 log10(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathLog10_2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathLog10_2(in x, out var res);
+            return res;
+        #else
             return new float2(log10(x.x), log10(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise base-10 logarithm of a float3 vector.</summary>
@@ -4595,13 +4442,11 @@ namespace calco
         public static float3 log10(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathLog10_3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathLog10_3(in x, out var res);
+            return res;
+        #else
             return new float3(log10(x.x), log10(x.y), log10(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise base-10 logarithm of a float4 vector.</summary>
@@ -4611,13 +4456,11 @@ namespace calco
         public static float4 log10(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathLog10_4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathLog10_4(in x, out var res);
+            return res;
+        #else
             return new float4(log10(x.x), log10(x.y), log10(x.z), log10(x.w));
+        #endif
         }
 
 
@@ -4788,10 +4631,10 @@ namespace calco
         public static float sqrt(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathSqrt(x);
-        #endif
+            return vecILMathSqrt(x);
+        #else
             return systemMathSqrt(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise square root of a float2 vector.</summary>
@@ -4801,13 +4644,11 @@ namespace calco
         public static float2 sqrt(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSqrt2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathSqrt2(in x, out var res);
+            return res;
+        #else
             return new float2(sqrt(x.x), sqrt(x.y));
+        #endif
         }
 
         /// <summary>Returns the componentwise square root of a float3 vector.</summary>
@@ -4817,26 +4658,22 @@ namespace calco
         public static float3 sqrt(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSqrt3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathSqrt3(in x, out var res);
+            return res;
+        #else
             return new float3(sqrt(x.x), sqrt(x.y), sqrt(x.z));
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a sqrt(in float3a x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSqrt3a(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathSqrt3a(in x, out var res);
+            return res;
+        #else
             return new float3(sqrt(x.x), sqrt(x.y), sqrt(x.z));
+        #endif
         }
 
         /// <summary>Returns the componentwise square root of a float4 vector.</summary>
@@ -4846,13 +4683,11 @@ namespace calco
         public static float4 sqrt(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSqrt4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathSqrt4(in x, out var res);
+            return res;
+        #else
             return new float4(sqrt(x.x), sqrt(x.y), sqrt(x.z), sqrt(x.w));
+        #endif
         }
 
 
@@ -4891,10 +4726,10 @@ namespace calco
         public static float rsqrt(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathRsqrt(x);
-        #endif
+            return vecILMathRsqrt(x);
+        #else
             return systemMathRsqrt(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise reciprocal square root of a float2 vector.</summary>
@@ -4904,13 +4739,11 @@ namespace calco
         public static float2 rsqrt(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathRsqrt2(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathRsqrt2(in x, out var res);
+            return res;
+        #else
             return 1.0f / sqrt(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise reciprocal square root of a float3 vector.</summary>
@@ -4920,26 +4753,22 @@ namespace calco
         public static float3 rsqrt(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathRsqrt3(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathRsqrt3(in x, out var res);
+            return res;
+        #else
             return 1.0f / sqrt(x);
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a rsqrt(in float3a x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathRsqrt3a(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathRsqrt3a(in x, out var res);
+            return res;
+        #else
             return 1.0f / sqrt(x);
+        #endif
         }
 
         /// <summary>Returns the componentwise reciprocal square root of a float4 vector</summary>
@@ -4949,13 +4778,11 @@ namespace calco
         public static float4 rsqrt(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathRsqrt4(in x, out var res);
-                return res;
-            }
-        #endif
+            vecILMathRsqrt4(in x, out var res);
+            return res;
+        #else
             return 1.0f / sqrt(x);
+        #endif
         }
 
 
@@ -5363,26 +5190,22 @@ namespace calco
         public static float3 cross(in float3 x, in float3 y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathFloat3Cross(in x, in y, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3Cross(in x, in y, out var res);
+            return res;
+        #else
             return (x * y.yzx - x.yzx * y).yzx;
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a cross(in float3a x, in float3a y)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathFloat3aCross(in x, in y, out var res);
-                return res;
-            }
-        #endif
+            vecILMathFloat3aCross(in x, in y, out var res);
+            return res;
+        #else
             return (x * y.yzx - x.yzx * y).yzx;
+        #endif
         }
 
         /// <summary>Returns the cross product of two double3 vectors.</summary>
@@ -6561,13 +6384,10 @@ namespace calco
         public static void sincos(in float2 x, out float2 s, out float2 c)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSinCos2(in x, out s, out c);
-                return;
-            }
-        #endif
+            vecILMathSinCos2(in x, out s, out c);
+        #else
             sincos(x.x, out s.x, out c.x); sincos(x.y, out s.y, out c.y);
+        #endif
         }
 
         /// <summary>Returns the componentwise sine and cosine of the input float3 vector x through the out parameters s and c.</summary>
@@ -6579,13 +6399,10 @@ namespace calco
         public static void sincos(in float3 x, out float3 s, out float3 c)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSinCos3(in x, out s, out c);
-                return;
-            }
-        #endif
+            vecILMathSinCos3(in x, out s, out c);
+        #else
             sincos(x.x, out s.x, out c.x); sincos(x.y, out s.y, out c.y); sincos(x.z, out s.z, out c.z);
+        #endif
         }
 
         /// <summary>Returns the componentwise sine and cosine of the input float4 vector x through the out parameters s and c.</summary>
@@ -6597,69 +6414,54 @@ namespace calco
         public static void sincos(in float4 x, out float4 s, out float4 c)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSinCos4(in x, out s, out c);
-                return;
-            }
-        #endif
+            vecILMathSinCos4(in x, out s, out c);
+        #else
             sincos(x.x, out s.x, out c.x); sincos(x.y, out s.y, out c.y); sincos(x.z, out s.z, out c.z); sincos(x.w, out s.w, out c.w);
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void sincosprecise(float x, out float s, out float c)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSinCosPrecise(x, out s, out c);
-                return;
-            }
-        #endif
+            vecILMathSinCosPrecise(x, out s, out c);
+        #else
             s = sinprecise(x);
             c = cosprecise(x);
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void sincosprecise2(in float2 x, out float2 s, out float2 c)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSinCosPrecise2(in x, out s, out c);
-                return;
-            }
-        #endif
+            vecILMathSinCosPrecise2(in x, out s, out c);
+        #else
             s = sinprecise(x);
             c = cosprecise(x);
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void sincosprecise(in float3 x, out float3 s, out float3 c)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSinCosPrecise3(in x, out s, out c);
-                return;
-            }
-        #endif
+            vecILMathSinCosPrecise3(in x, out s, out c);
+        #else
             s = sinprecise(x);
             c = cosprecise(x);
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void sincosprecise(in float4 x, out float4 s, out float4 c)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathSinCosPrecise4(in x, out s, out c);
-                return;
-            }
-        #endif
+            vecILMathSinCosPrecise4(in x, out s, out c);
+        #else
             s = sinprecise(x);
             c = cosprecise(x);
+        #endif
         }
 
 
@@ -8268,9 +8070,8 @@ namespace calco
         public static float f16tof32(ushort x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return vecILMathF16tof32(x);
-        #endif
+            return vecILMathF16tof32(x);
+        #else
             const uint shifted_exp = (0x7c00 << 13);
             uint uf = (x & 0x7fffu) << 13;
             uint e = uf & shifted_exp;
@@ -8279,6 +8080,7 @@ namespace calco
             uf = select(uf, asuint(asfloat(uf + (1 << 23)) - 6.10351563e-05f), e == 0);
             uf |= (x & 0x8000u) << 16;
             return asfloat(uf);
+        #endif
         }
 
         /// <summary>Returns the floating point representation of a half-precision floating point vector.</summary>
@@ -8288,12 +8090,9 @@ namespace calco
         public static float2 f16tof32(ushort2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathF16tof32_2(asuint(x), out var res);
-                return res;
-            }
-        #endif
+            vecILMathF16tof32_2(asuint(x), out var res);
+            return res;
+        #else
             const uint shifted_exp = (0x7c00 << 13);
             uint2 uf = (uint2(x) & 0x7fffu) << 13;
             uint2 e = uf & shifted_exp;
@@ -8302,6 +8101,7 @@ namespace calco
             uf = select(uf, asuint(asfloat(uf + (1 << 23)) - 6.10351563e-05f), e == 0);
             uf |= (uint2(x) & 0x8000u) << 16;
             return asfloat(uf);
+        #endif
         }
 
         /// <summary>Returns the floating point representation of a half-precision floating point vector.</summary>
@@ -8311,12 +8111,9 @@ namespace calco
         public static float4 f16tof32(ushort4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathF16tof32_4(asuint2(x), out var res);
-                return res;
-            }
-        #endif
+            vecILMathF16tof32_4(asuint2(x), out var res);
+            return res;
+        #else
             const uint shifted_exp = (0x7c00 << 13);
             uint4 uf = (uint4(x) & 0x7fff) << 13;
             uint4 e = uf & shifted_exp;
@@ -8325,6 +8122,7 @@ namespace calco
             uf = select(uf, asuint(asfloat(uf + (1 << 23)) - 6.10351563e-05f), e == 0);
             uf |= (uint4(x) & 0x8000) << 16;
             return asfloat(uf);
+        #endif
         }
 
         /// <summary>Returns the result converting a float value to its nearest half-precision floating point representation.</summary>
@@ -8334,9 +8132,8 @@ namespace calco
         public static ushort f32tof16(float x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return (ushort)vecILMathF32tof16(x);
-        #endif
+            return (ushort)vecILMathF32tof16(x);
+        #else
             const int infinity_32 = 255 << 23;
             const uint msk = 0x7FFFF000u;
 
@@ -8345,6 +8142,7 @@ namespace calco
             uint h = (uint)(asuint(min(asfloat(uux) * 1.92592994e-34f, 260042752.0f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
             h = select(h, select(0x7c00u, 0x7e00u, (int)uux > infinity_32), (int)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
             return (ushort)(h | (ux & ~msk) >> 16);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise conversion of a float2 vector to its nearest half-precision floating point representation.</summary>
@@ -8354,9 +8152,8 @@ namespace calco
         public static ushort2 f32tof16(in float2 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-                return ushort2FromPacked(vecILMathF32tof16_2(x));
-        #endif
+            return ushort2FromPacked(vecILMathF32tof16_2(x));
+        #else
             const int infinity_32 = 255 << 23;
             const uint msk = 0x7FFFF000u;
 
@@ -8365,6 +8162,7 @@ namespace calco
             uint2 h = (uint2)(asint(min(asfloat(uux) * 1.92592994e-34f, 260042752.0f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
             h = select(h, select(0x7c00u, 0x7e00u, (int2)uux > infinity_32), (int2)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
             return ushort2(h | (ux & ~msk) >> 16);
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise conversion of a float3 vector to its nearest half-precision floating point representation.</summary>
@@ -8374,12 +8172,9 @@ namespace calco
         public static ushort4 f32tof16(in float3 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathF32tof16_3(x, out uint2 res);
-                return ushort4FromPacked(res);
-            }
-        #endif
+            vecILMathF32tof16_3(x, out uint2 res);
+            return ushort4FromPacked(res);
+        #else
             const int infinity_32 = 255 << 23;
             const uint msk = 0x7FFFF000u;
 
@@ -8388,6 +8183,7 @@ namespace calco
             uint3 h = (uint3)(asint(min(asfloat(uux) * 1.92592994e-34f, 260042752.0f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
             h = select(h, select(0x7c00u, 0x7e00u, (int3)uux > infinity_32), (int3)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
             return ushort4(uint4(h | (ux & ~msk) >> 16, 0));
+        #endif
         }
 
         /// <summary>Returns the result of a componentwise conversion of a float4 vector to its nearest half-precision floating point representation.</summary>
@@ -8397,12 +8193,9 @@ namespace calco
         public static ushort4 f32tof16(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathF32tof16_4(x, out uint2 res);
-                return ushort4FromPacked(res);
-            }
-        #endif
+            vecILMathF32tof16_4(x, out uint2 res);
+            return ushort4FromPacked(res);
+        #else
             const int infinity_32 = 255 << 23;
             const uint msk = 0x7FFFF000u;
 
@@ -8411,6 +8204,7 @@ namespace calco
             uint4 h = (uint4)(asint(min(asfloat(uux) * 1.92592994e-34f, 260042752.0f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
             h = select(h, select(0x7c00u, 0x7e00u, (int4)uux > infinity_32), (int4)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
             return ushort4(h | (ux & ~msk) >> 16);
+        #endif
         }
 
         // a workaround for some Burs compiler's error that can't properly use f32tof16 overloads
@@ -8418,12 +8212,9 @@ namespace calco
         public static ushort4 f32tof16SameExclusive(in float4 x)
         {
         #if ENABLE_IL2CPP
-            if( !IsBurstEnabled() )
-            {
-                vecILMathF32tof16_4(x, out uint2 res);
-                return ushort4FromPacked(res);
-            }
-        #endif
+            vecILMathF32tof16_4(x, out uint2 res);
+            return ushort4FromPacked(res);
+        #else
             const int infinity_32 = 255 << 23;
             const uint msk = 0x7FFFF000u;
 
@@ -8433,6 +8224,7 @@ namespace calco
             h = select(h, select(0x7c00u, 0x7e00u, (int4)uux > infinity_32), (int4)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
 
             return ushort4(h | (ux & ~msk) >> 16);
+        #endif
         }
 
         /// <summary>

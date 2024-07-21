@@ -485,6 +485,9 @@ namespace calco
 
     public ref partial struct float3ax3
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        static extern void vecILMathFloat3ax3FromQuat(in quaternion q, out float3a res0, out float3a res1, out float3a res2);
+
         /// <summary>
         /// Constructs a float3x3 from the upper left 3x3 of a float4x4.
         /// </summary>1
@@ -497,21 +500,14 @@ namespace calco
             c2 = f4x4.c2.xyz;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        static extern void vecILMathFloat3ax3FromQuat(in quaternion q, out float3a res0, out float3a res1, out float3a res2);
-
         /// <summary>Constructs a float3x3 matrix from a unit quaternion.</summary>
         /// <param name="q">The quaternion rotation.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float3ax3(in quaternion q)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat3ax3FromQuat(in q, out c0, out c1, out c2);
-                return;
-            }
-        #endif
+            vecILMathFloat3ax3FromQuat(in q, out c0, out c1, out c2);
+        #else
             float4 v = q.value;
             float4 v2 = v + v;
 
@@ -521,6 +517,7 @@ namespace calco
             c0 = v2.y * asfloat(asuint(v.yxw) ^ npn) - v2.z * asfloat(asuint(v.zwx) ^ pnn) + float3(1, 0, 0);
             c1 = v2.z * asfloat(asuint(v.wzy) ^ nnp) - v2.x * asfloat(asuint(v.yxw) ^ npn) + float3(0, 1, 0);
             c2 = v2.x * asfloat(asuint(v.zwx) ^ pnn) - v2.y * asfloat(asuint(v.wzy) ^ nnp) + float3(0, 0, 1);
+        #endif
         }
 
         /// <summary>
@@ -1462,6 +1459,9 @@ namespace calco
 
     public partial struct float4x3
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        static extern void vecILMathFloat4x3FromRotTrans(in quaternion rot, in float3a trans, out float4 res0, out float4 res1, out float4 res2);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float4x3(in float3ax3 rotation, in float3 translation)
         {
@@ -1471,39 +1471,30 @@ namespace calco
             c2 = float4(rot.c2, translation.z);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        static extern void vecILMathFloat4x3FromRotTrans(in quaternion rot, in float3a trans, out float4 res0, out float4 res1, out float4 res2);
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float4x3(in quaternion rotation, in float3a translation)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4x3FromRotTrans(in rotation, in translation, out c0, out c1, out c2);
-                return;
-            }
-        #endif
+            vecILMathFloat4x3FromRotTrans(in rotation, in translation, out c0, out c1, out c2);
+        #else
             float3ax3 rot = transpose(float3ax3(rotation));
             c0 = float4(rot.c0, translation.x);
             c1 = float4(rot.c1, translation.y);
             c2 = float4(rot.c2, translation.z);
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float4x3(in RigidTransform transform)
         {
         #if ENABLE_IL2CPP
-            if( !math.IsBurstEnabled() )
-            {
-                vecILMathFloat4x3FromRotTrans(in transform.rot, transform.posa, out c0, out c1, out c2);
-                return;
-            }
-        #endif
+            vecILMathFloat4x3FromRotTrans(in transform.rot, transform.posa, out c0, out c1, out c2);
+        #else
             float3ax3 rot = transpose(float3ax3(transform.rot));
             c0 = float4(rot.c0, transform.pos.x);
             c1 = float4(rot.c1, transform.pos.y);
             c2 = float4(rot.c2, transform.pos.z);
+        #endif
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
