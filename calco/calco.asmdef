@@ -1,0 +1,16 @@
+{
+    "name": "calco",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9E174ACB5D6542AE829EA5EDE367BE87"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

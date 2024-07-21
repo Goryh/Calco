@@ -1,0 +1,12 @@
+{
+    "name": "calco.editor",
+    "references": [
+        "calco"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true
+}
