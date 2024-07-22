@@ -1,5 +1,9 @@
 #pragma once
 
+#if defined(__x86_64__) || defined(_M_X64) 
+  #define DENORM_SENSITIVE_PLATFORM 1
+#endif
+
 #include "vecMath.h"
 
 typedef unsigned int uint;
@@ -34,6 +38,12 @@ struct float3_internal
 	Vec load4Unaligned()
 	{
 		return vecUnaligned((float*)this);
+	}
+
+	Vec load4UnalignedWith0()
+	{
+		Vec v = vecUnaligned((float*)this);
+		return vecShuffle<VecMask::_xyz0>(v);
 	}
 
 	Vec load1()
@@ -188,8 +198,11 @@ FORCEINLINE void __cdecl vecILMathFloat3ToFloat3a(float3_t6AA3147528097F78953A47
 	float3_internal* v 		= (float3_internal*)inV;
 	float3a_internal* res	= (float3a_internal*)resF;
 
+#ifdef DENORM_SENSITIVE_PLATFORM
+	res->store(v->load4UnalignedWith0());
+#else
 	*res = *(float3a_internal*)v; // this syntax produces a shorter code on MSVC, the same on arm
-	//res->store(v->load4Unaligned());
+#endif
 }
 
 FORCEINLINE void __cdecl vecILMathFloat3aToFloat3(float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inV, float3_t6AA3147528097F78953A47B9192D58883F3F08FB* RESTRICT resF)
@@ -206,8 +219,11 @@ FORCEINLINE void __cdecl vecILMathVector3ToFloat3a(Vector3_t24C512C7B96BBABAD472
 	float3_internal* v 		= (float3_internal*)inV;
 	float3a_internal* res	= (float3a_internal*)resF;
 
+#ifdef DENORM_SENSITIVE_PLATFORM
+	res->store(v->load4UnalignedWith0());
+#else
 	*res = *(float3a_internal*)v; // this syntax produces a shorter code on MSVC, the same on arm
-	//res->store(v->load4Unaligned());
+#endif
 }
 
 FORCEINLINE void __cdecl vecILMathFloat3aToVector3(float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inV, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* RESTRICT resF)
