@@ -193,9 +193,9 @@ namespace calco
 		//   translation:
 		//	 The offset in space to move the plane with.
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public void Translate(float3 translation)
+		public void Translate(float3a translation)
 		{
-			distance += math.dot(normal, translation);
+			distance += math.dot(normala, translation);
 		}
 
 		/// <summary>
@@ -218,7 +218,7 @@ namespace calco
 
 		/// is a point on the positive side of the plane?
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool IsOnPositiveSide(float3 point)
+		public readonly bool IsOnPositiveSide(float3a point)
 		{
 			return math.dot(normalAndDistance, new float4(point, 1.0f)) > 0.0f;
 		}
@@ -311,6 +311,12 @@ namespace calco
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Plane3d Plane3d(in float3a vector1InPlane, in float3a vector2InPlane, in float3a pointInPlane) => new Plane3d(vector1InPlane, vector2InPlane, pointInPlane);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Plane3d Plane3d(in UnityEngine.Plane p) { return calco.Plane3d.CreateFromUnitNormalAndDistance(float3(p.normal), p.distance); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static UnityEngine.Plane Plane(in Plane3d p) { return new UnityEngine.Plane(Vec3(p.normal), p.distance); }
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Plane3d transform(in RigidTransform transf, in Plane3d p)

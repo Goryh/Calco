@@ -1649,6 +1649,9 @@ namespace calco
         public static float3a float3a(in float3 xyz) { return (float3a)xyz; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a float3a(in UnityEngine.Vector3 xyz) { return (float3a)xyz; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 float3(in float3a xyz) { return (float3)xyz; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

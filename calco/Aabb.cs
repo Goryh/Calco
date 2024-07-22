@@ -50,6 +50,15 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly bool Contains(float3a point) => all(point >= float3a(min) & point <= float3a(max));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly bool Contains(Aabba aabb) => all((float3a(min) <= aabb.min) & (float3a(max) >= aabb.max));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly bool Overlaps(Aabba aabb) => all(float3a(max) >= aabb.min & float3a(min) <= aabb.max);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool Equals(Aabb other)
 		{
 			return min.Equals(other.min) && max.Equals(other.max);
@@ -66,5 +75,11 @@ namespace calco
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Aabb Aabb(in Aabb xyz) { return new Aabb(xyz); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static UnityEngine.Bounds Bounds(in Aabb b) { return new UnityEngine.Bounds(Vec3(b.center), Vec3(b.extents)); }
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Aabb Aabb(in UnityEngine.Bounds b) { return new Aabb(float3(b.min), float3(b.max)); }
 	}
 }

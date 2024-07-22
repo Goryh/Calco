@@ -26,25 +26,6 @@ namespace calco
         public static implicit operator float2(in Vector2 v)     { return new float2(v.x, v.y); }
     }
 
-    public partial struct float3
-    {
-        /// <summary>
-        /// Converts a float3 to Vector3.
-        /// </summary>
-        /// <param name="v">float3 to convert.</param>
-        /// <returns>The converted Vector3.</returns>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Vector3(in float3 v)     { return new Vector3(v.x, v.y, v.z); }
-
-        /// <summary>
-        /// Converts a Vector3 to float3.
-        /// </summary>
-        /// <param name="v">Vector3 to convert.</param>
-        /// <returns>The converted float3.</returns>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator float3(in Vector3 v)     { return new float3(v.x, v.y, v.z); }
-    }
-
     public partial struct float4
     {
         /// <summary>
@@ -100,33 +81,6 @@ namespace calco
         /// <returns>The converted Matrix4x4.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Matrix4x4(in float4x4 m) { return new Matrix4x4(m.c0, m.c1, m.c2, m.c3); }
-    }
-
-    public partial struct Aabb
-    {
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Aabb(in Bounds b)  { return new Aabb((float3)b.min, (float3)b.max); }
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Bounds(in Aabb b)  { return new Bounds((float3)b.center, (float3)b.extents); }
-    }
-
-    public partial struct Ray3d
-    {
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Ray3d(in Ray r)  { return new Ray3d(r.origin, r.direction); }
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Ray(in Ray3d r)  { return new Ray(r.origin, r.dir); }
-    }
-
-    public partial struct Plane3d
-    {
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Plane3d(in Plane p)  { return CreateFromUnitNormalAndDistance(p.normal, p.distance); }
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Plane(in Plane3d p)  { return new Plane(){normal = p.normal, distance = p.distance}; }
     }
 }
 #endif

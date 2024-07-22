@@ -2311,18 +2311,6 @@ namespace calco
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float dot(in UnityEngine.Vector3 x, in UnityEngine.Vector3 y)
-        {
-        #if ENABLE_IL2CPP
-            var vx = float3a(x);
-            var vy = float3a(y);
-            return vecILMathFloat3aDot(in vx, in vy);
-        #else
-            return x.x * y.x + x.y * y.y + x.z * y.z;
-        #endif
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float dot(in float3a x, in float3a y)
         {
         #if ENABLE_IL2CPP
@@ -4824,9 +4812,6 @@ namespace calco
         public static float3 normalize(in float3 x) { return rsqrt(dot(x, x)) * x; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 normalize(in UnityEngine.Vector3 x) { return rsqrt(dot(x, x)) * x; }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a normalize(in float3a x) { return rsqrt(dot(x, x)) * x; }
 
         /// <summary>Returns a normalized version of the float4 vector x by scaling it by 1 / length(x).</summary>
@@ -4968,9 +4953,6 @@ namespace calco
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float length(in float3a x) { return sqrt(dot(x, x)); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float length(in UnityEngine.Vector3 x) { return sqrt(dot(x, x)); }
 
         /// <summary>Returns the length of a float4 vector.</summary>
         /// <param name="x">Vector to use when computing length.</param>

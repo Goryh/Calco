@@ -1715,6 +1715,12 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 float3(float3 xyz) { return xyz; }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static UnityEngine.Vector3 Vec3(float3 v) { unsafe{ return *(UnityEngine.Vector3*)&v; } }
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 float3(UnityEngine.Vector3 v) { unsafe{ return *(float3*)&v; } }
+
         /// <summary>Returns a float3 vector constructed from a single float value by assigning it to every component.</summary>
         /// <param name="v">float to convert to float3</param>
         /// <returns>Converted value.</returns>
