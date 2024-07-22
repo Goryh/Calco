@@ -63,16 +63,14 @@ namespace calco
 
 			string destPath = path + "/Il2CppOutputProject/Source/il2cppOutput/";
 
-			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/pch-cpp.hpp").Replace('\\','/'),
-																																	destPath + "pch-cpp.hpp", true);
-			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/cppMath.h").Replace('\\','/'), 
-																																	destPath + "cppMath.h", true);
-			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/vecILMath.h").Replace('\\','/'),
-																																	destPath + "vecILMath.h", true);
-			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/vecMath.h").Replace('\\','/'),
-																																	destPath + "vecMath.h", true);
-			File.Copy(Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/vecMathNeon.h").Replace('\\','/'),
-																																	destPath + "vecMathNeon.h", true);
+			var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForPackageName("com.flowers.calco");
+			string sourcePath = packageInfo.resolvedPath;
+
+			File.Copy(Path.Combine(sourcePath, "calco/pch-cpp.hpp")	.Replace('\\','/'), 	destPath + "pch-cpp.hpp", 	true);
+			File.Copy(Path.Combine(sourcePath, "calco/cppMath.h")	.Replace('\\','/'), 	destPath + "cppMath.h", 	true);
+			File.Copy(Path.Combine(sourcePath, "calco/vecILMath.h")	.Replace('\\','/'),		destPath + "vecILMath.h", 	true);
+			File.Copy(Path.Combine(sourcePath, "calco/vecMath.h")	.Replace('\\','/'),		destPath + "vecMath.h", 	true);
+			File.Copy(Path.Combine(sourcePath, "calco/vecMathNeon.h").Replace('\\','/'),	destPath + "vecMathNeon.h", true);
 		}
 #endif
 	}
