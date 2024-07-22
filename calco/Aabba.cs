@@ -56,6 +56,12 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Aabba CreateHuge()
+		{
+			return new Aabba(float3a(float.MinValue), float3a(float.MaxValue));
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Aabba CreateFromCenterAndHalfExtents(in float3a center, in float3a halfExtents)
 		{
 			return new Aabba(center - halfExtents, center + halfExtents);

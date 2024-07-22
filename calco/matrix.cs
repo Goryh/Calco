@@ -488,16 +488,20 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         static extern void vecILMathFloat3ax3FromQuat(in quaternion q, out float3a res0, out float3a res1, out float3a res2);
 
-        /// <summary>
-        /// Constructs a float3x3 from the upper left 3x3 of a float4x4.
-        /// </summary>1
-        /// <param name="f4x4"><see cref="float4x4"/> to extract a float3x3 from.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float3ax3(in float4x4 f4x4)
         {
-            c0 = f4x4.c0.xyz;
-            c1 = f4x4.c1.xyz;
-            c2 = f4x4.c2.xyz;
+            c0 = f4x4.c0.xyza;
+            c1 = f4x4.c1.xyza;
+            c2 = f4x4.c2.xyza;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public float3ax3(in float3a c0, in float3a c1, in float3a c2)
+        {
+            this.c0 = c0;
+            this.c1 = c1;
+            this.c2 = c2;
         }
 
         /// <summary>Constructs a float3x3 matrix from a unit quaternion.</summary>
@@ -1454,6 +1458,52 @@ namespace calco
                               float4(r.c1 * scale.y, 0.0f),
                               float4(r.c2 * scale.z, 0.0f),
                               float4(translation, 1.0f));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly float3a Translation()
+        {
+            return c3.xyza;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly quaternion Rotation()
+        {
+            return quaternion(float3ax3(normalize(c0.xyza),
+                                        normalize(c1.xyza),
+                                        normalize(c2.xyza)));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly quaternion RotationOfUnscaled()
+        {
+            return quaternion(this);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly float UniformScale()
+        {
+            return length(c0.xyza);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetTranslation(float3a translation)
+        {
+            c3 = float4(translation, 1.0f);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetRotation(in float3ax3 rotation)
+        {
+            c0 = float4(rotation.c0, 0.0f);
+            c1 = float4(rotation.c1, 0.0f);
+            c2 = float4(rotation.c2, 0.0f);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetRotation(in quaternion rotation)
+        {
+            SetRotation(float3ax3(rotation));
         }
     }
 
