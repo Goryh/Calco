@@ -15,7 +15,7 @@ namespace calco
         /// <param name="v">float2 to convert.</param>
         /// <returns>The converted Vector2.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Vector2(in float2 v)     { return new Vector2(v.x, v.y); }
+        public static implicit operator Vector2(float2 v)        { unsafe{ return *(Vector2*)&v; } }
 
         /// <summary>
         /// Converts a Vector2 to float2.
@@ -23,7 +23,7 @@ namespace calco
         /// <param name="v">Vector2 to convert.</param>
         /// <returns>The converted float2.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator float2(in Vector2 v)     { return new float2(v.x, v.y); }
+        public static implicit operator float2(Vector2 v)        { unsafe{ return *(float2*)&v; } }
     }
 
     public partial struct float4
@@ -34,7 +34,7 @@ namespace calco
         /// <param name="v">Vector4 to convert.</param>
         /// <returns>The converted float4.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator float4(in Vector4 v)     { return new float4(v.x, v.y, v.z, v.w); }
+        public static implicit operator float4(Vector4 v)        { unsafe{ return *(float4*)&v; } }
 
         /// <summary>
         /// Converts a float4 to Vector4.
@@ -42,7 +42,7 @@ namespace calco
         /// <param name="v">float4 to convert.</param>
         /// <returns>The converted Vector4.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Vector4(in float4 v)     { return new Vector4(v.x, v.y, v.z, v.w); }
+        public static implicit operator Vector4(float4 v)        { unsafe{ return *(Vector4*)&v; } }
     }
 
     public partial struct quaternion
@@ -53,7 +53,7 @@ namespace calco
         /// <param name="q">quaternion to convert.</param>
         /// <returns>The converted Quaternion.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Quaternion(in quaternion q)  { return new Quaternion(q.value.x, q.value.y, q.value.z, q.value.w); }
+        public static implicit operator Quaternion(quaternion q)  { unsafe{ return *(Quaternion*)&q; } }
 
         /// <summary>
         /// Converts a Quaternion to quaternion.
@@ -61,7 +61,7 @@ namespace calco
         /// <param name="q">Quaternion to convert.</param>
         /// <returns>The converted quaternion.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator quaternion(in Quaternion q)  { return new quaternion(q.x, q.y, q.z, q.w); }
+        public static implicit operator quaternion(Quaternion q)  { unsafe{ return *(quaternion*)&q; } }
     }
 
     public partial struct float4x4
