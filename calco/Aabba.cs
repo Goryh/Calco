@@ -58,7 +58,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Aabba CreateHuge()
 		{
-			return new Aabba(float3a(float.MinValue), float3a(float.MaxValue));
+			return new Aabba(float3a(-1e+38f), float3a(1e+38f)); // don't use float.MaxValue/float.MinValue here as some subsystems might not like that special cases
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
