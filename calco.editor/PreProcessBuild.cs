@@ -14,6 +14,9 @@ namespace calco
 		public int callbackOrder { get { return 0; } }
 		public void OnPreprocessBuild(BuildReport report)
 		{
+			var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForPackageName("com.flowers.calco");
+			string sourcePackagePath = packageInfo.resolvedPath;
+
 			if( report.summary.platform == BuildTarget.StandaloneWindows || report.summary.platform == BuildTarget.StandaloneWindows64 )
 			{
 				var createSolutionBuildSettings = EditorUserBuildSettings.GetPlatformSettings("Standalone", "CreateSolution");
@@ -25,7 +28,7 @@ namespace calco
 				}
 				else
 				{
-					var pchCppPath = Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/pch-cpp.hpp").Replace('\\','/');
+					var pchCppPath = Path.Combine(sourcePackagePath, "calco/pch-cpp.hpp").Replace('\\','/');
 					var addlArgs = $"--additional-cpp=\"{pchCppPath}\"";
 					PlayerSettings.SetAdditionalIl2CppArgs(addlArgs);
 				}
@@ -38,7 +41,7 @@ namespace calco
 			else if( report.summary.platform == BuildTarget.Android )
 			{
 				// the only way to properly include the cppMath.h file is to reference to its base location as on the temporal location it will be available with a delay so some files won't find it
-				var pchCppPath = Path.Combine(Path.GetDirectoryName(UnityEngine.Application.dataPath), "InternalPackages/calco/calco/pch-cpp.hpp").Replace('\\','/');
+				var pchCppPath = Path.Combine(sourcePackagePath, "calco/pch-cpp.hpp").Replace('\\','/');
 				var addlArgs = $"--additional-cpp=\"{pchCppPath}\"";
 				PlayerSettings.SetAdditionalIl2CppArgs(addlArgs);
 			}
