@@ -102,10 +102,9 @@ namespace calco
 			vecILMathFloat3ax3Transpose(in m, out var res);
 			return res;
         #else
-			return float3ax3(
-				float3(m.c0.x, m.c0.y, m.c0.z),
-				float3(m.c1.x, m.c1.y, m.c1.z),
-				float3(m.c2.x, m.c2.y, m.c2.z));
+			return float3ax3(	float3a(m.c0.x, m.c1.x, m.c2.x),
+								float3a(m.c0.y, m.c1.y, m.c2.y),
+								float3a(m.c0.z, m.c1.z, m.c2.z));
         #endif
 		}
 
