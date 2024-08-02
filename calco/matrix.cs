@@ -951,7 +951,7 @@ namespace calco
         /// <summary>Constructs a float4x4 from a RigidTransform.</summary>
         /// <param name="transform">The RigidTransform.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float4x4(in RigidTransform transform)
+        public float4x4(in RigidTransforma transform)
         {
             float3ax3 rot = float3ax3(transform.rot);
             c0 = float4(rot.c0, 0.0f);
@@ -1535,10 +1535,10 @@ namespace calco
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float4x3(in RigidTransform transform)
+        public float4x3(in RigidTransforma transform)
         {
         #if ENABLE_IL2CPP
-            vecILMathFloat4x3FromRotTrans(in transform.rot, transform.posa, out c0, out c1, out c2);
+            vecILMathFloat4x3FromRotTrans(in transform.rot, transform.pos, out c0, out c1, out c2);
         #else
             float3ax3 rot = transpose(float3ax3(transform.rot));
             c0 = float4(rot.c0, transform.pos.x);
@@ -1602,7 +1602,7 @@ namespace calco
         /// <param name="transform">The rigid transformation.</param>
         /// <returns>The float4x4 constructed from a RigidTransform.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4x4 float4x4(in RigidTransform transform)
+        public static float4x4 float4x4(in RigidTransforma transform)
         {
             return new float4x4(transform);
         }
@@ -1614,7 +1614,7 @@ namespace calco
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4x3 float4x3(in RigidTransform transform)
+        public static float4x3 float4x3(in RigidTransforma transform)
         {
             return new float4x3(transform);
         }

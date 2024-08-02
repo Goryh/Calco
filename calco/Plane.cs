@@ -295,7 +295,7 @@ namespace calco
 	public static partial class math
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-		static extern void vecILMathRigidTransformMulPlane(in RigidTransform t, in Plane3d p, out Plane3d res);
+		static extern void vecILMathRigidTransformMulPlane(in RigidTransforma t, in Plane3d p, out Plane3d res);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Plane3d Plane3d(float coefficientA, float coefficientB, float coefficientC, float coefficientD) => new Plane3d(coefficientA, coefficientB, coefficientC, coefficientD);
@@ -319,14 +319,14 @@ namespace calco
         public static UnityEngine.Plane Plane(in Plane3d p) { return new UnityEngine.Plane(Vec3(p.normal), p.distance); }
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d transform(in RigidTransform transf, in Plane3d p)
+		public static Plane3d transform(in RigidTransforma transf, in Plane3d p)
 		{
 		#if ENABLE_IL2CPP
 			vecILMathRigidTransformMulPlane(in transf, in p, out var res);
 			return res;
         #else
 			var normal = rotate(in transf, p.normal);
-			return new Plane3d(normal, normal * -p.distance + transf.posa);
+			return new Plane3d(normal, normal * -p.distance + transf.pos);
         #endif
 		}
 

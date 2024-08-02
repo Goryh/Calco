@@ -263,7 +263,7 @@ namespace calco
 
 	public static partial class math
 	{
-		public static Aabba transform(in RigidTransform transf, in Aabba aabb)
+		public static Aabba transform(in RigidTransforma transf, in Aabba aabb)
 		{
 			float3 halfExtentsInA = aabb.halfExtents;
 

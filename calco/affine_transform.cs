@@ -74,7 +74,7 @@ namespace calco
         /// <summary>Constructs an AffineTransform from a RigidTransform.</summary>
         /// <param name="rigid">The RigidTransform.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AffineTransform(RigidTransform rigid)
+        public AffineTransform(RigidTransforma rigid)
         {
             rs = math.float3ax3(rigid.rot);
             t = rigid.pos;
@@ -196,7 +196,7 @@ namespace calco
         /// <param name="rigid">The RigidTransform.</param>
         /// <returns>The AffineTransform given a RigidTransform.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static AffineTransform AffineTransform(RigidTransform rigid) { return new AffineTransform (rigid); }
+        public static AffineTransform AffineTransform(RigidTransforma rigid) { return new AffineTransform (rigid); }
 
         /// <summary>Returns a float4x4 matrix constructed from an AffineTransform.</summary>
         /// <param name="transform">The AffineTransform.</param>

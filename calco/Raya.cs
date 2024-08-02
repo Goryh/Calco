@@ -72,7 +72,7 @@ namespace calco
 		public static Ray3da Ray3da(in float3a origin, in float3a dir) => new Ray3da(origin, dir);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Ray3da transform(in RigidTransform transf, in Ray3da r)
+		public static Ray3da transform(in RigidTransforma transf, in Ray3da r)
 		{
 			return new Ray3da {
 				origin = transform(in transf, r.origin),

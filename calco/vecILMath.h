@@ -142,6 +142,12 @@ struct rigidTransform_internal
 	float3_internal pos;
 };
 
+struct rigidTransforma_internal
+{
+	quaternion_internal rot;
+	float3a_internal pos;
+};
+
 struct float3x3_internal
 {
 	float3_internal c0;
@@ -178,7 +184,7 @@ struct Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2;
 struct float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F;
 struct float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871;
 struct quaternion_tF319262949BE7146C3BD7F6FF96A3BDED4A61CA0;
-struct RigidTransform_t391045435A59B03F7E5DFCBE9109A80299AD80BB;
+struct RigidTransforma_tE6F1418FB3D6CCA15B95A924E66B2B7AA1394989;
 struct Plane3d_t27106A8A8B2892483966559FEB2D730EFEED23FB;
 struct float3x3_t84A7DC860959A02869A55DE6870D63EB0E2EC440;
 struct float3ax3_tC89BE68F0241ADBD139AB7620C8C61D1C4D0E485;
@@ -328,10 +334,10 @@ FORCEINLINE void __cdecl vecILMathQuatFromAxisAngle(float3a_t925C03B5EB8C57EB0A1
 	res->store(vecMul(axis->load1(), vecShuffle<VecMask::_xxxy>(sinCos)));
 }
 
-FORCEINLINE void __cdecl vecILMathRigidTransformInverse(RigidTransform_t391045435A59B03F7E5DFCBE9109A80299AD80BB* RESTRICT inT, RigidTransform_t391045435A59B03F7E5DFCBE9109A80299AD80BB* RESTRICT resT)
+FORCEINLINE void __cdecl vecILMathRigidTransformaInverse(RigidTransforma_tE6F1418FB3D6CCA15B95A924E66B2B7AA1394989* RESTRICT inT, RigidTransforma_tE6F1418FB3D6CCA15B95A924E66B2B7AA1394989* RESTRICT resT)
 {
-	rigidTransform_internal* t = (rigidTransform_internal*)inT;
-	rigidTransform_internal* res = (rigidTransform_internal*)resT;
+	rigidTransforma_internal* t = (rigidTransforma_internal*)inT;
+	rigidTransforma_internal* res = (rigidTransforma_internal*)resT;
 
 	Vec invRotation = vecMathQuaternionInverse(t->rot.load());
 	Vec invTranslation = vecMathQuaternionTransformVec3(invRotation, vecNeg(t->pos.load()));
@@ -340,11 +346,11 @@ FORCEINLINE void __cdecl vecILMathRigidTransformInverse(RigidTransform_t39104543
 	res->pos.store(invTranslation);
 }
 
-FORCEINLINE void __cdecl vecILMathRigidTransformMul(RigidTransform_t391045435A59B03F7E5DFCBE9109A80299AD80BB* RESTRICT inTa, RigidTransform_t391045435A59B03F7E5DFCBE9109A80299AD80BB* RESTRICT inTb, RigidTransform_t391045435A59B03F7E5DFCBE9109A80299AD80BB* RESTRICT resT)
+FORCEINLINE void __cdecl vecILMathRigidTransformaMul(RigidTransforma_tE6F1418FB3D6CCA15B95A924E66B2B7AA1394989* RESTRICT inTa, RigidTransforma_tE6F1418FB3D6CCA15B95A924E66B2B7AA1394989* RESTRICT inTb, RigidTransforma_tE6F1418FB3D6CCA15B95A924E66B2B7AA1394989* RESTRICT resT)
 {
-	rigidTransform_internal* a = (rigidTransform_internal*)inTa;
-	rigidTransform_internal* b = (rigidTransform_internal*)inTb;
-	rigidTransform_internal* res = (rigidTransform_internal*)resT;
+	rigidTransforma_internal* a = (rigidTransforma_internal*)inTa;
+	rigidTransforma_internal* b = (rigidTransforma_internal*)inTb;
+	rigidTransforma_internal* res = (rigidTransforma_internal*)resT;
 
 	Vec aRot = a->rot.load();
 	Vec bRot = b->rot.load();
@@ -355,9 +361,9 @@ FORCEINLINE void __cdecl vecILMathRigidTransformMul(RigidTransform_t391045435A59
 	res->pos.store(vecAdd(vecMathQuaternionTransformVec3(aRot, bPos), aPos));
 }
 
-FORCEINLINE void __cdecl vecILMathRigidTransformMulPlane(RigidTransform_t391045435A59B03F7E5DFCBE9109A80299AD80BB* RESTRICT inT, Plane3d_t27106A8A8B2892483966559FEB2D730EFEED23FB* RESTRICT inP, Plane3d_t27106A8A8B2892483966559FEB2D730EFEED23FB* RESTRICT resP)
+FORCEINLINE void __cdecl vecILMathRigidTransformMulPlane(RigidTransforma_tE6F1418FB3D6CCA15B95A924E66B2B7AA1394989* RESTRICT inT, Plane3d_t27106A8A8B2892483966559FEB2D730EFEED23FB* RESTRICT inP, Plane3d_t27106A8A8B2892483966559FEB2D730EFEED23FB* RESTRICT resP)
 {
-	rigidTransform_internal* t 	= (rigidTransform_internal*)inT;
+	rigidTransforma_internal* t = (rigidTransforma_internal*)inT;
 	plane3d_internal* p 		= (plane3d_internal*)inP;
 	plane3d_internal* res 		= (plane3d_internal*)resP;
 
