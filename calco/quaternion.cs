@@ -10,7 +10,13 @@ namespace calco
     public static class quaternionc
     {
         /// <summary>A quaternion representing the identity transform.</summary>
-        public static quaternion identity { [MethodImpl(MethodImplOptions.AggressiveInlining)] get => new(0.0f, 0.0f, 0.0f, 1.0f); }
+        public static quaternion identity 	{ [MethodImpl(MethodImplOptions.AggressiveInlining)] get => new(0.0f, 0.0f, 0.0f, 1.0f); }
+		public static quaternion rotateX90	{ [MethodImpl(MethodImplOptions.AggressiveInlining)] get => new(0.70710678f, 0.0f, 0.0f, 0.70710678f); }
+		public static quaternion rotateY90	{ [MethodImpl(MethodImplOptions.AggressiveInlining)] get => new(0.0f, 0.70710678f, 0.0f, 0.70710678f); }
+		public static quaternion rotateZ90	{ [MethodImpl(MethodImplOptions.AggressiveInlining)] get => new(0.0f, 0.0f, 0.70710678f, 0.70710678f); }
+		public static quaternion rotateX180	{ [MethodImpl(MethodImplOptions.AggressiveInlining)] get => new(1.0f, 0.0f, 0.0f, 0.0f); }
+		public static quaternion rotateY180	{ [MethodImpl(MethodImplOptions.AggressiveInlining)] get => new(0.0f, 1.0f, 0.0f, 0.0f); }
+		public static quaternion rotateZ180	{ [MethodImpl(MethodImplOptions.AggressiveInlining)] get => new(0.0f, 0.0f, 1.0f, 0.0f); }
     }
 
     /// <summary>
