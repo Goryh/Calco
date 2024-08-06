@@ -4820,6 +4820,19 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 normalize(in float4 x) { return rsqrt(dot(x, x)) * x; }
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Plane3d normalize(in Plane3d plane)
+		{
+        	float recipLength = rsqrt(lengthsq(plane.normala));
+			return new Plane3d(plane.normalAndDistance * recipLength);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Ray3da normalize(Ray3da ray)
+		{
+            ray.dir = normalize(ray.dir);
+            return ray;
+		}
 
         /// <summary>Returns a normalized version of the double2 vector x by scaling it by 1 / length(x).</summary>
         /// <param name="x">Vector to normalize.</param>

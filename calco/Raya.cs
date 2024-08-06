@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Unity.IL2CPP.CompilerServices;
 using static calco.math;
@@ -63,6 +64,19 @@ namespace calco
 		public readonly override string ToString()
 		{
 			return string.Format("Ray({0}, {1})", float3(origin), float3(dir));
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly bool IsNormalized()
+		{
+			return false;
+		}
+
+		[Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
+		public readonly void CheckRayIsNormalized()
+		{
+			if( !IsNormalized() )
+				throw new System.ArgumentException("The ray must be normalized. Call normalize(Ray) for normalization.");
 		}
 	}
 

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Unity.IL2CPP.CompilerServices;
+using static calco.math;
 
 namespace calco
 {
@@ -40,7 +41,8 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public Plane3d(float coefficientA, float coefficientB, float coefficientC, float coefficientD)
 		{
-			normalAndDistance = Normalize(new float4(coefficientA, coefficientB, coefficientC, coefficientD));
+			normalAndDistance = new float4(coefficientA, coefficientB, coefficientC, coefficientD);
+			this = normalize(this);
 		}
 
 		/// <summary>
@@ -56,7 +58,8 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public Plane3d(in float3a normal, float distance)
 		{
-			normalAndDistance = Normalize(new float4(normal, distance));
+			normalAndDistance = new float4(normal, distance);
+			this = normalize(this);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -159,32 +162,6 @@ namespace calco
 			[MethodImpl(MethodImplOptions.AggressiveInlining)] set => normalAndDistance.w = value;
 		}
 
-		/// <summary>
-		/// Normalizes the given Plane.
-		/// </summary>
-		/// <param name="plane">Plane to normalize.</param>
-		/// <returns>Normalized Plane.</returns>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d Normalize(Plane3d plane)
-		{
-			return new Plane3d { normalAndDistance = Normalize(plane.normalAndDistance) };
-		}
-
-		/// <summary>
-		/// Normalizes the plane represented by the given plane coefficients.
-		/// </summary>
-		/// <remarks>
-		/// The plane coefficients are A, B, C, D and stored in that order in the <see cref="float4"/>.
-		/// </remarks>
-		/// <param name="planeCoefficients">Plane coefficients A, B, C, D stored in x, y, z, w (respectively).</param>
-		/// <returns>Normalized plane coefficients.</returns>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private static float4 Normalize(float4 planeCoefficients)
-		{
-			float recipLength = math.rsqrt(math.lengthsq(planeCoefficients.xyza));
-			return planeCoefficients * recipLength;
-		}
-
 		//
 		// Summary:
 		//	 Moves the plane in space by the translation vector.
@@ -285,10 +262,10 @@ namespace calco
 		}
 
 		[Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
-		readonly void CheckPlaneIsNormalized()
+		public readonly void CheckPlaneIsNormalized()
 		{
 			if( !IsNormalized() )
-				throw new System.ArgumentException("Plane must be normalized. Call Plane.Normalize() to normalize plane.");
+				throw new System.ArgumentException("The plane must be normalized. Call normalize(Plane) for normalization.");
 		}
 	}
 
