@@ -185,9 +185,9 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Intersects(in float4 sphere)
+		public readonly bool Intersects(in Sphere sphere)
 		{
-			return ClosestPointDistSq(sphere.xyza) <= square(sphere.w);
+			return ClosestPointDistSq(sphere.positiona) <= sphere.radiussq;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

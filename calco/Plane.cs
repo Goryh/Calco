@@ -131,6 +131,12 @@ namespace calco
 			return new Plane3d { normalAndDistance = new float4(unitNormal, -math.dot(unitNormal, pointInPlane)) };
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Plane3d CreateFrom3Points(in float3a p0, in float3a p1, in float3a p2)
+		{
+			return new Plane3d(p0 - p2, p1 - p2, p2);
+		}
+
 		/// <summary>
 		/// Get/set the normal vector of the plane.
 		/// </summary>
