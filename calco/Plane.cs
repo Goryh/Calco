@@ -223,7 +223,10 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly float3a ClosestPointOnPlane(float3a point) => Projection(point);
+		public readonly float3a ClosestPoint(float3a point) => Projection(point);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly float ClosestPointDist(float3a point) => abs(SignedDistanceToPoint(point));
 
 		/// <summary>
 		/// Flips the plane so the normal points in the opposite direction.
@@ -243,6 +246,46 @@ namespace calco
 
 			hitDist = num2 / num;
 			return hitDist > 0f;
+		}
+
+		//Find the line of intersection between two planes.	The planes are defined by a normal and a point on that plane.
+		//The outputs are a point on the line and a vector which indicates it's direction. If the planes are not parallel, 
+		//the function outputs true, otherwise false.
+		public readonly bool Intersection(in Plane3d other, out Ray3da intersectionRay)
+		{
+			var plane1Normal = this.normala;
+			var plane2Normal = other.normala;
+			//We can get the direction of the line of intersection of the two planes by calculating the 
+			//cross product of the normals of the two planes. Note that this is just a direction and the line
+			//is not fixed in space yet. We need a point for that to go with the line vector.
+			var resLineVec = cross(plane1Normal, plane2Normal);
+
+			//Next is to calculate a point on the line to fix it's position in space. This is done by finding a vector from
+			//the plane2 location, moving parallel to it's plane, and intersecting plane1. To prevent rounding
+			//errors, this vector also has to be perpendicular to lineDirection. To get this vector, calculate
+			//the cross product of the normal of plane2 and the lineDirection.		
+			var ldir = cross(plane2Normal, resLineVec);		
+
+			float denominator = dot(plane1Normal, ldir);
+
+			//Prevent divide by zero and rounding errors by requiring about 5 degrees angle between the planes.
+			if( abs(denominator) > 0.006f )
+			{
+				var pointOnThePlane1 = this.Projection(float3c.zero);
+				var pointOnThePlane2 = other.Projection(float3c.zero);
+
+				var plane1ToPlane2 = pointOnThePlane1 - pointOnThePlane2;
+				float t = dot(plane1Normal, plane1ToPlane2) / denominator;
+				var resLinePoint = pointOnThePlane2 + t * ldir;
+
+				intersectionRay = new Ray3da(resLinePoint, resLineVec);
+				return true;
+			}
+			else // output is not valid
+			{
+				intersectionRay = new Ray3da(float3c.zero, float3c.zero);
+				return false;
+			}
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

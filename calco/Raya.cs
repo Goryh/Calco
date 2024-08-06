@@ -50,15 +50,118 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly float DistToPointSq(in float3a pt)
+		public readonly float3a ClosestPoint(in float3a pt)
 		{
 			float l = dot(pt - origin, dir) / dot(dir, dir);
-			var diff = origin + l * dir - pt;
+			return GetPoint(l);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly float ClosestPointDistSq(in float3a pt)
+		{
+			var diff = ClosestPoint(pt) - pt;
 			return dot(diff, diff);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly float DistToPoint(in float3a pt) => sqrt(DistToPointSq(pt));
+		public readonly float ClosestPointDist(in float3a pt) => sqrt(ClosestPointDistSq(pt));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly float3a ClosestPointUnitRay(in float3a pt)
+		{
+			CheckRayIsNormalized();
+
+			float l = dot(pt - origin, dir);
+			return GetPoint(l);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly float ClosestPointUnitRayDistSq(in float3a pt)
+		{
+			var diff = ClosestPointUnitRay(pt) - pt;
+			return dot(diff, diff);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly float ClosestPointUnitRayDist(in float3a pt) => sqrt(ClosestPointUnitRayDistSq(pt));
+
+		public readonly bool ClosestPoint(in Ray3da other, out float thisRayT, out float otherRayT)
+		{
+			var ray1Dir = dir;
+			var ray2Dir = other.dir;
+			var ray1Origin = origin;
+			var ray2Origin = other.origin;
+
+			float a = dot(ray1Dir, ray1Dir);
+			float b = dot(ray1Dir, ray2Dir);
+			float e = dot(ray2Dir, ray2Dir);
+			float d = a*e - b*b;
+
+			if( d != 0.0f ) // lines are not parallel
+			{
+				var r = ray1Origin - ray2Origin;
+				float c = dot(ray1Dir, r);
+				float f = dot(ray2Dir, r);
+
+				thisRayT = (b*f - c*e) / d;
+				otherRayT = (a*f - c*b) / d;
+				return true;
+			}
+			else
+			{
+				thisRayT = otherRayT = 0.0f;
+				return false;
+			}
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly bool Raycast(in float3a triangleV0, in float3a triangleV1, in float3a triangleV2, out float hitDist)
+		{
+			var v0v1 = triangleV1 - triangleV0;
+			var v0v2 = triangleV2 - triangleV0;
+
+			var N = cross(v0v1, v0v2); // no need to normalize
+			float d = -dot(N, triangleV0);
+
+			float NdotRayDirection = dot(N, dir);
+			if( abs(NdotRayDirection) < EPSILON * 4 )
+			{
+				hitDist = 0;
+				return false; // they are parallel, so they don't intersect
+			}
+
+			hitDist = -(dot(N, origin) + d) / NdotRayDirection;
+
+			// commented out to return both positive and negative side intersections
+			// if( t < 0 )
+			//	return false;
+
+			var p = GetPoint(hitDist);
+			return isPointInsideTriangle(p, triangleV0, triangleV1, triangleV2);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly bool Raycast(in Plane3d trianglePlane, in float3a triangleV0, in float3a triangleV1, in float3a triangleV2, out float hitDist)
+		{
+			var N = trianglePlane.normala;
+			var d = trianglePlane.distance;
+
+			float NdotRayDirection = dot(N, dir);
+			if( abs(NdotRayDirection) < EPSILON * 4 )
+			{
+				hitDist = 0;
+				return false; // they are parallel, so they don't intersect
+			}
+
+			hitDist = -(dot(N, origin) + d) / NdotRayDirection;
+
+			// commented out to return both positive and negative side intersections
+			// if( t < 0 )
+			//	return false;
+
+			var p = GetPoint(hitDist);
+			return isPointInsideTriangle(p, triangleV0, triangleV1, triangleV2);
+		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly override string ToString()

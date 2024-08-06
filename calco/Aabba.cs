@@ -185,22 +185,25 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		readonly float ClosestPointDist(float3a point) => square(ClosestPointDist(point));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool Intersects(in Sphere sphere)
 		{
 			return ClosestPointDistSq(sphere.positiona) <= sphere.radiussq;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		/// return depth in ray-length units, multiply by the ray norm to get absolute; takes negative ray side as well
-		public readonly float IntersectionDepth(in Ray3da r)
+
+		public readonly bool Raycast(in Ray3da r, out float hitDistMin, out float hitDistMax)
 		{
 			var t1 = (min - r.origin) / r.dir;
 			var t2 = (max - r.origin) / r.dir;
 
-			float tmin = cmax(min(t1, t2));
-			float tmax = cmin(max(t1, t2));
+			hitDistMin = cmax(min(t1, t2));
+			hitDistMax = cmin(max(t1, t2));
 
-			return tmax - tmin;
+			return hitDistMax > hitDistMin;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -218,18 +221,25 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Intersection(in Ray3da r, out float3a intersectionPoint)
+		public readonly bool Intersects(in float3a segmentV0, in float3a segmentV1, out float hitDistMin, out float hitDistMax)
 		{
-			var t1 = (min - r.origin) / r.dir;
-			var t2 = (max - r.origin) / r.dir;
+			var invRayDir = float3c.one / (segmentV1 - segmentV0);
 
-			float tmin = cmax(min(t1, t2));
-			float tmax = cmin(max(t1, t2));
+			var firstPlaneIntersections = (min - segmentV0) * invRayDir;
+			var secondPlaneIntersections = (max - segmentV0) * invRayDir;
+			var closestPlaneIntersections = min(firstPlaneIntersections, secondPlaneIntersections);
+			var furthestPlaneIntersections = max(firstPlaneIntersections, secondPlaneIntersections);
 
-			tmin = max(tmin, 0.0f); // only positive side of the ray
+			hitDistMin = saturate(cmax(closestPlaneIntersections));
+			hitDistMax = saturate(cmin(furthestPlaneIntersections));
 
-			intersectionPoint = r.GetPoint(tmin);
-			return tmax > tmin;
+			return hitDistMin < hitDistMax;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly bool Intersects(in float3a segmentV0, in float3a segmentV1)
+		{
+			return Intersects(segmentV0, segmentV1, out var _, out var _);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -238,6 +248,26 @@ namespace calco
 			var projSize = dot(halfExtents, abs(plane.normala));
 			var dist = plane.SignedDistanceToPoint(center);
 			return abs(dist) <= projSize;
+		}
+
+		public readonly bool Intersects(in float3a triangleV0, in float3a triangleV1, in float3a triangleV2)
+		{
+			var trianglePlane = Plane3d.CreateFrom3Points(triangleV0, triangleV1, triangleV2);
+
+			if( !Intersects(trianglePlane) )
+				return false;
+
+			if( isPointInsideTriangle(trianglePlane.ClosestPoint(center), triangleV0, triangleV1, triangleV2) )
+				return true;
+
+			if( Intersects(triangleV0, triangleV1) )
+				return true;
+			if( Intersects(triangleV1, triangleV2) )
+				return true;
+			if( Intersects(triangleV2, triangleV0) )
+				return true;
+
+			return false;
 		}
 
 		// gives some false-positives

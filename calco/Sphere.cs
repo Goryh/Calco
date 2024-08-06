@@ -62,6 +62,9 @@ namespace calco
 		public readonly float ClosestPointDist(float3a point) => abs(distance(positiona, point) - radius);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly bool Contains(float3a point) => distancesq(point, positiona) <= radiussq;
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool Raycast(in Ray3da unitRay, out float hitDistMin, out float hitDistMax)
 		{
 			unitRay.CheckRayIsNormalized();
@@ -83,6 +86,12 @@ namespace calco
 			hitDistMax = oToD + dToHit;
 
 			return true;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly bool Intersects(in Sphere other)
+		{
+			return distancesq(positiona, other.positiona) <= square(radius + other.radius);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
