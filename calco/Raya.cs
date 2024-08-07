@@ -115,55 +115,6 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Raycast(in float3a triangleV0, in float3a triangleV1, in float3a triangleV2, out float hitDist)
-		{
-			var v0v1 = triangleV1 - triangleV0;
-			var v0v2 = triangleV2 - triangleV0;
-
-			var N = cross(v0v1, v0v2); // no need to normalize
-			float d = -dot(N, triangleV0);
-
-			float NdotRayDirection = dot(N, dir);
-			if( abs(NdotRayDirection) < EPSILON * 4 )
-			{
-				hitDist = 0;
-				return false; // they are parallel, so they don't intersect
-			}
-
-			hitDist = -(dot(N, origin) + d) / NdotRayDirection;
-
-			// commented out to return both positive and negative side intersections
-			// if( t < 0 )
-			//	return false;
-
-			var p = GetPoint(hitDist);
-			return isPointInsideTriangle(p, triangleV0, triangleV1, triangleV2);
-		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Raycast(in Plane3d trianglePlane, in float3a triangleV0, in float3a triangleV1, in float3a triangleV2, out float hitDist)
-		{
-			var N = trianglePlane.normala;
-			var d = trianglePlane.distance;
-
-			float NdotRayDirection = dot(N, dir);
-			if( abs(NdotRayDirection) < EPSILON * 4 )
-			{
-				hitDist = 0;
-				return false; // they are parallel, so they don't intersect
-			}
-
-			hitDist = -(dot(N, origin) + d) / NdotRayDirection;
-
-			// commented out to return both positive and negative side intersections
-			// if( t < 0 )
-			//	return false;
-
-			var p = GetPoint(hitDist);
-			return isPointInsideTriangle(p, triangleV0, triangleV1, triangleV2);
-		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly override string ToString()
 		{
 			return string.Format("Ray({0}, {1})", float3(origin), float3(dir));

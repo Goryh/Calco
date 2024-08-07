@@ -102,7 +102,14 @@ namespace calco
 			var center = positiona;
 			var closestPointOnRay = unitRay.dir * max(0, dot(center - unitRay.origin, unitRay.dir));
 			var centerToRay = unitRay.origin + closestPointOnRay - center;
-			return lengthsq(centerToRay) < radiussq;
+			return lengthsq(centerToRay) <= radiussq;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly bool Intersects(in Plane3d plane)
+		{
+			float dist = plane.SignedDistanceToPoint(positiona);
+			return abs(dist) <= radius;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -113,23 +120,21 @@ namespace calco
 				&&  Intersects(Ray3da(segment.p1, -dir));
 		}
 
-		public readonly bool Intersects(in float3a triangleV0, in float3a triangleV1, in float3a triangleV2)
+		public readonly bool Intersects(in Trianglea triangle)
 		{
-			var plane = Plane3d.CreateFrom3Points(triangleV0, triangleV1, triangleV2);
+			var trianglePlane = triangle.plane;
 
-			var center = positiona;
-			float dist = plane.SignedDistanceToPoint(center);
-			if( abs(dist) > radius )
+			if( !Intersects(trianglePlane) )
 				return false;
 
-			if( isPointInsideTriangle(center - plane.normala * dist, triangleV0, triangleV1, triangleV2) )
+			if( triangle.Contains(trianglePlane.ClosestPoint(positiona)) )
 				return true;
 
-			if( Intersects(LineSegmenta(triangleV0, triangleV1)) )
+			if( Intersects(LineSegmenta(triangle.v0, triangle.v1)) )
 				return true;
-			if( Intersects(LineSegmenta(triangleV1, triangleV2)) )
+			if( Intersects(LineSegmenta(triangle.v1, triangle.v2)) )
 				return true;
-			if( Intersects(LineSegmenta(triangleV2, triangleV0)) )
+			if( Intersects(LineSegmenta(triangle.v2, triangle.v0)) )
 				return true;
 
 			return false;

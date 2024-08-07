@@ -8786,15 +8786,5 @@ namespace calco
             [FieldOffset(0)]
             public double doubleValue;
         }
-
-	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-	    public static bool isPointInsideTriangle(in float3a pt, in float3a v0, in float3a v1, in float3a v2)
-	    {
-		    var d0 = cross(pt - v0, v1 - v0);
-		    var d1 = cross(pt - v1, v2 - v1);
-		    var d2 = cross(pt - v2, v0 - v2);
-
-		    return dot(d0, d1) > 0 && dot(d1, d2) > 0;
-	    }
     }
 }

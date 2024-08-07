@@ -250,21 +250,21 @@ namespace calco
 			return abs(dist) <= projSize;
 		}
 
-		public readonly bool Intersects(in float3a triangleV0, in float3a triangleV1, in float3a triangleV2)
+		public readonly bool Intersects(in Trianglea triangle)
 		{
-			var trianglePlane = Plane3d.CreateFrom3Points(triangleV0, triangleV1, triangleV2);
+			var trianglePlane = triangle.plane;
 
 			if( !Intersects(trianglePlane) )
 				return false;
 
-			if( isPointInsideTriangle(trianglePlane.ClosestPoint(center), triangleV0, triangleV1, triangleV2) )
+			if( triangle.Contains(trianglePlane.ClosestPoint(center)) )
 				return true;
 
-			if( Intersects(LineSegmenta(triangleV0, triangleV1)) )
+			if( Intersects(LineSegmenta(triangle.v0, triangle.v1)) )
 				return true;
-			if( Intersects(LineSegmenta(triangleV1, triangleV2)) )
+			if( Intersects(LineSegmenta(triangle.v1, triangle.v2)) )
 				return true;
-			if( Intersects(LineSegmenta(triangleV2, triangleV0)) )
+			if( Intersects(LineSegmenta(triangle.v2, triangle.v0)) )
 				return true;
 
 			return false;

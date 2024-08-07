@@ -79,7 +79,7 @@ namespace calco
 		/// <param name="pointInPlane">A point that lies in the plane.</param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public Plane3d(in float3a normal, in float3a pointInPlane)
-			: this(normal, -math.dot(normal, pointInPlane))
+			: this(normal, -dot(normal, pointInPlane))
 		{
 		}
 
@@ -94,7 +94,7 @@ namespace calco
 		/// <param name="pointInPlane">A point that lies in the plane.</param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public Plane3d(in float3a vector1InPlane, in float3a vector2InPlane, in float3a pointInPlane)
-			: this(math.cross(vector1InPlane, vector2InPlane), pointInPlane)
+			: this(cross(vector1InPlane, vector2InPlane), pointInPlane)
 		{
 		}
 
@@ -128,13 +128,25 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Plane3d CreateFromUnitNormalAndPointInPlane(in float3a unitNormal, in float3a pointInPlane)
 		{
-			return new Plane3d { normalAndDistance = new float4(unitNormal, -math.dot(unitNormal, pointInPlane)) };
+			return new Plane3d { normalAndDistance = new float4(unitNormal, -dot(unitNormal, pointInPlane)) };
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Plane3d CreateFrom3Points(in float3a p0, in float3a p1, in float3a p2)
 		{
-			return new Plane3d(p0 - p2, p1 - p2, p2);
+			return new Plane3d(p1 - p0, p2 - p0, p0);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Plane3d CreateNonUnitFrom3Points(in float3a p0, in float3a p1, in float3a p2)
+		{
+			var vector1InPlane = p1 - p0;
+			var vector2InPlane = p2 - p0;
+
+			var N = cross(vector1InPlane, vector2InPlane);
+			float d = -dot(N, p0);
+
+			return new Plane3d(float4(N, d));
 		}
 
 		/// <summary>
@@ -178,7 +190,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void Translate(float3a translation)
 		{
-			distance += math.dot(normala, translation);
+			distance += dot(normala, translation);
 		}
 
 		/// <summary>
@@ -196,14 +208,14 @@ namespace calco
 		public readonly float SignedDistanceToPoint(float3a point)
 		{
 			CheckPlaneIsNormalized();
-			return math.dot(normalAndDistance, new float4(point, 1.0f));
+			return dot(normalAndDistance, new float4(point, 1.0f));
 		}
 
 		/// is a point on the positive side of the plane?
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool IsOnPositiveSide(float3a point)
 		{
-			return math.dot(normalAndDistance, new float4(point, 1.0f)) > 0.0f;
+			return dot(normalAndDistance, new float4(point, 1.0f)) > 0.0f;
 		}
 
 		/// <summary>
@@ -236,9 +248,9 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool Raycast(in Ray3da ray, out float hitDist)
 		{
-			float num = math.dot(ray.dir, normala);
+			float num = dot(ray.dir, normala);
 			float num2 = -SignedDistanceToPoint(ray.origin);
-			if( math.abs(num) < math.EPSILON * 4 )
+			if( abs(num) < EPSILON * 4 )
 			{
 				hitDist = 0f;
 				return false;
@@ -297,13 +309,13 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool SameNormalized(Plane3d other, float tolerance = 1e-3f)
 		{
-			return math.dot(normal, other.normal) > (1 - tolerance) && math.abs(distance - other.distance) < tolerance;
+			return dot(normal, other.normal) > (1 - tolerance) && abs(distance - other.distance) < tolerance;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool IsNormalized()
 		{
-			float ll = math.lengthsq(normal.xyz);
+			float ll = lengthsq(normal.xyz);
 			const float lowerBound = 0.999f * 0.999f;
 			const float upperBound = 1.001f * 1.001f;
 
