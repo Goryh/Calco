@@ -106,11 +106,11 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Intersects(in float3a segmentV0, in float3a segmentV1)
+		public readonly bool Intersects(in LineSegmenta segment)
 		{
-			var dir = normalize(segmentV1 - segmentV0);
-			return	Intersects(Ray3da(segmentV0, dir))
-				&&  Intersects(Ray3da(segmentV1, -dir));
+			var dir = normalize(segment.dir);
+			return	Intersects(Ray3da(segment.p0, dir))
+				&&  Intersects(Ray3da(segment.p1, -dir));
 		}
 
 		public readonly bool Intersects(in float3a triangleV0, in float3a triangleV1, in float3a triangleV2)
@@ -125,11 +125,11 @@ namespace calco
 			if( isPointInsideTriangle(center - plane.normala * dist, triangleV0, triangleV1, triangleV2) )
 				return true;
 
-			if( Intersects(triangleV0, triangleV1) )
+			if( Intersects(LineSegmenta(triangleV0, triangleV1)) )
 				return true;
-			if( Intersects(triangleV1, triangleV2) )
+			if( Intersects(LineSegmenta(triangleV1, triangleV2)) )
 				return true;
-			if( Intersects(triangleV2, triangleV0) )
+			if( Intersects(LineSegmenta(triangleV2, triangleV0)) )
 				return true;
 
 			return false;

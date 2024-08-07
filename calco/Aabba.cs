@@ -221,12 +221,12 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Intersects(in float3a segmentV0, in float3a segmentV1, out float hitDistMin, out float hitDistMax)
+		public readonly bool Intersects(in LineSegmenta segment, out float hitDistMin, out float hitDistMax)
 		{
-			var invRayDir = float3c.one / (segmentV1 - segmentV0);
+			var invRayDir = float3c.one / segment.dir;
 
-			var firstPlaneIntersections = (min - segmentV0) * invRayDir;
-			var secondPlaneIntersections = (max - segmentV0) * invRayDir;
+			var firstPlaneIntersections = (min - segment.p0) * invRayDir;
+			var secondPlaneIntersections = (max - segment.p0) * invRayDir;
 			var closestPlaneIntersections = min(firstPlaneIntersections, secondPlaneIntersections);
 			var furthestPlaneIntersections = max(firstPlaneIntersections, secondPlaneIntersections);
 
@@ -237,9 +237,9 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Intersects(in float3a segmentV0, in float3a segmentV1)
+		public readonly bool Intersects(in LineSegmenta segment)
 		{
-			return Intersects(segmentV0, segmentV1, out var _, out var _);
+			return Intersects(segment, out var _, out var _);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -260,11 +260,11 @@ namespace calco
 			if( isPointInsideTriangle(trianglePlane.ClosestPoint(center), triangleV0, triangleV1, triangleV2) )
 				return true;
 
-			if( Intersects(triangleV0, triangleV1) )
+			if( Intersects(LineSegmenta(triangleV0, triangleV1)) )
 				return true;
-			if( Intersects(triangleV1, triangleV2) )
+			if( Intersects(LineSegmenta(triangleV1, triangleV2)) )
 				return true;
-			if( Intersects(triangleV2, triangleV0) )
+			if( Intersects(LineSegmenta(triangleV2, triangleV0)) )
 				return true;
 
 			return false;
