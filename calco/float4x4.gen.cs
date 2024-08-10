@@ -463,7 +463,7 @@ namespace calco
         /// <param name="m">Matrix to invert.</param>
         /// <returns>The inverted matrix.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4x4 inverse(float4x4 m)
+        public static float4x4 inverse(in float4x4 m)
         {
         #if ENABLE_IL2CPP
             vecILMathFloat4x4Inverse(in m, out var res);

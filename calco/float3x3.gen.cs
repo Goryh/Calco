@@ -38,7 +38,7 @@ namespace calco
         /// <param name="c1">The matrix column c1 will be set to this value.</param>
         /// <param name="c2">The matrix column c2 will be set to this value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float3x3(float3 c0, float3 c1, float3 c2)
+        public float3x3(in float3 c0, in float3 c1, in float3 c2)
         {
             this.c0 = c0;
             this.c1 = c1;
@@ -330,7 +330,7 @@ namespace calco
         /// <param name="c2">The matrix column c2 will be set to this value.</param>
         /// <returns>float3x3 constructed from arguments.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3x3 float3x3(float3 c0, float3 c1, float3 c2) { return new float3x3(c0, c1, c2); }
+        public static float3x3 float3x3(in float3 c0, in float3 c1, in float3 c2) { return new float3x3(c0, c1, c2); }
 
         /// <summary>Returns a float3x3 matrix constructed from from 9 float values given in row-major order.</summary>
         /// <param name="m00">The matrix at row 0, column 0 will be set to this value.</param>
@@ -392,7 +392,7 @@ namespace calco
         /// <summary>Returns the float3x3 full inverse of a float3x3 matrix.</summary>
         /// <param name="m">Matrix to invert.</param>
         /// <returns>The inverted matrix.</returns>
-        public static float3x3 inverse(float3x3 m)
+        public static float3x3 inverse(in float3x3 m)
         {
          #if ENABLE_IL2CPP
             vecILMathFloat3x3Inverse(in m, out var res);
@@ -419,7 +419,7 @@ namespace calco
         /// <param name="m">Matrix to use when computing determinant.</param>
         /// <returns>The determinant of the matrix.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float determinant(float3x3 m)
+        public static float determinant(in float3x3 m)
         {
             float3 c0 = m.c0;
             float3 c1 = m.c1;
