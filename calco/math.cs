@@ -12,10 +12,8 @@ namespace calco
     [Il2CppEagerStaticClassConstruction]
     public static partial class math
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathFloat3Dot(in float3 a, in float3 b);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathFloat3aDot(in float3a a, in float3a b);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathFloat4Dot(in float4 a, in float4 b);
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathFloat3Cross(in float3 a, in float3 b, out float3 res);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathFloat3aCross(in float3a a, in float3a b, out float3a res);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathTan(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathTan2(in float2 x, out float2 s);
@@ -95,40 +93,33 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog10_4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathSqrt(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSqrt2(in float2 x, out float2 s);
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSqrt3(in float3 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSqrt3a(in float3a x, out float3a s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSqrt4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathRsqrt(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRsqrt2(in float2 x, out float2 s);
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRsqrt3(in float3 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRsqrt3a(in float3a x, out float3a s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRsqrt4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern uint  vecILMathF32tof16(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern uint  vecILMathF32tof16_2(in float2 x);
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathF32tof16_3(in float3 x, out uint2 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathF32tof16_3(in float3a x, out uint2 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathF32tof16_4(in float4 x, out uint2 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathF16tof32(uint x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathF16tof32_2(uint x, out float2 s);
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathF16tof32_3(in uint2 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathF16tof32_4(in uint2 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathFloor(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathFloor2(in float2 x, out float2 s);
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathFloor3(in float3 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathFloor3a(in float3a x, out float3a s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathFloor4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathCeil(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathCeil2(in float2 x, out float2 s);
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathCeil3(in float3 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathCeil3a(in float3a x, out float3a s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathCeil4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathRound(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRound2(in float2 x, out float2 s);
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRound3(in float3 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRound3a(in float3a x, out float3a s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRound4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathTrunc(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathTrunc2(in float2 x, out float2 s);
-        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathTrunc3(in float3 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathTrunc3a(in float3a x, out float3a s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathTrunc4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathAbs3a(in float3a x, out float3a s);
@@ -1237,9 +1228,6 @@ namespace calco
         /// <param name="s">The interpolation parameter. May be a value outside the interval [0, 1].</param>
         /// <returns>The componentwise interpolation from x to y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 lerp(in float3 x, in float3 y, float s) { return x + s * (y - x); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a lerp(in float3a x, in float3a y, float s) { return x + s * (y - x); }
 
         /// <summary>Returns the result of a componentwise linear interpolating from x to y using the interpolation parameter s.</summary>
@@ -1274,9 +1262,6 @@ namespace calco
         /// <param name="s">The interpolation parameter. May be a value outside the interval [0, 1].</param>
         /// <returns>The componentwise interpolation from x to y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 lerp(in float3 x, in float3 y, in float3 s) { return x + s * (y - x); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a lerp(in float3a x, in float3a y, in float3a s) { return x + s * (y - x); }
 
         /// <summary>Returns the result of a componentwise linear interpolating from x to y using the corresponding components of the interpolation parameter s.</summary>
@@ -1297,11 +1282,6 @@ namespace calco
         public static float2 lerpsat(float2 x, float2 y, float2 s) { return x + saturate(s) * (y - x); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 lerpsat(float2 x, float2 y, float s) { return x + saturate(s) * (y - x); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 lerpsat(float3 x, float3 y, float3 s) { return x + saturate(s) * (y - x); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 lerpsat(float3 x, float3 y, float s) { return x + saturate(s) * (y - x); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a lerpsat(float3a x, float3a y, float3a s) { return x + saturate(s) * (y - x); }
@@ -1347,9 +1327,6 @@ namespace calco
         /// <param name="x">The value to normalize to the range.</param>
         /// <returns>The componentwise interpolation parameter of x with respect to the input range [a, b].</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 unlerp(in float3 a, in float3 b, in float3 x) { return (x - a) / (b - a); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a unlerp(in float3a a, in float3a b, in float3a x) { return (x - a) / (b - a); }
 
         /// <summary>Returns the componentwise result of normalizing a floating point value x to a range [a, b]. The opposite of lerp. Equivalent to (x - a) / (b - a).</summary>
@@ -1375,9 +1352,6 @@ namespace calco
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 unlerpsat(float2 a, float2 b, float2 x) { return saturate((x - a) / (b - a)); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 unlerpsat(float3 a, float3 b, float3 x) { return saturate((x - a) / (b - a)); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a unlerpsat(float3a a, float3a b, float3a x) { return saturate((x - a) / (b - a)); }
@@ -1413,9 +1387,6 @@ namespace calco
         /// <param name="x">The value to remap from the source to destination range.</param>
         /// <returns>The componentwise remap of input x from the source range to the destination range.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 remap(in float3 a, in float3 b, in float3 c, in float3 d, in float3 x) { return lerp(c, d, unlerp(a, b, x)); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a remap(in float3a a, in float3a b, in float3a c, in float3a d, in float3a x) { return lerp(c, d, unlerp(a, b, x)); }
 
         /// <summary>Returns the componentwise result of a non-clamping linear remapping of a value x from source range [a, b] to the destination range [c, d].</summary>
@@ -1440,9 +1411,6 @@ namespace calco
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 remapsat(float2 a, float2 b, float2 c, float2 d, float2 x) { return lerp(c, d, unlerpsat(a, b, x)); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 remapsat(float3 a, float3 b, float3 c, float3 d, float3 x) { return lerp(c, d, unlerpsat(a, b, x)); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a remapsat(float3a a, float3a b, float3a c, float3a d, float3a x) { return lerp(c, d, unlerpsat(a, b, x)); }
@@ -1582,9 +1550,6 @@ namespace calco
         /// <param name="b">Second value to multiply.</param>
         /// <param name="c">Third value to add to the product of a and b.</param>
         /// <returns>The componentwise multiply-add of the inputs.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 mad(in float3 a, in float3 b, in float3 c) { return a * b + c; }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a mad(in float3a a, in float3a b, in float3a c) { return a * b + c; }
 
@@ -1737,9 +1702,6 @@ namespace calco
         /// <param name="b">Upper bound of the interval.</param>
         /// <returns>The componentwise clamping of the input x into the interval [a, b].</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 clamp(in float3 x, in float3 a, in float3 b) { return max(a, min(b, x)); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a clamp(in float3a x, in float3a a, in float3a b) { return max(a, min(b, x)); }
 
         /// <summary>Returns the result of a componentwise clamping of the value x into the interval [a, b], where x, a and b are float4 vectors.</summary>
@@ -1774,9 +1736,6 @@ namespace calco
         /// <summary>Returns the result of a componentwise clamping of the float3 vector x into the interval [0, 1].</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The componentwise clamping of the input into the interval [0, 1].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 saturate(in float3 x) { return clamp(x, new float3(0.0f), new float3(1.0f)); }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a saturate(in float3a x) { return clamp(x, new float3a(0.0f), new float3a(1.0f)); }
 
@@ -1843,16 +1802,6 @@ namespace calco
         public static float2 abs(in float2 x)
         {
             return float2(abs(x.x), abs(x.y));
-            //return asfloat(asuint(x) & 0x7FFFFFFF);
-        }
-
-        /// <summary>Returns the componentwise absolute value of a float3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise absolute value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 abs(in float3 x)
-        {
-            return float3(abs(x.x), abs(x.y), abs(x.z));
             //return asfloat(asuint(x) & 0x7FFFFFFF);
         }
 
@@ -1963,16 +1912,6 @@ namespace calco
         /// <param name="x">The first vector.</param>
         /// <param name="y">The second vector.</param>
         /// <returns>The dot product of two vectors.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float dot(in float3 x, in float3 y)
-        {
-        #if ENABLE_IL2CPP
-            return vecILMathFloat3Dot(in x, in y);
-        #else
-            return x.x * y.x + x.y * y.y + x.z * y.z;
-        #endif
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float dot(in float3a x, in float3a y)
         {
@@ -2770,17 +2709,6 @@ namespace calco
         /// <param name="x">Input value.</param>
         /// <returns>The componentwise round down to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 floor(in float3 x)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathFloor3(in x, out var res);
-            return res;
-        #else
-            return new float3(floor(x.x), floor(x.y), floor(x.z));
-        #endif
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a floor(in float3a x)
         {
         #if ENABLE_IL2CPP
@@ -2868,17 +2796,6 @@ namespace calco
         /// <param name="x">Input value.</param>
         /// <returns>The componentwise round up to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 ceil(in float3 x)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathCeil3(in x, out var res);
-            return res;
-        #else
-            return new float3(ceil(x.x), ceil(x.y), ceil(x.z));
-        #endif
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a ceil(in float3a x)
         {
         #if ENABLE_IL2CPP
@@ -2947,17 +2864,6 @@ namespace calco
         /// <summary>Returns the result of rounding each component of a float3 vector value to the nearest integral value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The componentwise round to nearest integral value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 round(in float3 x)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathRound3(in x, out var res);
-            return res;
-        #else
-            return new float3(round(x.x), round(x.y), round(x.z));
-        #endif
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a round(in float3a x)
         {
@@ -3050,17 +2956,6 @@ namespace calco
         /// <param name="x">Input value.</param>
         /// <returns>The componentwise truncation of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 trunc(in float3 x)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathTrunc3(in x, out var res);
-            return res;
-        #else
-            return new float3(trunc(x.x), trunc(x.y), trunc(x.z));
-        #endif
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a trunc(in float3a x)
         {
         #if ENABLE_IL2CPP
@@ -3108,7 +3003,7 @@ namespace calco
         /// <param name="x">Input value.</param>
         /// <returns>The componentwise fractional part of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 frac(in float3 x) { return x - floor(x); }
+        public static float3a frac(in float3a x) { return x - floor(x); }
 
         /// <summary>Returns the componentwise fractional parts of a float4 vector.</summary>
         /// <param name="x">Input value.</param>
@@ -3140,9 +3035,6 @@ namespace calco
         /// <summary>Returns the componentwise reciprocal a float3 vector.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The componentwise reciprocal of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 rcp(in float3 x) { return 1.0f / x; }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a rcp(in float3a x) { return 1.0f / x; }
 
@@ -3200,7 +3092,7 @@ namespace calco
         /// <param name="x">Input value.</param>
         /// <returns>The componentwise sign of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 sign(in float3 x) { return new float3(sign(x.x), sign(x.y), sign(x.z)); }
+        public static float3a sign(in float3a x) { return new float3a(sign(x.x), sign(x.y), sign(x.z)); }
 
         /// <summary>Returns the componentwise sign of a float4 value. 1.0f for positive components, 0.0f for zero components and -1.0f for negative components.</summary>
         /// <param name="x">Input value.</param>
@@ -3219,7 +3111,7 @@ namespace calco
 
         /// <summary>Returns the componentwise sign of a float3 value. 1.0f for positive components, 1.0f otherwise.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 signnozero(in float3 x) { return new float3(signnozero(x.x), signnozero(x.y), signnozero(x.z)); }
+        public static float3a signnozero(in float3a x) { return new float3a(signnozero(x.x), signnozero(x.y), signnozero(x.z)); }
 
         /// <summary>Returns the componentwise sign of a float4 value. 1.0f for positive components, 1.0f otherwise..</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3737,7 +3629,7 @@ namespace calco
         /// <param name="i">Output value containing integral part of x.</param>
         /// <returns>The componentwise fractional part of x.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 modf(in float3 x, out float3 i) { i = trunc(x); return x - i; }
+        public static float3a modf(in float3a x, out float3a i) { i = trunc(x); return x - i; }
 
         /// <summary>
         /// Performs a componentwise split of a float4 vector into an integral part i and a fractional part that gets returned.
@@ -3781,17 +3673,6 @@ namespace calco
         /// <summary>Returns the componentwise square root of a float3 vector.</summary>
         /// <param name="x">Value to use when computing square root.</param>
         /// <returns>The componentwise square root.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 sqrt(in float3 x)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathSqrt3(in x, out var res);
-            return res;
-        #else
-            return new float3(sqrt(x.x), sqrt(x.y), sqrt(x.z));
-        #endif
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a sqrt(in float3a x)
         {
@@ -3860,17 +3741,6 @@ namespace calco
         /// <param name="x">Value to use when computing reciprocal square root.</param>
         /// <returns>The componentwise reciprocal square root.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 rsqrt(in float3 x)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathRsqrt3(in x, out var res);
-            return res;
-        #else
-            return 1.0f / sqrt(x);
-        #endif
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a rsqrt(in float3a x)
         {
         #if ENABLE_IL2CPP
@@ -3911,9 +3781,6 @@ namespace calco
         /// <summary>Returns a normalized version of the float3 vector x by scaling it by 1 / length(x).</summary>
         /// <param name="x">Vector to normalize.</param>
         /// <returns>The normalized vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 normalize(in float3 x) { return rsqrt(dot(x, x)) * x; }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a normalize(in float3a x) { return rsqrt(dot(x, x)) * x; }
 
@@ -3960,13 +3827,6 @@ namespace calco
         /// <param name="defaultvalue">Vector to return if normalized vector is not finite.</param>
         /// <returns>The normalized vector or the default value if the normalized vector is not finite.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 normalizesafe(in float3 x, in float3 defaultvalue = new float3())
-        {
-            float len = math.dot(x, x);
-            return math.select(defaultvalue, x * math.rsqrt(len), len > FLT_MIN_NORMAL);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a normalizesafe(in float3a x, in float3a defaultvalue = new float3a())
         {
             float len = math.dot(x, x);
@@ -4004,9 +3864,6 @@ namespace calco
         /// <param name="x">Vector to use when computing length.</param>
         /// <returns>Length of vector x.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float length(in float3 x) { return sqrt(dot(x, x)); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float length(in float3a x) { return sqrt(dot(x, x)); }
 
         /// <summary>Returns the length of a float4 vector.</summary>
@@ -4030,9 +3887,6 @@ namespace calco
         /// <summary>Returns the squared length of a float3 vector.</summary>
         /// <param name="x">Vector to use when computing squared length.</param>
         /// <returns>Squared length of vector x.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float lengthsq(in float3 x) { return dot(x, x); }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float lengthsq(in float3a x) { return dot(x, x); }
 
@@ -4062,9 +3916,6 @@ namespace calco
         /// <param name="y">Second vector to use in distance computation.</param>
         /// <returns>The distance between x and y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float distance(in float3 x, in float3 y) { return length(y - x); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float distance(in float3a x, in float3a y) { return length(y - x); }
 
         /// <summary>Returns the distance between two float4 vectors.</summary>
@@ -4093,9 +3944,6 @@ namespace calco
         /// <param name="y">Second vector to use in distance computation.</param>
         /// <returns>The squared distance between x and y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float distancesq(in float3 x, in float3 y) { return lengthsq(y - x); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float distancesq(in float3a x, in float3a y) { return lengthsq(y - x); }
 
         /// <summary>Returns the squared distance between two float4 vectors.</summary>
@@ -4114,17 +3962,6 @@ namespace calco
         /// <param name="x">First vector to use in cross product.</param>
         /// <param name="y">Second vector to use in cross product.</param>
         /// <returns>The cross product of x and y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 cross(in float3 x, in float3 y)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathFloat3Cross(in x, in y, out var res);
-            return res;
-        #else
-            return (x * y.yzx - x.yzx * y).yzx;
-        #endif
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a cross(in float3a x, in float3a y)
         {
@@ -4165,13 +4002,6 @@ namespace calco
         /// <param name="b">The maximum range of the x parameter.</param>
         /// <param name="x">The value to be interpolated.</param>
         /// <returns>Returns component values camped to the range [0, 1].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 smoothstep(in float3 a, in float3 b, in float3 x)
-        {
-            var t = saturate((x - a) / (b - a));
-            return t * t * (3.0f - (2.0f * t));
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a smoothstep(in float3a a, in float3a b, in float3a x)
         {
@@ -4589,9 +4419,6 @@ namespace calco
         /// <param name="c">Bool value to choose between a and b.</param>
         /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 select(in float3 a, in float3 b, bool c) { return c ? b : a; }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a select(in float3a a, in float3a b, bool c) { return c ? b : a; }
 
         /// <summary>Returns b if c is true, a otherwise.</summary>
@@ -4657,9 +4484,6 @@ namespace calco
         /// <param name="x">Vector of values to compare against threshold y.</param>
         /// <returns>1 if the componentwise comparison x &gt;= y is true, otherwise 0.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 step(in float3 y, in float3 x) { return select(float3(0.0f), float3(1.0f), x >= y); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a step(in float3a y, in float3a x) { return select(float3a(0.0f), float3a(1.0f), x >= y); }
 
         /// <summary>Returns the result of a componentwise step function where each component is 1.0f when x &gt;= y and 0.0f otherwise.</summary>
@@ -4681,9 +4505,6 @@ namespace calco
         /// <param name="i">Incident vector.</param>
         /// <param name="n">Normal vector.</param>
         /// <returns>Reflection vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 reflect(in float3 i, in float3 n) { return i - 2f * n * dot(i, n); }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a reflect(in float3a i, in float3a n) { return i - 2f * n * dot(i, n); }
 
@@ -4713,14 +4534,6 @@ namespace calco
         /// <param name="n">Normal vector.</param>
         /// <param name="eta">Index of refraction.</param>
         /// <returns>Refraction vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 refract(in float3 i, in float3 n, float eta)
-        {
-            float ni = dot(n, i);
-            float k = 1.0f - eta * eta * (1.0f - ni * ni);
-            return select(0.0f, eta * i - (eta * ni + sqrt(k)) * n, k >= 0);
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a refract(in float3a i, in float3a n, float eta)
         {
@@ -4773,12 +4586,6 @@ namespace calco
         /// <param name="a">Vector to project.</param>
         /// <param name="b">Non-zero vector to project onto.</param>
         /// <returns>Vector projection of a onto b.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 project(in float3 a, in float3 b)
-        {
-            return (dot(a, b) / dot(b, b)) * b;
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a project(in float3a a, in float3a b)
         {
@@ -4838,14 +4645,6 @@ namespace calco
         /// <param name="defaultValue">Default value to return if projection is not finite.</param>
         /// <returns>Vector projection of a onto b or the default value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 projectsafe(in float3 a, in float3 b, in float3 defaultValue = new float3())
-        {
-            var proj = project(a, b);
-
-            return select(defaultValue, proj, all(isfinite(proj)));
-        }
- 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a projectsafe(in float3a a, in float3a b, in float3a defaultValue = new float3a())
         {
             var proj = project(a, b);
@@ -4887,9 +4686,6 @@ namespace calco
         /// <param name="i">First vector in direction comparison.</param>
         /// <param name="ng">Second vector in direction comparison.</param>
         /// <returns>-n if i and ng point in the same direction; otherwise return n unchanged.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 faceforward(in float3 n, in float3 i, in float3 ng) { return select(n, -n, dot(ng, i) >= 0.0f); }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a faceforward(in float3a n, in float3a i, in float3a ng) { return select(n, -n, dot(ng, i) >= 0.0f); }
 
@@ -5962,9 +5758,6 @@ namespace calco
         /// <param name="x">Vector containing angles in degrees.</param>
         /// <returns>Vector containing angles converted to radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 radians(in float3 x) { return x * 0.0174532925f; }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a radians(in float3a x) { return x * 0.0174532925f; }
 
         /// <summary>Returns the result of a componentwise conversion of a float4 vector from degrees to radians.</summary>
@@ -5989,9 +5782,6 @@ namespace calco
         /// <summary>Returns the result of a componentwise conversion of a float3 vector from radians to degrees.</summary>
         /// <param name="x">Vector containing angles in radians.</param>
         /// <returns>Vector containing angles converted to degrees.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 degrees(in float3 x) { return x * 57.295779513f; }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a degrees(in float3a x) { return x * 57.295779513f; }
 
@@ -6200,12 +5990,6 @@ namespace calco
         /// </summary>
         /// <param name="x">Value to square.</param>
         /// <returns>Returns the square of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 square(in float3 x)
-        {
-            return x * x;
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a square(in float3a x)
         {
@@ -6524,7 +6308,7 @@ namespace calco
         /// <param name="x">The single precision float vector.</param>
         /// <returns>The half precision float vector representation of the single precision float vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ushort4 f32tof16(in float3 x)
+        public static ushort4 f32tof16(in float3a x)
         {
         #if ENABLE_IL2CPP
             vecILMathF32tof16_3(x, out uint2 res);
@@ -6592,17 +6376,17 @@ namespace calco
         /// <param name="normal">Unit length normal vector.</param>
         /// <param name="basis1">Output unit length vector, orthogonal to normal vector.</param>
         /// <param name="basis2">Output unit length vector, orthogonal to normal vector and basis1.</param>
-        public static void orthonormal_basis(in float3 normal, out float3 basis1, out float3 basis2)
+        public static void orthonormal_basis(in float3a normal, out float3a basis1, out float3a basis2)
         {
             var sign = normal.z >= 0.0f ? 1.0f : -1.0f;
             var a = -1.0f / (sign + normal.z);
             var b = normal.x * normal.y * a;
-            basis1.x = 1.0f + sign * normal.x * normal.x * a;
-            basis1.y = sign * b;
-            basis1.z = -sign * normal.x;
-            basis2.x = b;
-            basis2.y = sign + normal.y * normal.y * a;
-            basis2.z = -normal.y;
+            basis1 = float3a(1.0f + sign * normal.x * normal.x * a,
+                             sign * b,
+                             -sign * normal.x);
+            basis2 = float3a(b,
+                             sign + normal.y * normal.y * a,
+                             basis2.z = -normal.y);
         }
 
         /// <summary>Change the sign of x based on the most significant bit of y [msb(y) ? -x : x].</summary>
@@ -7032,7 +6816,7 @@ namespace calco
         /// <param name="s">Scaling coefficients for each column.</param>
         /// <returns>The scaled matrix.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3ax3 mulScale(in float3ax3 m, in float3 s) => new float3ax3(m.c0 * s.x, m.c1 * s.y, m.c2 * s.z);
+        public static float3ax3 mulScale(in float3ax3 m, in float3a s) => new float3ax3(m.c0 * s.x, m.c1 * s.y, m.c2 * s.z);
 
         /// <summary>
         /// Matrix rows multiplied by scale components

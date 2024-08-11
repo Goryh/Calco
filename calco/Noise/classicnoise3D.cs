@@ -52,14 +52,14 @@ namespace calco
             gx1 -= sz1 * (step(0.0f, gx1) - 0.5f);
             gy1 -= sz1 * (step(0.0f, gy1) - 0.5f);
 
-            float3 g000 = float3(gx0.x, gy0.x, gz0.x);
-            float3 g100 = float3(gx0.y, gy0.y, gz0.y);
-            float3 g010 = float3(gx0.z, gy0.z, gz0.z);
-            float3 g110 = float3(gx0.w, gy0.w, gz0.w);
-            float3 g001 = float3(gx1.x, gy1.x, gz1.x);
-            float3 g101 = float3(gx1.y, gy1.y, gz1.y);
-            float3 g011 = float3(gx1.z, gy1.z, gz1.z);
-            float3 g111 = float3(gx1.w, gy1.w, gz1.w);
+            float3a g000 = float3a(gx0.x, gy0.x, gz0.x);
+            float3a g100 = float3a(gx0.y, gy0.y, gz0.y);
+            float3a g010 = float3a(gx0.z, gy0.z, gz0.z);
+            float3a g110 = float3a(gx0.w, gy0.w, gz0.w);
+            float3a g001 = float3a(gx1.x, gy1.x, gz1.x);
+            float3a g101 = float3a(gx1.y, gy1.y, gz1.y);
+            float3a g011 = float3a(gx1.z, gy1.z, gz1.z);
+            float3a g111 = float3a(gx1.w, gy1.w, gz1.w);
 
             float4 norm0 = taylorInvSqrt(float4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)));
             g000 *= norm0.x;
@@ -73,12 +73,12 @@ namespace calco
             g111 *= norm1.w;
 
             float n000 = dot(g000, Pf0);
-            float n100 = dot(g100, float3(Pf1.x, Pf0.yz));
-            float n010 = dot(g010, float3(Pf0.x, Pf1.y, Pf0.z));
-            float n110 = dot(g110, float3(Pf1.xy, Pf0.z));
-            float n001 = dot(g001, float3(Pf0.xy, Pf1.z));
-            float n101 = dot(g101, float3(Pf1.x, Pf0.y, Pf1.z));
-            float n011 = dot(g011, float3(Pf0.x, Pf1.yz));
+            float n100 = dot(g100, float3a(Pf1.x, Pf0.yz));
+            float n010 = dot(g010, float3a(Pf0.x, Pf1.y, Pf0.z));
+            float n110 = dot(g110, float3a(Pf1.xy, Pf0.z));
+            float n001 = dot(g001, float3a(Pf0.xy, Pf1.z));
+            float n101 = dot(g101, float3a(Pf1.x, Pf0.y, Pf1.z));
+            float n011 = dot(g011, float3a(Pf0.x, Pf1.yz));
             float n111 = dot(g111, Pf1);
 
             float3 fade_xyz = fade(Pf0);
@@ -122,14 +122,14 @@ namespace calco
             gx1 -= sz1 * (step(0.0f, gx1) - 0.5f);
             gy1 -= sz1 * (step(0.0f, gy1) - 0.5f);
 
-            float3 g000 = float3(gx0.x, gy0.x, gz0.x);
-            float3 g100 = float3(gx0.y, gy0.y, gz0.y);
-            float3 g010 = float3(gx0.z, gy0.z, gz0.z);
-            float3 g110 = float3(gx0.w, gy0.w, gz0.w);
-            float3 g001 = float3(gx1.x, gy1.x, gz1.x);
-            float3 g101 = float3(gx1.y, gy1.y, gz1.y);
-            float3 g011 = float3(gx1.z, gy1.z, gz1.z);
-            float3 g111 = float3(gx1.w, gy1.w, gz1.w);
+            float3a g000 = float3a(gx0.x, gy0.x, gz0.x);
+            float3a g100 = float3a(gx0.y, gy0.y, gz0.y);
+            float3a g010 = float3a(gx0.z, gy0.z, gz0.z);
+            float3a g110 = float3a(gx0.w, gy0.w, gz0.w);
+            float3a g001 = float3a(gx1.x, gy1.x, gz1.x);
+            float3a g101 = float3a(gx1.y, gy1.y, gz1.y);
+            float3a g011 = float3a(gx1.z, gy1.z, gz1.z);
+            float3a g111 = float3a(gx1.w, gy1.w, gz1.w);
 
             float4 norm0 = taylorInvSqrt(float4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)));
             g000 *= norm0.x;
@@ -143,12 +143,12 @@ namespace calco
             g111 *= norm1.w;
 
             float n000 = dot(g000, Pf0);
-            float n100 = dot(g100, float3(Pf1.x, Pf0.yz));
-            float n010 = dot(g010, float3(Pf0.x, Pf1.y, Pf0.z));
-            float n110 = dot(g110, float3(Pf1.xy, Pf0.z));
-            float n001 = dot(g001, float3(Pf0.xy, Pf1.z));
-            float n101 = dot(g101, float3(Pf1.x, Pf0.y, Pf1.z));
-            float n011 = dot(g011, float3(Pf0.x, Pf1.yz));
+            float n100 = dot(g100, float3a(Pf1.x, Pf0.yz));
+            float n010 = dot(g010, float3a(Pf0.x, Pf1.y, Pf0.z));
+            float n110 = dot(g110, float3a(Pf1.xy, Pf0.z));
+            float n001 = dot(g001, float3a(Pf0.xy, Pf1.z));
+            float n101 = dot(g101, float3a(Pf1.x, Pf0.y, Pf1.z));
+            float n011 = dot(g011, float3a(Pf0.x, Pf1.yz));
             float n111 = dot(g111, Pf1);
 
             float3 fade_xyz = fade(Pf0);

@@ -638,11 +638,11 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static quaternion unitexp(in quaternion q)
         {
-            float v_rcp_len = rsqrt(dot(q.value.xyz, q.value.xyz));
+            float v_rcp_len = rsqrt(dot(q.value.xyza, q.value.xyza));
             float v_len = rcp(v_rcp_len);
             float sin_v_len, cos_v_len;
             sincos(v_len, out sin_v_len, out cos_v_len);
-            return quaternion(float4(q.value.xyz * v_rcp_len * sin_v_len, cos_v_len));
+            return quaternion(float4(q.value.xyza * v_rcp_len * sin_v_len, cos_v_len));
         }
 
         /// <summary>Returns the natural exponent of a quaternion.</summary>
@@ -651,11 +651,11 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static quaternion exp(in quaternion q)
         {
-            float v_rcp_len = rsqrt(dot(q.value.xyz, q.value.xyz));
+            float v_rcp_len = rsqrt(dot(q.value.xyza, q.value.xyza));
             float v_len = rcp(v_rcp_len);
             float sin_v_len, cos_v_len;
             sincos(v_len, out sin_v_len, out cos_v_len);
-            return quaternion(float4(q.value.xyz * v_rcp_len * sin_v_len, cos_v_len) * exp(q.value.w));
+            return quaternion(float4(q.value.xyza * v_rcp_len * sin_v_len, cos_v_len) * exp(q.value.w));
         }
 
         /// <summary>Returns the natural logarithm of a unit length quaternion.</summary>
@@ -666,7 +666,7 @@ namespace calco
         {
             float w = clamp(q.value.w, -1.0f, 1.0f);
             float s = acos(w) * rsqrt(1.0f - w*w);
-            return quaternion(float4(q.value.xyz * s, 0.0f));
+            return quaternion(float4(q.value.xyza * s, 0.0f));
         }
 
         /// <summary>Returns the natural logarithm of a quaternion.</summary>
@@ -675,11 +675,11 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static quaternion log(in quaternion q)
         {
-            float v_len_sq = dot(q.value.xyz, q.value.xyz);
+            float v_len_sq = dot(q.value.xyza, q.value.xyza);
             float q_len_sq = v_len_sq + q.value.w*q.value.w;
 
             float s = acos(clamp(q.value.w * rsqrt(q_len_sq), -1.0f, 1.0f)) * rsqrt(v_len_sq);
-            return quaternion(float4(q.value.xyz * s, 0.5f * log(q_len_sq)));
+            return quaternion(float4(q.value.xyza * s, 0.5f * log(q_len_sq)));
         }
 
         /// <summary>Returns the result of transforming the quaternion b by the quaternion a.</summary>

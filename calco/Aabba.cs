@@ -98,7 +98,7 @@ namespace calco
 			[MethodImpl(MethodImplOptions.AggressiveInlining)] 
 			get
 			{
-				float3 diff = max - min;
+				var diff = max - min;
 				return 2 * dot(diff, diff.yzx);
 			}
 		}

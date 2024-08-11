@@ -315,7 +315,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool IsNormalized()
 		{
-			float ll = lengthsq(normal.xyz);
+			float ll = lengthsq(normala);
 			const float lowerBound = 0.999f * 0.999f;
 			const float upperBound = 1.001f * 1.001f;
 

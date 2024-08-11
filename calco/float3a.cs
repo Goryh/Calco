@@ -220,6 +220,13 @@ namespace calco
         #endif
         }
 
+        // allow this operator to support "float3 += float3a" sentences
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a operator + (in float3 lhs, in float3a rhs)
+        {
+            return (float3a)lhs + rhs;
+        }
+
         /// <summary>Returns the result of a componentwise addition operation on a float3a vector and a float value.</summary>
         /// <param name="lhs">Left hand side float3a to use to compute componentwise addition.</param>
         /// <param name="rhs">Right hand side float to use to compute componentwise addition.</param>

@@ -85,10 +85,10 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float3x4(bool v)
         {
-            this.c0 = math.select(new float3(0.0f), new float3(1.0f), v);
-            this.c1 = math.select(new float3(0.0f), new float3(1.0f), v);
-            this.c2 = math.select(new float3(0.0f), new float3(1.0f), v);
-            this.c3 = math.select(new float3(0.0f), new float3(1.0f), v);
+            this.c0 = math.select(new float3a(0.0f), new float3a(1.0f), v);
+            this.c1 = math.select(new float3a(0.0f), new float3a(1.0f), v);
+            this.c2 = math.select(new float3a(0.0f), new float3a(1.0f), v);
+            this.c3 = math.select(new float3a(0.0f), new float3a(1.0f), v);
         }
 
         /// <summary>Constructs a float3x4 matrix from a single int value by converting it to float and assigning it to every component.</summary>
