@@ -132,24 +132,6 @@ namespace calco
         {
         }
 
-        /// <summary>Constructs a float2 vector from a single double value by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float2</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float2(double v)
-        {
-            this.x = (float)v;
-            this.y = (float)v;
-        }
-
-        /// <summary>Constructs a float2 vector from a double2 vector by componentwise conversion.</summary>
-        /// <param name="v">double2 to convert to float2</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float2(double2 v)
-        {
-            this.x = (float)v.x;
-            this.y = (float)v.y;
-        }
-
 
         /// <summary>Implicitly converts a single float value to a float2 vector by assigning it to every component.</summary>
         /// <param name="v">float to convert to float2</param>
@@ -204,18 +186,6 @@ namespace calco
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator float2(half2 v) { return new float2(v); }
-
-        /// <summary>Explicitly converts a single double value to a float2 vector by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator float2(double v) { return new float2(v); }
-
-        /// <summary>Explicitly converts a double2 vector to a float2 vector by componentwise conversion.</summary>
-        /// <param name="v">double2 to convert to float2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator float2(double2 v) { return new float2(v); }
 
 
         /// <summary>Returns the result of a componentwise multiplication operation on two float2 vectors.</summary>
@@ -934,17 +904,6 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 float2(half2 v) { return new float2(v); }
 
-        /// <summary>Returns a float2 vector constructed from a single double value by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 float2(double v) { return new float2(v); }
-
-        /// <summary>Return a float2 vector constructed from a double2 vector by componentwise conversion.</summary>
-        /// <param name="v">double2 to convert to float2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 float2(double2 v) { return new float2(v); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 perpendicular(in float2 v) { return new float2(0f - v.y, v.x); }

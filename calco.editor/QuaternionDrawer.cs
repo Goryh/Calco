@@ -10,9 +10,9 @@ namespace calco.Editor
             return property.FindPropertyRelative("value");
         }
 
-        protected override double4 Normalize(double4 value)
+        protected override float4 Normalize(float4 value)
         {
-            return math.normalizesafe(new quaternion((float4)value)).value;
+            return math.normalizesafe(new quaternion(value)).value;
         }
     }
 }

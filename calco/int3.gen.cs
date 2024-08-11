@@ -148,26 +148,6 @@ namespace calco
             this.z = (int)v.z;
         }
 
-        /// <summary>Constructs a int3 vector from a single double value by converting it to int and assigning it to every component.</summary>
-        /// <param name="v">double to convert to int3</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int3(double v)
-        {
-            this.x = (int)v;
-            this.y = (int)v;
-            this.z = (int)v;
-        }
-
-        /// <summary>Constructs a int3 vector from a double3 vector by componentwise conversion.</summary>
-        /// <param name="v">double3 to convert to int3</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int3(double3 v)
-        {
-            this.x = (int)v.x;
-            this.y = (int)v.y;
-            this.z = (int)v.z;
-        }
-
 
         /// <summary>Implicitly converts a single int value to a int3 vector by assigning it to every component.</summary>
         /// <param name="v">int to convert to int3</param>
@@ -210,18 +190,6 @@ namespace calco
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator int3(float3 v) { return new int3(v); }
-
-        /// <summary>Explicitly converts a single double value to a int3 vector by converting it to int and assigning it to every component.</summary>
-        /// <param name="v">double to convert to int3</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator int3(double v) { return new int3(v); }
-
-        /// <summary>Explicitly converts a double3 vector to a int3 vector by componentwise conversion.</summary>
-        /// <param name="v">double3 to convert to int3</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator int3(double3 v) { return new int3(v); }
 
 
         /// <summary>Returns the result of a componentwise multiplication operation on two int3 vectors.</summary>
@@ -1804,18 +1772,6 @@ namespace calco
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int3 int3(float3 v) { return new int3(v); }
-
-        /// <summary>Returns a int3 vector constructed from a single double value by converting it to int and assigning it to every component.</summary>
-        /// <param name="v">double to convert to int3</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int3 int3(double v) { return new int3(v); }
-
-        /// <summary>Return a int3 vector constructed from a double3 vector by componentwise conversion.</summary>
-        /// <param name="v">double3 to convert to int3</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int3 int3(double3 v) { return new int3(v); }
 
         /// <summary>Returns a uint hash code of a int3 vector.</summary>
         /// <param name="v">Vector value to hash.</param>

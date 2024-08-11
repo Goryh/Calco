@@ -29,9 +29,9 @@ namespace calco.Editor
             // the number of element child properties
             readonly int m_NumElements;
             // per child property; value is null if there are multiple different values
-            readonly double?[] m_PreNormalizedValues;
+            readonly float?[] m_PreNormalizedValues;
             // per target; used to revert actual values for each object after displaying pre-normalized values
-            readonly Dictionary<SerializedProperty, double4> m_PostNormalizedValues = new Dictionary<SerializedProperty, double4>();
+            readonly Dictionary<SerializedProperty, float4> m_PostNormalizedValues = new Dictionary<SerializedProperty, float4>();
 
             public VectorPropertyGUIData(SerializedProperty property)
             {
@@ -51,7 +51,7 @@ namespace calco.Editor
                 Valid = true;
                 m_NumElements = elementPaths.Count;
                 m_ElementPaths = elementPaths;
-                m_PreNormalizedValues = elementPaths.Select(p => (double?)null).ToArray();
+                m_PreNormalizedValues = elementPaths.Select(p => (float?)null).ToArray();
 
                 UpdatePreNormalizedValues();
                 UpdatePostNormalizedValues();
@@ -62,10 +62,10 @@ namespace calco.Editor
                 m_PostNormalizedValues.Clear();
                 foreach (var target in m_VectorProperty.serializedObject.targetObjects)
                 {
-                    var postNormalizedValue = new double4();
+                    var postNormalizedValue = new float4();
                     var parentProperty = new SerializedObject(target).FindProperty(m_VectorProperty.propertyPath);
                     for (var i = 0; i < m_NumElements; ++i)
-                        postNormalizedValue[i] = parentProperty.FindPropertyRelative(m_ElementPaths[i]).doubleValue;
+                        postNormalizedValue[i] = parentProperty.FindPropertyRelative(m_ElementPaths[i]).floatValue;
                     m_PostNormalizedValues[parentProperty] = postNormalizedValue;
                 }
             }
@@ -75,7 +75,7 @@ namespace calco.Editor
                 for (var i = 0; i < m_NumElements; ++i)
                 {
                     var p = m_VectorProperty.FindPropertyRelative(m_ElementPaths[i]);
-                    m_PreNormalizedValues[i] = p.hasMultipleDifferentValues ? (double?)null : p.doubleValue;
+                    m_PreNormalizedValues[i] = p.hasMultipleDifferentValues ? (float?)null : p.floatValue;
                 }
             }
 
@@ -85,7 +85,7 @@ namespace calco.Editor
                 for (var i = 0; i < m_NumElements; ++i)
                 {
                     if (m_PreNormalizedValues[i] != null)
-                        m_VectorProperty.FindPropertyRelative(m_ElementPaths[i]).doubleValue = m_PreNormalizedValues[i].Value;
+                        m_VectorProperty.FindPropertyRelative(m_ElementPaths[i]).floatValue = m_PreNormalizedValues[i].Value;
                 }
             }
 
@@ -96,25 +96,25 @@ namespace calco.Editor
                     target.Key.serializedObject.Update();
                     for (var i = 0; i < m_NumElements; ++i)
                     {
-                        target.Key.FindPropertyRelative(m_ElementPaths[i]).doubleValue = target.Value[i];
+                        target.Key.FindPropertyRelative(m_ElementPaths[i]).floatValue = target.Value[i];
                         target.Key.serializedObject.ApplyModifiedProperties();
                     }
                 }
                 m_VectorProperty.serializedObject.Update();
             }
 
-            public void PostNormalize(Func<double4, double4> normalize)
+            public void PostNormalize(Func<float4, float4> normalize)
             {
                 m_VectorProperty.serializedObject.ApplyModifiedProperties();
                 foreach (var target in m_PostNormalizedValues)
                 {
                     target.Key.serializedObject.Update();
-                    var postNormalizedValue = new double4();
+                    var postNormalizedValue = new float4();
                     for (var i = 0; i < m_NumElements; ++i)
-                        postNormalizedValue[i] = target.Key.FindPropertyRelative(m_ElementPaths[i]).doubleValue;
+                        postNormalizedValue[i] = target.Key.FindPropertyRelative(m_ElementPaths[i]).floatValue;
                     postNormalizedValue = normalize(normalize(postNormalizedValue));
                     for (var i = 0; i < m_NumElements; ++i)
-                        target.Key.FindPropertyRelative(m_ElementPaths[i]).doubleValue = postNormalizedValue[i];
+                        target.Key.FindPropertyRelative(m_ElementPaths[i]).floatValue = postNormalizedValue[i];
                     target.Key.serializedObject.ApplyModifiedProperties();
                 }
                 UpdatePostNormalizedValues();
@@ -128,7 +128,7 @@ namespace calco.Editor
                     target.Key.serializedObject.Update();
                     for (var i = 0; i < m_NumElements; ++i)
                     {
-                        var serialized = target.Key.FindPropertyRelative(m_ElementPaths[i]).doubleValue;
+                        var serialized = target.Key.FindPropertyRelative(m_ElementPaths[i]).floatValue;
                         if (target.Value[i] != serialized)
                         {
                             UpdatePreNormalizedValues();
@@ -147,7 +147,7 @@ namespace calco.Editor
             return property;
         }
 
-        protected virtual double4 Normalize(double4 value)
+        protected virtual float4 Normalize(float4 value)
         {
             return math.normalizesafe(value);
         }

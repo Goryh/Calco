@@ -280,28 +280,6 @@ namespace calco
         {
         }
 
-        /// <summary>Constructs a float4 vector from a single double value by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float4</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float4(double v)
-        {
-            this.x = (float)v;
-            this.y = (float)v;
-            this.z = (float)v;
-            this.w = (float)v;
-        }
-
-        /// <summary>Constructs a float4 vector from a double4 vector by componentwise conversion.</summary>
-        /// <param name="v">double4 to convert to float4</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float4(double4 v)
-        {
-            this.x = (float)v.x;
-            this.y = (float)v.y;
-            this.z = (float)v.z;
-            this.w = (float)v.w;
-        }
-
 
         /// <summary>Implicitly converts a single float value to a float4 vector by assigning it to every component.</summary>
         /// <param name="v">float to convert to float4</param>
@@ -356,18 +334,6 @@ namespace calco
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator float4(half4 v) { return new float4(v); }
-
-        /// <summary>Explicitly converts a single double value to a float4 vector by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator float4(double v) { return new float4(v); }
-
-        /// <summary>Explicitly converts a double4 vector to a float4 vector by componentwise conversion.</summary>
-        /// <param name="v">double4 to convert to float4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator float4(double4 v) { return new float4(v); }
 
 
         /// <summary>Returns the result of a componentwise multiplication operation on two float4 vectors.</summary>
@@ -4104,18 +4070,6 @@ namespace calco
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 float4(half4 v) { return new float4(v); }
-
-        /// <summary>Returns a float4 vector constructed from a single double value by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 float4(double v) { return new float4(v); }
-
-        /// <summary>Return a float4 vector constructed from a double4 vector by componentwise conversion.</summary>
-        /// <param name="v">double4 to convert to float4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 float4(double4 v) { return new float4(v); }
 
         /// <summary>Returns a uint hash code of a float4 vector.</summary>
         /// <param name="v">Vector value to hash.</param>

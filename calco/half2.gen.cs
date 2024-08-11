@@ -88,25 +88,6 @@ namespace calco
         {
         }
 
-        /// <summary>Constructs a half2 vector from a single double value by converting it to half and assigning it to every component.</summary>
-        /// <param name="v">double to convert to half2</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public half2(double v)
-        {
-            this.x = (half)v;
-            this.y = (half)v;
-        }
-
-        /// <summary>Constructs a half2 vector from a double2 vector by componentwise conversion.</summary>
-        /// <param name="v">double2 to convert to half2</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public half2(double2 v)
-        {
-            this.x = (half)v.x;
-            this.y = (half)v.y;
-        }
-
-
         /// <summary>Implicitly converts a single half value to a half2 vector by assigning it to every component.</summary>
         /// <param name="v">half to convert to half2</param>
         /// <returns>Converted value.</returns>
@@ -124,19 +105,6 @@ namespace calco
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator half2(float2 v) { return new half2(v); }
-
-        /// <summary>Explicitly converts a single double value to a half2 vector by converting it to half and assigning it to every component.</summary>
-        /// <param name="v">double to convert to half2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator half2(double v) { return new half2(v); }
-
-        /// <summary>Explicitly converts a double2 vector to a half2 vector by componentwise conversion.</summary>
-        /// <param name="v">double2 to convert to half2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator half2(double2 v) { return new half2(v); }
-
 
         /// <summary>Returns the result of a componentwise equality operation on two half2 vectors.</summary>
         /// <param name="lhs">Left hand side half2 to use to compute componentwise equality.</param>
@@ -543,18 +511,6 @@ namespace calco
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static half2 half2(float2 v) { return new half2(v); }
-
-        /// <summary>Returns a half2 vector constructed from a single double value by converting it to half and assigning it to every component.</summary>
-        /// <param name="v">double to convert to half2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static half2 half2(double v) { return new half2(v); }
-
-        /// <summary>Return a half2 vector constructed from a double2 vector by componentwise conversion.</summary>
-        /// <param name="v">double2 to convert to half2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static half2 half2(double2 v) { return new half2(v); }
 
         /// <summary>Returns a uint hash code of a half2 vector.</summary>
         /// <param name="v">Vector value to hash.</param>

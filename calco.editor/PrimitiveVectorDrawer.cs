@@ -5,7 +5,6 @@ using UnityEngine;
 namespace calco.Editor
 {
     [CustomPropertyDrawer(typeof(bool2)), CustomPropertyDrawer(typeof(bool3)), CustomPropertyDrawer(typeof(bool4))]
-    [CustomPropertyDrawer(typeof(double2)), CustomPropertyDrawer(typeof(double3)), CustomPropertyDrawer(typeof(double4))]
     [CustomPropertyDrawer(typeof(float2)), CustomPropertyDrawer(typeof(float3)), CustomPropertyDrawer(typeof(float4))]
     [CustomPropertyDrawer(typeof(int2)), CustomPropertyDrawer(typeof(int3)), CustomPropertyDrawer(typeof(int4))]
     [CustomPropertyDrawer(typeof(uint2)), CustomPropertyDrawer(typeof(uint3)), CustomPropertyDrawer(typeof(uint4))]

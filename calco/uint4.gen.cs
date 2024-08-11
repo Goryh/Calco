@@ -213,28 +213,6 @@ namespace calco
             this.w = (uint)v.w;
         }
 
-        /// <summary>Constructs a uint4 vector from a single double value by converting it to uint and assigning it to every component.</summary>
-        /// <param name="v">double to convert to uint4</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public uint4(double v)
-        {
-            this.x = (uint)v;
-            this.y = (uint)v;
-            this.z = (uint)v;
-            this.w = (uint)v;
-        }
-
-        /// <summary>Constructs a uint4 vector from a double4 vector by componentwise conversion.</summary>
-        /// <param name="v">double4 to convert to uint4</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public uint4(double4 v)
-        {
-            this.x = (uint)v.x;
-            this.y = (uint)v.y;
-            this.z = (uint)v.z;
-            this.w = (uint)v.w;
-        }
-
 
         /// <summary>Implicitly converts a single uint value to a uint4 vector by assigning it to every component.</summary>
         /// <param name="v">uint to convert to uint4</param>
@@ -277,18 +255,6 @@ namespace calco
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator uint4(float4 v) { return new uint4(v); }
-
-        /// <summary>Explicitly converts a single double value to a uint4 vector by converting it to uint and assigning it to every component.</summary>
-        /// <param name="v">double to convert to uint4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator uint4(double v) { return new uint4(v); }
-
-        /// <summary>Explicitly converts a double4 vector to a uint4 vector by componentwise conversion.</summary>
-        /// <param name="v">double4 to convert to uint4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator uint4(double4 v) { return new uint4(v); }
 
 
         /// <summary>Returns the result of a componentwise multiplication operation on two uint4 vectors.</summary>
@@ -3972,18 +3938,6 @@ namespace calco
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint4 uint4(float4 v) { return new uint4(v); }
-
-        /// <summary>Returns a uint4 vector constructed from a single double value by converting it to uint and assigning it to every component.</summary>
-        /// <param name="v">double to convert to uint4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint4 uint4(double v) { return new uint4(v); }
-
-        /// <summary>Return a uint4 vector constructed from a double4 vector by componentwise conversion.</summary>
-        /// <param name="v">double4 to convert to uint4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint4 uint4(double4 v) { return new uint4(v); }
 
         /// <summary>Returns a uint hash code of a uint4 vector.</summary>
         /// <param name="v">Vector value to hash.</param>

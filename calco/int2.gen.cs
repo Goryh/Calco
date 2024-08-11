@@ -114,24 +114,6 @@ namespace calco
             this.y = (int)v.y;
         }
 
-        /// <summary>Constructs a int2 vector from a single double value by converting it to int and assigning it to every component.</summary>
-        /// <param name="v">double to convert to int2</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int2(double v)
-        {
-            this.x = (int)v;
-            this.y = (int)v;
-        }
-
-        /// <summary>Constructs a int2 vector from a double2 vector by componentwise conversion.</summary>
-        /// <param name="v">double2 to convert to int2</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int2(double2 v)
-        {
-            this.x = (int)v.x;
-            this.y = (int)v.y;
-        }
-
 
         /// <summary>Implicitly converts a single int value to a int2 vector by assigning it to every component.</summary>
         /// <param name="v">int to convert to int2</param>
@@ -174,18 +156,6 @@ namespace calco
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator int2(float2 v) { return new int2(v); }
-
-        /// <summary>Explicitly converts a single double value to a int2 vector by converting it to int and assigning it to every component.</summary>
-        /// <param name="v">double to convert to int2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator int2(double v) { return new int2(v); }
-
-        /// <summary>Explicitly converts a double2 vector to a int2 vector by componentwise conversion.</summary>
-        /// <param name="v">double2 to convert to int2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator int2(double2 v) { return new int2(v); }
 
 
         /// <summary>Returns the result of a componentwise multiplication operation on two int2 vectors.</summary>
@@ -930,18 +900,6 @@ namespace calco
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int2 int2(float2 v) { return new int2(v); }
-
-        /// <summary>Returns a int2 vector constructed from a single double value by converting it to int and assigning it to every component.</summary>
-        /// <param name="v">double to convert to int2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int2 int2(double v) { return new int2(v); }
-
-        /// <summary>Return a int2 vector constructed from a double2 vector by componentwise conversion.</summary>
-        /// <param name="v">double2 to convert to int2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int2 int2(double2 v) { return new int2(v); }
 
         /// <summary>Returns a uint hash code of a int2 vector.</summary>
         /// <param name="v">Vector value to hash.</param>

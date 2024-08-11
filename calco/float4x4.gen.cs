@@ -107,17 +107,6 @@ namespace calco
             this.c3 = math.select(new float4(0.0f), new float4(1.0f), v);
         }
 
-        /// <summary>Constructs a float4x4 matrix from a bool4x4 matrix by componentwise conversion.</summary>
-        /// <param name="v">bool4x4 to convert to float4x4</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float4x4(bool4x4 v)
-        {
-            this.c0 = math.select(new float4(0.0f), new float4(1.0f), v.c0);
-            this.c1 = math.select(new float4(0.0f), new float4(1.0f), v.c1);
-            this.c2 = math.select(new float4(0.0f), new float4(1.0f), v.c2);
-            this.c3 = math.select(new float4(0.0f), new float4(1.0f), v.c3);
-        }
-
         /// <summary>Constructs a float4x4 matrix from a single int value by converting it to float and assigning it to every component.</summary>
         /// <param name="v">int to convert to float4x4</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -129,17 +118,6 @@ namespace calco
             this.c3 = v;
         }
 
-        /// <summary>Constructs a float4x4 matrix from a int4x4 matrix by componentwise conversion.</summary>
-        /// <param name="v">int4x4 to convert to float4x4</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float4x4(int4x4 v)
-        {
-            this.c0 = v.c0;
-            this.c1 = v.c1;
-            this.c2 = v.c2;
-            this.c3 = v.c3;
-        }
-
         /// <summary>Constructs a float4x4 matrix from a single uint value by converting it to float and assigning it to every component.</summary>
         /// <param name="v">uint to convert to float4x4</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -149,39 +127,6 @@ namespace calco
             this.c1 = v;
             this.c2 = v;
             this.c3 = v;
-        }
-
-        /// <summary>Constructs a float4x4 matrix from a uint4x4 matrix by componentwise conversion.</summary>
-        /// <param name="v">uint4x4 to convert to float4x4</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float4x4(uint4x4 v)
-        {
-            this.c0 = v.c0;
-            this.c1 = v.c1;
-            this.c2 = v.c2;
-            this.c3 = v.c3;
-        }
-
-        /// <summary>Constructs a float4x4 matrix from a single double value by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float4x4</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float4x4(double v)
-        {
-            this.c0 = (float4)v;
-            this.c1 = (float4)v;
-            this.c2 = (float4)v;
-            this.c3 = (float4)v;
-        }
-
-        /// <summary>Constructs a float4x4 matrix from a double4x4 matrix by componentwise conversion.</summary>
-        /// <param name="v">double4x4 to convert to float4x4</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float4x4(double4x4 v)
-        {
-            this.c0 = (float4)v.c0;
-            this.c1 = (float4)v.c1;
-            this.c2 = (float4)v.c2;
-            this.c3 = (float4)v.c3;
         }
 
 
@@ -197,47 +142,17 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator float4x4(bool v) { return new float4x4(v); }
 
-        /// <summary>Explicitly converts a bool4x4 matrix to a float4x4 matrix by componentwise conversion.</summary>
-        /// <param name="v">bool4x4 to convert to float4x4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator float4x4(bool4x4 v) { return new float4x4(v); }
-
         /// <summary>Implicitly converts a single int value to a float4x4 matrix by converting it to float and assigning it to every component.</summary>
         /// <param name="v">int to convert to float4x4</param>
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator float4x4(int v) { return new float4x4(v); }
 
-        /// <summary>Implicitly converts a int4x4 matrix to a float4x4 matrix by componentwise conversion.</summary>
-        /// <param name="v">int4x4 to convert to float4x4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator float4x4(int4x4 v) { return new float4x4(v); }
-
         /// <summary>Implicitly converts a single uint value to a float4x4 matrix by converting it to float and assigning it to every component.</summary>
         /// <param name="v">uint to convert to float4x4</param>
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator float4x4(uint v) { return new float4x4(v); }
-
-        /// <summary>Implicitly converts a uint4x4 matrix to a float4x4 matrix by componentwise conversion.</summary>
-        /// <param name="v">uint4x4 to convert to float4x4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator float4x4(uint4x4 v) { return new float4x4(v); }
-
-        /// <summary>Explicitly converts a single double value to a float4x4 matrix by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float4x4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator float4x4(double v) { return new float4x4(v); }
-
-        /// <summary>Explicitly converts a double4x4 matrix to a float4x4 matrix by componentwise conversion.</summary>
-        /// <param name="v">double4x4 to convert to float4x4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator float4x4(double4x4 v) { return new float4x4(v); }
 
 
         /// <summary>Returns the result of a componentwise multiplication operation on two float4x4 matrices.</summary>
@@ -364,94 +279,6 @@ namespace calco
         public static float4x4 operator -- (float4x4 val) { return new float4x4 (--val.c0, --val.c1, --val.c2, --val.c3); }
 
 
-        /// <summary>Returns the result of a componentwise less than operation on two float4x4 matrices.</summary>
-        /// <param name="lhs">Left hand side float4x4 to use to compute componentwise less than.</param>
-        /// <param name="rhs">Right hand side float4x4 to use to compute componentwise less than.</param>
-        /// <returns>bool4x4 result of the componentwise less than.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator < (float4x4 lhs, float4x4 rhs) { return new bool4x4 (lhs.c0 < rhs.c0, lhs.c1 < rhs.c1, lhs.c2 < rhs.c2, lhs.c3 < rhs.c3); }
-
-        /// <summary>Returns the result of a componentwise less than operation on a float4x4 matrix and a float value.</summary>
-        /// <param name="lhs">Left hand side float4x4 to use to compute componentwise less than.</param>
-        /// <param name="rhs">Right hand side float to use to compute componentwise less than.</param>
-        /// <returns>bool4x4 result of the componentwise less than.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator < (float4x4 lhs, float rhs) { return new bool4x4 (lhs.c0 < rhs, lhs.c1 < rhs, lhs.c2 < rhs, lhs.c3 < rhs); }
-
-        /// <summary>Returns the result of a componentwise less than operation on a float value and a float4x4 matrix.</summary>
-        /// <param name="lhs">Left hand side float to use to compute componentwise less than.</param>
-        /// <param name="rhs">Right hand side float4x4 to use to compute componentwise less than.</param>
-        /// <returns>bool4x4 result of the componentwise less than.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator < (float lhs, float4x4 rhs) { return new bool4x4 (lhs < rhs.c0, lhs < rhs.c1, lhs < rhs.c2, lhs < rhs.c3); }
-
-
-        /// <summary>Returns the result of a componentwise less or equal operation on two float4x4 matrices.</summary>
-        /// <param name="lhs">Left hand side float4x4 to use to compute componentwise less or equal.</param>
-        /// <param name="rhs">Right hand side float4x4 to use to compute componentwise less or equal.</param>
-        /// <returns>bool4x4 result of the componentwise less or equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator <= (float4x4 lhs, float4x4 rhs) { return new bool4x4 (lhs.c0 <= rhs.c0, lhs.c1 <= rhs.c1, lhs.c2 <= rhs.c2, lhs.c3 <= rhs.c3); }
-
-        /// <summary>Returns the result of a componentwise less or equal operation on a float4x4 matrix and a float value.</summary>
-        /// <param name="lhs">Left hand side float4x4 to use to compute componentwise less or equal.</param>
-        /// <param name="rhs">Right hand side float to use to compute componentwise less or equal.</param>
-        /// <returns>bool4x4 result of the componentwise less or equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator <= (float4x4 lhs, float rhs) { return new bool4x4 (lhs.c0 <= rhs, lhs.c1 <= rhs, lhs.c2 <= rhs, lhs.c3 <= rhs); }
-
-        /// <summary>Returns the result of a componentwise less or equal operation on a float value and a float4x4 matrix.</summary>
-        /// <param name="lhs">Left hand side float to use to compute componentwise less or equal.</param>
-        /// <param name="rhs">Right hand side float4x4 to use to compute componentwise less or equal.</param>
-        /// <returns>bool4x4 result of the componentwise less or equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator <= (float lhs, float4x4 rhs) { return new bool4x4 (lhs <= rhs.c0, lhs <= rhs.c1, lhs <= rhs.c2, lhs <= rhs.c3); }
-
-
-        /// <summary>Returns the result of a componentwise greater than operation on two float4x4 matrices.</summary>
-        /// <param name="lhs">Left hand side float4x4 to use to compute componentwise greater than.</param>
-        /// <param name="rhs">Right hand side float4x4 to use to compute componentwise greater than.</param>
-        /// <returns>bool4x4 result of the componentwise greater than.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator > (float4x4 lhs, float4x4 rhs) { return new bool4x4 (lhs.c0 > rhs.c0, lhs.c1 > rhs.c1, lhs.c2 > rhs.c2, lhs.c3 > rhs.c3); }
-
-        /// <summary>Returns the result of a componentwise greater than operation on a float4x4 matrix and a float value.</summary>
-        /// <param name="lhs">Left hand side float4x4 to use to compute componentwise greater than.</param>
-        /// <param name="rhs">Right hand side float to use to compute componentwise greater than.</param>
-        /// <returns>bool4x4 result of the componentwise greater than.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator > (float4x4 lhs, float rhs) { return new bool4x4 (lhs.c0 > rhs, lhs.c1 > rhs, lhs.c2 > rhs, lhs.c3 > rhs); }
-
-        /// <summary>Returns the result of a componentwise greater than operation on a float value and a float4x4 matrix.</summary>
-        /// <param name="lhs">Left hand side float to use to compute componentwise greater than.</param>
-        /// <param name="rhs">Right hand side float4x4 to use to compute componentwise greater than.</param>
-        /// <returns>bool4x4 result of the componentwise greater than.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator > (float lhs, float4x4 rhs) { return new bool4x4 (lhs > rhs.c0, lhs > rhs.c1, lhs > rhs.c2, lhs > rhs.c3); }
-
-
-        /// <summary>Returns the result of a componentwise greater or equal operation on two float4x4 matrices.</summary>
-        /// <param name="lhs">Left hand side float4x4 to use to compute componentwise greater or equal.</param>
-        /// <param name="rhs">Right hand side float4x4 to use to compute componentwise greater or equal.</param>
-        /// <returns>bool4x4 result of the componentwise greater or equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator >= (float4x4 lhs, float4x4 rhs) { return new bool4x4 (lhs.c0 >= rhs.c0, lhs.c1 >= rhs.c1, lhs.c2 >= rhs.c2, lhs.c3 >= rhs.c3); }
-
-        /// <summary>Returns the result of a componentwise greater or equal operation on a float4x4 matrix and a float value.</summary>
-        /// <param name="lhs">Left hand side float4x4 to use to compute componentwise greater or equal.</param>
-        /// <param name="rhs">Right hand side float to use to compute componentwise greater or equal.</param>
-        /// <returns>bool4x4 result of the componentwise greater or equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator >= (float4x4 lhs, float rhs) { return new bool4x4 (lhs.c0 >= rhs, lhs.c1 >= rhs, lhs.c2 >= rhs, lhs.c3 >= rhs); }
-
-        /// <summary>Returns the result of a componentwise greater or equal operation on a float value and a float4x4 matrix.</summary>
-        /// <param name="lhs">Left hand side float to use to compute componentwise greater or equal.</param>
-        /// <param name="rhs">Right hand side float4x4 to use to compute componentwise greater or equal.</param>
-        /// <returns>bool4x4 result of the componentwise greater or equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator >= (float lhs, float4x4 rhs) { return new bool4x4 (lhs >= rhs.c0, lhs >= rhs.c1, lhs >= rhs.c2, lhs >= rhs.c3); }
-
-
         /// <summary>Returns the result of a componentwise unary minus operation on a float4x4 matrix.</summary>
         /// <param name="val">Value to use when computing the componentwise unary minus.</param>
         /// <returns>float4x4 result of the componentwise unary minus.</returns>
@@ -464,51 +291,6 @@ namespace calco
         /// <returns>float4x4 result of the componentwise unary plus.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4x4 operator + (float4x4 val) { return new float4x4 (+val.c0, +val.c1, +val.c2, +val.c3); }
-
-
-        /// <summary>Returns the result of a componentwise equality operation on two float4x4 matrices.</summary>
-        /// <param name="lhs">Left hand side float4x4 to use to compute componentwise equality.</param>
-        /// <param name="rhs">Right hand side float4x4 to use to compute componentwise equality.</param>
-        /// <returns>bool4x4 result of the componentwise equality.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator == (float4x4 lhs, float4x4 rhs) { return new bool4x4 (lhs.c0 == rhs.c0, lhs.c1 == rhs.c1, lhs.c2 == rhs.c2, lhs.c3 == rhs.c3); }
-
-        /// <summary>Returns the result of a componentwise equality operation on a float4x4 matrix and a float value.</summary>
-        /// <param name="lhs">Left hand side float4x4 to use to compute componentwise equality.</param>
-        /// <param name="rhs">Right hand side float to use to compute componentwise equality.</param>
-        /// <returns>bool4x4 result of the componentwise equality.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator == (float4x4 lhs, float rhs) { return new bool4x4 (lhs.c0 == rhs, lhs.c1 == rhs, lhs.c2 == rhs, lhs.c3 == rhs); }
-
-        /// <summary>Returns the result of a componentwise equality operation on a float value and a float4x4 matrix.</summary>
-        /// <param name="lhs">Left hand side float to use to compute componentwise equality.</param>
-        /// <param name="rhs">Right hand side float4x4 to use to compute componentwise equality.</param>
-        /// <returns>bool4x4 result of the componentwise equality.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator == (float lhs, float4x4 rhs) { return new bool4x4 (lhs == rhs.c0, lhs == rhs.c1, lhs == rhs.c2, lhs == rhs.c3); }
-
-
-        /// <summary>Returns the result of a componentwise not equal operation on two float4x4 matrices.</summary>
-        /// <param name="lhs">Left hand side float4x4 to use to compute componentwise not equal.</param>
-        /// <param name="rhs">Right hand side float4x4 to use to compute componentwise not equal.</param>
-        /// <returns>bool4x4 result of the componentwise not equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator != (float4x4 lhs, float4x4 rhs) { return new bool4x4 (lhs.c0 != rhs.c0, lhs.c1 != rhs.c1, lhs.c2 != rhs.c2, lhs.c3 != rhs.c3); }
-
-        /// <summary>Returns the result of a componentwise not equal operation on a float4x4 matrix and a float value.</summary>
-        /// <param name="lhs">Left hand side float4x4 to use to compute componentwise not equal.</param>
-        /// <param name="rhs">Right hand side float to use to compute componentwise not equal.</param>
-        /// <returns>bool4x4 result of the componentwise not equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator != (float4x4 lhs, float rhs) { return new bool4x4 (lhs.c0 != rhs, lhs.c1 != rhs, lhs.c2 != rhs, lhs.c3 != rhs); }
-
-        /// <summary>Returns the result of a componentwise not equal operation on a float value and a float4x4 matrix.</summary>
-        /// <param name="lhs">Left hand side float to use to compute componentwise not equal.</param>
-        /// <param name="rhs">Right hand side float4x4 to use to compute componentwise not equal.</param>
-        /// <returns>bool4x4 result of the componentwise not equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4x4 operator != (float lhs, float4x4 rhs) { return new bool4x4 (lhs != rhs.c0, lhs != rhs.c1, lhs != rhs.c2, lhs != rhs.c3); }
-
 
 
         /// <summary>Returns the float4 element at a specified index.</summary>
@@ -621,47 +403,17 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4x4 float4x4(bool v) { return new float4x4(v); }
 
-        /// <summary>Return a float4x4 matrix constructed from a bool4x4 matrix by componentwise conversion.</summary>
-        /// <param name="v">bool4x4 to convert to float4x4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4x4 float4x4(bool4x4 v) { return new float4x4(v); }
-
         /// <summary>Returns a float4x4 matrix constructed from a single int value by converting it to float and assigning it to every component.</summary>
         /// <param name="v">int to convert to float4x4</param>
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4x4 float4x4(int v) { return new float4x4(v); }
 
-        /// <summary>Return a float4x4 matrix constructed from a int4x4 matrix by componentwise conversion.</summary>
-        /// <param name="v">int4x4 to convert to float4x4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4x4 float4x4(int4x4 v) { return new float4x4(v); }
-
         /// <summary>Returns a float4x4 matrix constructed from a single uint value by converting it to float and assigning it to every component.</summary>
         /// <param name="v">uint to convert to float4x4</param>
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4x4 float4x4(uint v) { return new float4x4(v); }
-
-        /// <summary>Return a float4x4 matrix constructed from a uint4x4 matrix by componentwise conversion.</summary>
-        /// <param name="v">uint4x4 to convert to float4x4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4x4 float4x4(uint4x4 v) { return new float4x4(v); }
-
-        /// <summary>Returns a float4x4 matrix constructed from a single double value by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float4x4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4x4 float4x4(double v) { return new float4x4(v); }
-
-        /// <summary>Return a float4x4 matrix constructed from a double4x4 matrix by componentwise conversion.</summary>
-        /// <param name="v">double4x4 to convert to float4x4</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4x4 float4x4(double4x4 v) { return new float4x4(v); }
 
         /// <summary>Return the result of rotating a float3 vector by a float4x4 matrix</summary>
         /// <param name ="a">Left hand side matrix argument that specifies the rotation.</param>

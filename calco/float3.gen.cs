@@ -173,26 +173,6 @@ namespace calco
             this.z = v.z;
         }
 
-        /// <summary>Constructs a float3 vector from a single double value by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float3</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float3(double v)
-        {
-            this.x = (float)v;
-            this.y = (float)v;
-            this.z = (float)v;
-        }
-
-        /// <summary>Constructs a float3 vector from a double3 vector by componentwise conversion.</summary>
-        /// <param name="v">double3 to convert to float3</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float3(double3 v)
-        {
-            this.x = (float)v.x;
-            this.y = (float)v.y;
-            this.z = (float)v.z;
-        }
-
 
         /// <summary>Implicitly converts a single float value to a float3 vector by assigning it to every component.</summary>
         /// <param name="v">float to convert to float3</param>
@@ -247,18 +227,6 @@ namespace calco
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator float3(half3 v) { return new float3(v); }
-
-        /// <summary>Explicitly converts a single double value to a float3 vector by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float3</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator float3(double v) { return new float3(v); }
-
-        /// <summary>Explicitly converts a double3 vector to a float3 vector by componentwise conversion.</summary>
-        /// <param name="v">double3 to convert to float3</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator float3(double3 v) { return new float3(v); }
 
 
         /// <summary>Returns the result of a componentwise multiplication operation on two float3 vectors.</summary>
@@ -1774,18 +1742,6 @@ namespace calco
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 float3(in half3 v) { return new float3(v); }
-
-        /// <summary>Returns a float3 vector constructed from a single double value by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float3</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 float3(double v) { return new float3(v); }
-
-        /// <summary>Return a float3 vector constructed from a double3 vector by componentwise conversion.</summary>
-        /// <param name="v">double3 to convert to float3</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 float3(double3 v) { return new float3(v); }
 
         /// <summary>Returns a uint hash code of a float3 vector.</summary>
         /// <param name="v">Vector value to hash.</param>

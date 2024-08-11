@@ -71,15 +71,6 @@ namespace calco
             this.c1 = math.select(new float3(0.0f), new float3(1.0f), v);
         }
 
-        /// <summary>Constructs a float3x2 matrix from a bool3x2 matrix by componentwise conversion.</summary>
-        /// <param name="v">bool3x2 to convert to float3x2</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float3x2(bool3x2 v)
-        {
-            this.c0 = math.select(new float3(0.0f), new float3(1.0f), v.c0);
-            this.c1 = math.select(new float3(0.0f), new float3(1.0f), v.c1);
-        }
-
         /// <summary>Constructs a float3x2 matrix from a single int value by converting it to float and assigning it to every component.</summary>
         /// <param name="v">int to convert to float3x2</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -89,15 +80,6 @@ namespace calco
             this.c1 = v;
         }
 
-        /// <summary>Constructs a float3x2 matrix from a int3x2 matrix by componentwise conversion.</summary>
-        /// <param name="v">int3x2 to convert to float3x2</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float3x2(int3x2 v)
-        {
-            this.c0 = v.c0;
-            this.c1 = v.c1;
-        }
-
         /// <summary>Constructs a float3x2 matrix from a single uint value by converting it to float and assigning it to every component.</summary>
         /// <param name="v">uint to convert to float3x2</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -105,33 +87,6 @@ namespace calco
         {
             this.c0 = v;
             this.c1 = v;
-        }
-
-        /// <summary>Constructs a float3x2 matrix from a uint3x2 matrix by componentwise conversion.</summary>
-        /// <param name="v">uint3x2 to convert to float3x2</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float3x2(uint3x2 v)
-        {
-            this.c0 = v.c0;
-            this.c1 = v.c1;
-        }
-
-        /// <summary>Constructs a float3x2 matrix from a single double value by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float3x2</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float3x2(double v)
-        {
-            this.c0 = (float3)v;
-            this.c1 = (float3)v;
-        }
-
-        /// <summary>Constructs a float3x2 matrix from a double3x2 matrix by componentwise conversion.</summary>
-        /// <param name="v">double3x2 to convert to float3x2</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float3x2(double3x2 v)
-        {
-            this.c0 = (float3)v.c0;
-            this.c1 = (float3)v.c1;
         }
 
 
@@ -147,47 +102,17 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator float3x2(bool v) { return new float3x2(v); }
 
-        /// <summary>Explicitly converts a bool3x2 matrix to a float3x2 matrix by componentwise conversion.</summary>
-        /// <param name="v">bool3x2 to convert to float3x2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator float3x2(bool3x2 v) { return new float3x2(v); }
-
         /// <summary>Implicitly converts a single int value to a float3x2 matrix by converting it to float and assigning it to every component.</summary>
         /// <param name="v">int to convert to float3x2</param>
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator float3x2(int v) { return new float3x2(v); }
 
-        /// <summary>Implicitly converts a int3x2 matrix to a float3x2 matrix by componentwise conversion.</summary>
-        /// <param name="v">int3x2 to convert to float3x2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator float3x2(int3x2 v) { return new float3x2(v); }
-
         /// <summary>Implicitly converts a single uint value to a float3x2 matrix by converting it to float and assigning it to every component.</summary>
         /// <param name="v">uint to convert to float3x2</param>
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator float3x2(uint v) { return new float3x2(v); }
-
-        /// <summary>Implicitly converts a uint3x2 matrix to a float3x2 matrix by componentwise conversion.</summary>
-        /// <param name="v">uint3x2 to convert to float3x2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator float3x2(uint3x2 v) { return new float3x2(v); }
-
-        /// <summary>Explicitly converts a single double value to a float3x2 matrix by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float3x2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator float3x2(double v) { return new float3x2(v); }
-
-        /// <summary>Explicitly converts a double3x2 matrix to a float3x2 matrix by componentwise conversion.</summary>
-        /// <param name="v">double3x2 to convert to float3x2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator float3x2(double3x2 v) { return new float3x2(v); }
 
 
         /// <summary>Returns the result of a componentwise multiplication operation on two float3x2 matrices.</summary>
@@ -314,94 +239,6 @@ namespace calco
         public static float3x2 operator -- (float3x2 val) { return new float3x2 (--val.c0, --val.c1); }
 
 
-        /// <summary>Returns the result of a componentwise less than operation on two float3x2 matrices.</summary>
-        /// <param name="lhs">Left hand side float3x2 to use to compute componentwise less than.</param>
-        /// <param name="rhs">Right hand side float3x2 to use to compute componentwise less than.</param>
-        /// <returns>bool3x2 result of the componentwise less than.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator < (float3x2 lhs, float3x2 rhs) { return new bool3x2 (lhs.c0 < rhs.c0, lhs.c1 < rhs.c1); }
-
-        /// <summary>Returns the result of a componentwise less than operation on a float3x2 matrix and a float value.</summary>
-        /// <param name="lhs">Left hand side float3x2 to use to compute componentwise less than.</param>
-        /// <param name="rhs">Right hand side float to use to compute componentwise less than.</param>
-        /// <returns>bool3x2 result of the componentwise less than.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator < (float3x2 lhs, float rhs) { return new bool3x2 (lhs.c0 < rhs, lhs.c1 < rhs); }
-
-        /// <summary>Returns the result of a componentwise less than operation on a float value and a float3x2 matrix.</summary>
-        /// <param name="lhs">Left hand side float to use to compute componentwise less than.</param>
-        /// <param name="rhs">Right hand side float3x2 to use to compute componentwise less than.</param>
-        /// <returns>bool3x2 result of the componentwise less than.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator < (float lhs, float3x2 rhs) { return new bool3x2 (lhs < rhs.c0, lhs < rhs.c1); }
-
-
-        /// <summary>Returns the result of a componentwise less or equal operation on two float3x2 matrices.</summary>
-        /// <param name="lhs">Left hand side float3x2 to use to compute componentwise less or equal.</param>
-        /// <param name="rhs">Right hand side float3x2 to use to compute componentwise less or equal.</param>
-        /// <returns>bool3x2 result of the componentwise less or equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator <= (float3x2 lhs, float3x2 rhs) { return new bool3x2 (lhs.c0 <= rhs.c0, lhs.c1 <= rhs.c1); }
-
-        /// <summary>Returns the result of a componentwise less or equal operation on a float3x2 matrix and a float value.</summary>
-        /// <param name="lhs">Left hand side float3x2 to use to compute componentwise less or equal.</param>
-        /// <param name="rhs">Right hand side float to use to compute componentwise less or equal.</param>
-        /// <returns>bool3x2 result of the componentwise less or equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator <= (float3x2 lhs, float rhs) { return new bool3x2 (lhs.c0 <= rhs, lhs.c1 <= rhs); }
-
-        /// <summary>Returns the result of a componentwise less or equal operation on a float value and a float3x2 matrix.</summary>
-        /// <param name="lhs">Left hand side float to use to compute componentwise less or equal.</param>
-        /// <param name="rhs">Right hand side float3x2 to use to compute componentwise less or equal.</param>
-        /// <returns>bool3x2 result of the componentwise less or equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator <= (float lhs, float3x2 rhs) { return new bool3x2 (lhs <= rhs.c0, lhs <= rhs.c1); }
-
-
-        /// <summary>Returns the result of a componentwise greater than operation on two float3x2 matrices.</summary>
-        /// <param name="lhs">Left hand side float3x2 to use to compute componentwise greater than.</param>
-        /// <param name="rhs">Right hand side float3x2 to use to compute componentwise greater than.</param>
-        /// <returns>bool3x2 result of the componentwise greater than.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator > (float3x2 lhs, float3x2 rhs) { return new bool3x2 (lhs.c0 > rhs.c0, lhs.c1 > rhs.c1); }
-
-        /// <summary>Returns the result of a componentwise greater than operation on a float3x2 matrix and a float value.</summary>
-        /// <param name="lhs">Left hand side float3x2 to use to compute componentwise greater than.</param>
-        /// <param name="rhs">Right hand side float to use to compute componentwise greater than.</param>
-        /// <returns>bool3x2 result of the componentwise greater than.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator > (float3x2 lhs, float rhs) { return new bool3x2 (lhs.c0 > rhs, lhs.c1 > rhs); }
-
-        /// <summary>Returns the result of a componentwise greater than operation on a float value and a float3x2 matrix.</summary>
-        /// <param name="lhs">Left hand side float to use to compute componentwise greater than.</param>
-        /// <param name="rhs">Right hand side float3x2 to use to compute componentwise greater than.</param>
-        /// <returns>bool3x2 result of the componentwise greater than.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator > (float lhs, float3x2 rhs) { return new bool3x2 (lhs > rhs.c0, lhs > rhs.c1); }
-
-
-        /// <summary>Returns the result of a componentwise greater or equal operation on two float3x2 matrices.</summary>
-        /// <param name="lhs">Left hand side float3x2 to use to compute componentwise greater or equal.</param>
-        /// <param name="rhs">Right hand side float3x2 to use to compute componentwise greater or equal.</param>
-        /// <returns>bool3x2 result of the componentwise greater or equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator >= (float3x2 lhs, float3x2 rhs) { return new bool3x2 (lhs.c0 >= rhs.c0, lhs.c1 >= rhs.c1); }
-
-        /// <summary>Returns the result of a componentwise greater or equal operation on a float3x2 matrix and a float value.</summary>
-        /// <param name="lhs">Left hand side float3x2 to use to compute componentwise greater or equal.</param>
-        /// <param name="rhs">Right hand side float to use to compute componentwise greater or equal.</param>
-        /// <returns>bool3x2 result of the componentwise greater or equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator >= (float3x2 lhs, float rhs) { return new bool3x2 (lhs.c0 >= rhs, lhs.c1 >= rhs); }
-
-        /// <summary>Returns the result of a componentwise greater or equal operation on a float value and a float3x2 matrix.</summary>
-        /// <param name="lhs">Left hand side float to use to compute componentwise greater or equal.</param>
-        /// <param name="rhs">Right hand side float3x2 to use to compute componentwise greater or equal.</param>
-        /// <returns>bool3x2 result of the componentwise greater or equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator >= (float lhs, float3x2 rhs) { return new bool3x2 (lhs >= rhs.c0, lhs >= rhs.c1); }
-
-
         /// <summary>Returns the result of a componentwise unary minus operation on a float3x2 matrix.</summary>
         /// <param name="val">Value to use when computing the componentwise unary minus.</param>
         /// <returns>float3x2 result of the componentwise unary minus.</returns>
@@ -414,50 +251,6 @@ namespace calco
         /// <returns>float3x2 result of the componentwise unary plus.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3x2 operator + (float3x2 val) { return new float3x2 (+val.c0, +val.c1); }
-
-
-        /// <summary>Returns the result of a componentwise equality operation on two float3x2 matrices.</summary>
-        /// <param name="lhs">Left hand side float3x2 to use to compute componentwise equality.</param>
-        /// <param name="rhs">Right hand side float3x2 to use to compute componentwise equality.</param>
-        /// <returns>bool3x2 result of the componentwise equality.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator == (float3x2 lhs, float3x2 rhs) { return new bool3x2 (lhs.c0 == rhs.c0, lhs.c1 == rhs.c1); }
-
-        /// <summary>Returns the result of a componentwise equality operation on a float3x2 matrix and a float value.</summary>
-        /// <param name="lhs">Left hand side float3x2 to use to compute componentwise equality.</param>
-        /// <param name="rhs">Right hand side float to use to compute componentwise equality.</param>
-        /// <returns>bool3x2 result of the componentwise equality.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator == (float3x2 lhs, float rhs) { return new bool3x2 (lhs.c0 == rhs, lhs.c1 == rhs); }
-
-        /// <summary>Returns the result of a componentwise equality operation on a float value and a float3x2 matrix.</summary>
-        /// <param name="lhs">Left hand side float to use to compute componentwise equality.</param>
-        /// <param name="rhs">Right hand side float3x2 to use to compute componentwise equality.</param>
-        /// <returns>bool3x2 result of the componentwise equality.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator == (float lhs, float3x2 rhs) { return new bool3x2 (lhs == rhs.c0, lhs == rhs.c1); }
-
-
-        /// <summary>Returns the result of a componentwise not equal operation on two float3x2 matrices.</summary>
-        /// <param name="lhs">Left hand side float3x2 to use to compute componentwise not equal.</param>
-        /// <param name="rhs">Right hand side float3x2 to use to compute componentwise not equal.</param>
-        /// <returns>bool3x2 result of the componentwise not equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator != (float3x2 lhs, float3x2 rhs) { return new bool3x2 (lhs.c0 != rhs.c0, lhs.c1 != rhs.c1); }
-
-        /// <summary>Returns the result of a componentwise not equal operation on a float3x2 matrix and a float value.</summary>
-        /// <param name="lhs">Left hand side float3x2 to use to compute componentwise not equal.</param>
-        /// <param name="rhs">Right hand side float to use to compute componentwise not equal.</param>
-        /// <returns>bool3x2 result of the componentwise not equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator != (float3x2 lhs, float rhs) { return new bool3x2 (lhs.c0 != rhs, lhs.c1 != rhs); }
-
-        /// <summary>Returns the result of a componentwise not equal operation on a float value and a float3x2 matrix.</summary>
-        /// <param name="lhs">Left hand side float to use to compute componentwise not equal.</param>
-        /// <param name="rhs">Right hand side float3x2 to use to compute componentwise not equal.</param>
-        /// <returns>bool3x2 result of the componentwise not equal.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3x2 operator != (float lhs, float3x2 rhs) { return new bool3x2 (lhs != rhs.c0, lhs != rhs.c1); }
 
 
 
@@ -551,47 +344,17 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3x2 float3x2(bool v) { return new float3x2(v); }
 
-        /// <summary>Return a float3x2 matrix constructed from a bool3x2 matrix by componentwise conversion.</summary>
-        /// <param name="v">bool3x2 to convert to float3x2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3x2 float3x2(bool3x2 v) { return new float3x2(v); }
-
         /// <summary>Returns a float3x2 matrix constructed from a single int value by converting it to float and assigning it to every component.</summary>
         /// <param name="v">int to convert to float3x2</param>
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3x2 float3x2(int v) { return new float3x2(v); }
 
-        /// <summary>Return a float3x2 matrix constructed from a int3x2 matrix by componentwise conversion.</summary>
-        /// <param name="v">int3x2 to convert to float3x2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3x2 float3x2(int3x2 v) { return new float3x2(v); }
-
         /// <summary>Returns a float3x2 matrix constructed from a single uint value by converting it to float and assigning it to every component.</summary>
         /// <param name="v">uint to convert to float3x2</param>
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3x2 float3x2(uint v) { return new float3x2(v); }
-
-        /// <summary>Return a float3x2 matrix constructed from a uint3x2 matrix by componentwise conversion.</summary>
-        /// <param name="v">uint3x2 to convert to float3x2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3x2 float3x2(uint3x2 v) { return new float3x2(v); }
-
-        /// <summary>Returns a float3x2 matrix constructed from a single double value by converting it to float and assigning it to every component.</summary>
-        /// <param name="v">double to convert to float3x2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3x2 float3x2(double v) { return new float3x2(v); }
-
-        /// <summary>Return a float3x2 matrix constructed from a double3x2 matrix by componentwise conversion.</summary>
-        /// <param name="v">double3x2 to convert to float3x2</param>
-        /// <returns>Converted value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3x2 float3x2(double3x2 v) { return new float3x2(v); }
 
         /// <summary>Return the float2x3 transpose of a float3x2 matrix.</summary>
         /// <param name="v">Value to transpose.</param>
