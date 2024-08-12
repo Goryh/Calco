@@ -1936,9 +1936,6 @@ namespace calco
         #endif
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathTan(float x) { return (float)System.Math.Tan((float)x); }
-
         /// <returns>Returns the tangent of a float value</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float tan(float x)
@@ -1946,7 +1943,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathTan(x);
         #else
-            return systemMathTan(x);
+            return (float)System.Math.Tan((float)x);
         #endif
         }
 
@@ -1999,9 +1996,6 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double tan(double x) { return System.Math.Tan(x); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathTanh(float x) { return (float)System.Math.Tanh((float)x); }
-
         /// <returns>Returns the hyperbolic tangent of a float value</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float tanh(float x)
@@ -2009,7 +2003,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return cppMathTanh(x);
         #else
-            return systemMathTanh(x);
+            return (float)System.Math.Tanh((float)x);
         #endif
         }
 
@@ -2031,16 +2025,12 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 tanh(in float4 x) { return new float4(tanh(x.x), tanh(x.y), tanh(x.z), tanh(x.w)); }
 
-
         /// <summary>Returns the hyperbolic tangent of a double value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The hyperbolic tangent of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double tanh(double x) { return System.Math.Tanh(x); }
 
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathAtan(float x) { return (float)System.Math.Atan((float)x); }
 
         /// <returns>Returns the arctangent of a float value</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2049,7 +2039,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathATan(x);
         #else
-            return systemMathAtan(x);
+            return (float)System.Math.Atan((float)x);
         #endif
         }
 
@@ -2095,16 +2085,12 @@ namespace calco
         #endif
         }
 
-
         /// <summary>Returns the arctangent of a double value.</summary>
         /// <param name="x">A tangent value, usually the ratio y/x on the unit circle.</param>
         /// <returns>The arctangent of the input, in radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double atan(double x) { return System.Math.Atan(x); }
 
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathAtan2(float y, float x) { return (float)System.Math.Atan2(y, x); }
 
         /// <summary>Returns the 2-argument arctangent of a pair of float values.</summary>
         /// <param name="y">Numerator of the ratio y/x, usually the y component on the unit circle.</param>
@@ -2116,7 +2102,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathATan2(y, x);
         #else
-            return systemMathAtan2(y, x);
+           return (float)System.Math.Atan2(y, x);
         #endif
         }
 
@@ -2164,7 +2150,6 @@ namespace calco
             return new float4(atan2(y.x, x.x), atan2(y.y, x.y), atan2(y.z, x.z), atan2(y.w, x.w));
         #endif
         }
-
 
         /// <summary>Returns the 2-argument arctangent of a pair of double values.</summary>
         /// <param name="y">Numerator of the ratio y/x, usually the y component on the unit circle.</param>
@@ -2222,9 +2207,6 @@ namespace calco
         public static double cos(double x) { return System.Math.Cos(x); }
 
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathCosPrecise(float x) { return (float)System.Math.Cos((float)x); }
-
         /// <returns>Returns the cosine of a float value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float cosprecise(float x)
@@ -2232,7 +2214,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathCosPrecise(x);
         #else
-            return systemMathCosPrecise(x);
+           return (float)System.Math.Cos((float)x);
         #endif
         }
 
@@ -2272,9 +2254,6 @@ namespace calco
         #endif
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathCosh(float x) { return (float)System.Math.Cosh((float)x); }
-
         /// <returns>Returns the hyperbolic cosine of a float value</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float cosh(float x)
@@ -2282,7 +2261,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return cppMathCosh(x);
         #else
-            return systemMathCosh(x);
+            return (float)System.Math.Cosh((float)x);
         #endif
         }
 
@@ -2304,15 +2283,11 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 cosh(in float4 x) { return new float4(cosh(x.x), cosh(x.y), cosh(x.z), cosh(x.w)); }
 
-
         /// <summary>Returns the hyperbolic cosine of a double value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The hyperbolic cosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double cosh(double x) { return System.Math.Cosh(x); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathAcos(float x) { return (float)System.Math.Acos((float)x); }
 
         /// <returns>Returns the arccosine of a float value</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2321,7 +2296,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathACos(x);
         #else
-            return systemMathAcos(x);
+            return (float)System.Math.Acos((float)x);
         #endif
         }
 
@@ -2366,7 +2341,6 @@ namespace calco
             return new float4(acos(x.x), acos(x.y), acos(x.z), acos(x.w));
         #endif
         }
-
 
         /// <summary>Returns the arccosine of a double value.</summary>
         /// <param name="x">Input value.</param>
@@ -2524,9 +2498,6 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double sin(double x) { return System.Math.Sin(x); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathSinPrecise(float x) { return (float)System.Math.Sin((float)x); }
-
         /// <returns>Returns the sine of a float value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float sinprecise(float x)
@@ -2534,7 +2505,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathSinPrecise(x);
         #else
-            return systemMathSinPrecise(x);
+            return (float)System.Math.Sin((float)x);
         #endif
         }
 
@@ -2574,9 +2545,6 @@ namespace calco
         #endif
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathSinh(float x) { return (float)System.Math.Sinh((float)x); }
-
         /// <returns>Returns the hyperbolic sine of a float value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float sinh(float x)
@@ -2584,7 +2552,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return cppMathSinh(x);
         #else
-            return systemMathSinh(x);
+            return (float)System.Math.Sinh((float)x);
         #endif
         }
 
@@ -2606,15 +2574,11 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 sinh(in float4 x) { return new float4(sinh(x.x), sinh(x.y), sinh(x.z), sinh(x.w)); }
 
-
         /// <summary>Returns the hyperbolic sine of a double value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The hyperbolic sine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double sinh(double x) { return System.Math.Sinh(x); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathAsin(float x) { return (float)System.Math.Asin((float)x); }
 
         /// <returns>Returns the arcsine of a float value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2623,7 +2587,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathASin(x);
         #else
-            return systemMathAsin(x);
+            return (float)System.Math.Asin((float)x);
         #endif
         }
 
@@ -2669,16 +2633,12 @@ namespace calco
         #endif
         }
 
-
         /// <summary>Returns the arcsine of a double value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The arcsine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double asin(double x) { return System.Math.Asin(x); }
 
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathFloor(float x) { return (float)System.Math.Floor((float)x); }
 
         /// <returns>The round down to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2687,7 +2647,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathFloor(x);
         #else
-            return systemMathFloor(x);
+            return (float)System.Math.Floor((float)x);
         #endif
         }
 
@@ -2764,9 +2724,6 @@ namespace calco
         public static double floor(double x) { return System.Math.Floor(x); }
 
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathCeil(float x) { return (float)System.Math.Ceiling((float)x); }
-
         /// <returns>The round up to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float ceil(float x)
@@ -2774,7 +2731,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathCeil(x);
         #else
-            return systemMathCeil(x);
+            return (float)System.Math.Ceiling((float)x);
         #endif
         }
 
@@ -2924,9 +2881,6 @@ namespace calco
         public static double round(double x) { return System.Math.Round(x); }
 
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathTrunc(float x) { return (float)System.Math.Truncate((float)x); }
-
         /// <returns>The round down to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float trunc(float x)
@@ -2934,7 +2888,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathTrunc(x);
         #else
-            return systemMathTrunc(x);
+            return (float)System.Math.Truncate((float)x);
         #endif
         }
 
@@ -3118,9 +3072,6 @@ namespace calco
         public static float4 signnozero(in float4 x) { return new float4(signnozero(x.x), signnozero(x.y), signnozero(x.z), signnozero(x.w)); }
 
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathPow(float x, float y) { return (float)System.Math.Pow((float)x, (float)y); }
-
         /// <summary>Returns x raised to the power y.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float pow(float x, float y)
@@ -3128,7 +3079,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathPow(x, y);
         #else
-            return systemMathPow(x, y);
+            return (float)System.Math.Pow((float)x, (float)y);
         #endif
         }
 
@@ -3177,7 +3128,6 @@ namespace calco
         #endif
         }
 
-
         /// <summary>Returns x raised to the power y.</summary>
         /// <param name="x">The exponent base.</param>
         /// <param name="y">The exponent power.</param>
@@ -3185,8 +3135,6 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double pow(double x, double y) { return System.Math.Pow(x, y); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathExp(float x) { return (float)System.Math.Exp((float)x); }
 
         /// <returns>Returns the base-e exponential of x</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3195,7 +3143,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathExp(x);
         #else
-            return systemMathExp(x);
+            return (float)System.Math.Exp((float)x);
         #endif
         }
 
@@ -3241,15 +3189,12 @@ namespace calco
         #endif
         }
 
-
         /// <summary>Returns the base-e exponential of x.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The base-e exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double exp(double x) { return System.Math.Exp(x); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathExp2(float x) { return (float)System.Math.Exp((float)x * 0.69314718f); }
 
         /// <returns>Returns the base-2 exponential of x</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3258,7 +3203,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathExp2(x);
         #else
-            return systemMathExp2(x);
+            return (float)System.Math.Exp((float)x * 0.69314718f);
         #endif
         }
 
@@ -3312,9 +3257,6 @@ namespace calco
 
 
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathExp10(float x) { return (float)System.Math.Exp((float)x * 2.30258509f); }
-
         /// <returns>Returns the base-10 exponential of x</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float exp10(float x)
@@ -3322,7 +3264,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathExp10(x);
         #else
-            return systemMathExp10(x);
+            return (float)System.Math.Exp((float)x * 2.30258509f);
         #endif
         }
 
@@ -3368,15 +3310,12 @@ namespace calco
         #endif
         }
 
-
         /// <summary>Returns the base-10 exponential of x.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The base-10 exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double exp10(double x) { return System.Math.Exp(x * 2.302585092994045684); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathLog(float x) { return (float)System.Math.Log((float)x); }
 
         /// <returns>Returns the natural logarithm of a float value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3385,7 +3324,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathLog(x);
         #else
-            return systemMathLog(x);
+            return (float)System.Math.Log((float)x);
         #endif
         }
 
@@ -3431,17 +3370,12 @@ namespace calco
         #endif
         }
 
-
         /// <summary>Returns the natural logarithm of a double value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The natural logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double log(double x) { return System.Math.Log(x); }
 
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathLog2(float x) { return (float)System.Math.Log((float)x, 2.0f); }
 
         /// <returns>Returns base-2 logarithm of a float value</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3450,7 +3384,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathLog2(x);
         #else
-            return systemMathLog2(x);
+            return (float)System.Math.Log((float)x, 2.0f);
         #endif
         }
 
@@ -3503,9 +3437,6 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double log2(double x) { return System.Math.Log(x, 2.0); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathLog10(float x) { return (float)System.Math.Log10((float)x); }
-
         /// <returns>Returns the base-10 logarithm of a float value</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float log10(float x)
@@ -3513,7 +3444,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathLog10(x);
         #else
-            return systemMathLog10(x);
+            return (float)System.Math.Log10((float)x);
         #endif
         }
 
@@ -3642,9 +3573,6 @@ namespace calco
         public static float4 modf(in float4 x, out float4 i) { i = trunc(x); return x - i; }
 
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathSqrt(float x) { return (float)System.Math.Sqrt((float)x); }
-
         /// <returns>The square root.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float sqrt(float x)
@@ -3652,7 +3580,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathSqrt(x);
         #else
-            return systemMathSqrt(x);
+            return (float)System.Math.Sqrt((float)x);
         #endif
         }
 
@@ -3698,7 +3626,6 @@ namespace calco
         #endif
         }
 
-
         /// <summary>Returns the square root of a double value.</summary>
         /// <param name="x">Value to use when computing square root.</param>
         /// <returns>The square root.</returns>
@@ -3706,9 +3633,6 @@ namespace calco
         public static double sqrt(double x) { return System.Math.Sqrt(x); }
 
 
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static float systemMathRsqrt(float x) { return 1.0f / (float)System.Math.Sqrt((float)x); }
 
         /// <summary>Returns the reciprocal square root of a float value.</summary>
         /// <param name="x">Value to use when computing reciprocal square root.</param>
@@ -3719,7 +3643,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathRsqrt(x);
         #else
-            return systemMathRsqrt(x);
+            return 1.0f / (float)System.Math.Sqrt((float)x);
         #endif
         }
 
