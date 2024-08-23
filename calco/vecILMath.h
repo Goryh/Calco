@@ -1274,6 +1274,16 @@ FORCEINLINE uint __cdecl vecILMathF32tof16_2(float2_t24F58B676AEF68C4CB4133963D5
 	return (uint)vecStore1(vecPackU32ToU16(vecF32tof16(x->load())));
 }
 
+FORCEINLINE void __cdecl vecILMathF32tof16_3(float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inX, uint2_tAA4B64493002FBF807B8A7FA259C801232DF28B7* RESTRICT resU)
+{
+	float3a_internal* x 	= (float3a_internal*)inX;
+	uint2_internal* res 	= (uint2_internal*)resU;
+
+	IntVec packedRes = vecPackU32ToU16(vecF32tof16(x->load()));
+
+	vecStore2Unaligned(packedRes, (int*)res);
+}
+
 FORCEINLINE void __cdecl vecILMathF32tof16_4(float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inX, uint2_tAA4B64493002FBF807B8A7FA259C801232DF28B7* RESTRICT resU)
 {
 	float4_internal* x 	= (float4_internal*)inX;
