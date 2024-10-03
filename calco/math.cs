@@ -1197,6 +1197,7 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double max(double x, double y) { return x > y ? x : y; }
 
+		
         /// <summary>Returns the result of linearly interpolating from x to y using the interpolation parameter s.</summary>
         /// <remarks>
         /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
@@ -1428,6 +1429,38 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double remap(double a, double b, double c, double d, double x) { return lerp(c, d, unlerp(a, b, x)); }
 
+
+        /// <summary>Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide).</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float bimul(float x) { return x >= 0 ? (x + 1) : 1.0f / (-x + 1); }
+
+        /// <summary>Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide).</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 bimul(float2 x) { return float2(bimul(x.x), bimul(x.y)); }
+
+        /// <summary>Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide).</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a bimul(float3a x) { return float3a(bimul(x.x), bimul(x.y), bimul(x.z)); }
+
+        /// <summary>Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide).</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 bimul(float4 x) { return float4(bimul(x.x), bimul(x.y), bimul(x.z), bimul(x.w)); }
+
+        /// <summary>Converts a multiplier to bi-multiplier that symmetrically scales the value.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float tobimul(float x) { return x >= 0 ? (x - 1) : -1.0f / (x + 1); }
+
+        /// <summary>Converts a multiplier to bi-multiplier that symmetrically scales the value.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 tobimul(float2 x) { return float2(tobimul(x.x), tobimul(x.y)); }
+
+        /// <summary>Converts a multiplier to bi-multiplier that symmetrically scales the value.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a tobimul(float3a x) { return float3a(tobimul(x.x), tobimul(x.y), tobimul(x.z)); }
+
+        /// <summary>Converts a multiplier to bi-multiplier that symmetrically scales the value.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 tobimul(float4 x) { return float4(tobimul(x.x), tobimul(x.y), tobimul(x.z), tobimul(x.w)); }
 
 
         /// <summary>Returns the result of a multiply-add operation (a * b + c) on 3 int values.</summary>
@@ -1713,6 +1746,31 @@ namespace calco
         public static float4 clamp(in float4 x, in float4 a, in float4 b) { return max(a, min(b, x)); }
 
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int wrap(int x, int a, int b) { while( x < a ) x += b - a; while( x > b ) x -= b - a; return x; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint wrap(uint x, uint a, uint b) { while( x < a ) x += b - a; while( x > b ) x -= b - a; return x; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long wrap(long x, long a, long b) { while( x < a ) x += b - a; while( x > b ) x -= b - a; return x; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ulong wrap(ulong x, ulong a, ulong b) { while( x < a ) x += b - a; while( x > b ) x -= b - a; return x; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float wrap(float x, float a, float b) { while( x < a ) x += b - a; while( x > b ) x -= b - a; return x; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 wrap(in float2 x, in float2 a, in float2 b)     { return float2 (wrap(x.x, a.x, b.x), wrap(x.y, a.y, b.y)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a wrap(in float3a x, in float3a a, in float3a b) { return float3a(wrap(x.x, a.x, b.x), wrap(x.y, a.y, b.y), wrap(x.z, a.z, b.z)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 wrap(in float4 x, in float4 a, in float4 b)     { return float4 (wrap(x.x, a.x, b.x), wrap(x.y, a.y, b.y), wrap(x.z, a.z, b.z), wrap(x.w, a.w, b.w)); }
+
+
         /// <summary>Returns the result of clamping the value x into the interval [a, b], where x, a and b are double values.</summary>
         /// <param name="x">Input value to be clamped.</param>
         /// <param name="a">Lower bound of the interval.</param>
@@ -1784,7 +1842,6 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long abs(long x) { return max(-x, x); }
 
-
         /// <summary>Returns the absolute value of a float value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The absolute value of the input.</returns>
@@ -1829,7 +1886,6 @@ namespace calco
             return asfloat(asuint(x) & 0x7FFFFFFF);
         #endif
         }
-
 
         /// <summary>Returns the absolute value of a double value.</summary>
         /// <param name="x">Input value.</param>
