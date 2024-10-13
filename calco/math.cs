@@ -2846,6 +2846,55 @@ namespace calco
         public static double ceil(double x) { return System.Math.Ceiling(x); }
 
 
+        /// <summary>Returns the result of dividing an integer number to another rounded up to the next integer.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int ceildiv(int value, int divider)
+        {
+            return (value + divider - 1) / divider;
+        }
+
+        /// <summary>Returns the result of dividing an integer number to another rounded up to the next integer.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint ceildiv(uint value, uint divider)
+        {
+            return (value + divider - 1) / divider;
+        }
+
+        /// <summary>Returns a smallest aligned value.</summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static int alignstart(int start, int alignTo)
+		{
+			return (start / alignTo) * alignTo;
+		}
+
+        /// <summary>Returns a smallest aligned value.</summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static uint alignstart(uint start, uint alignTo)
+		{
+			return (start / alignTo) * alignTo;
+		}
+
+        /// <summary>Returns a largest aligned value.</summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static int aligncount(int count, int alignTo)
+		{
+			return ceildiv(count, alignTo) * alignTo;
+		}
+
+        /// <summary>Returns a largest aligned value.</summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static uint aligncount(uint count, uint alignTo)
+		{
+			return ceildiv(count, alignTo) * alignTo;
+		}
+
+        /// <summary>Returns a largest aligned value.</summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float aligncount(float count, float alignTo)
+		{
+			return ceil(count / alignTo) * alignTo;
+		}
+
 
         /// <summary>Returns the result of rounding a float value to the nearest integral value.</summary>
         /// <param name="x">Input value.</param>
