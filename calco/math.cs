@@ -1276,6 +1276,42 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 lerp(in float4 x, in float4 y, in float4 s) { return x + s * (y - x); }
 
+        /// <summary>Returns the result of linearly interpolating from x to y using the interpolation parameter s.</summary>
+        /// <remarks>
+        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
+        /// </remarks>
+        /// <param name="x">The first endpoint, corresponding to the interpolation parameter value of 0.</param>
+        /// <param name="y">The second endpoint, corresponding to the interpolation parameter value of 1.</param>
+        /// <param name="s">The interpolation parameter. May be a value outside the interval [0, 1].</param>
+        /// <returns>The interpolation from x to y.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double lerp(double x, double y, double s) { return x + s * (y - x); }
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ushort lerp(ushort x, ushort y, short s, int sFixedBits) { return (ushort)((x * ((1 << sFixedBits) - s) + (int)s * y) / (1 << sFixedBits)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ushort lerp(ushort x, ushort y, ushort s, int sFixedBits) { return (ushort)((x * ((1u << sFixedBits) - s) + (uint)s * y) / (1u << sFixedBits)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static short lerp(short x, short y, short s, int sFixedBits) { return (short)((x * ((1 << sFixedBits) - s) + (int)s * y) / (1 << sFixedBits)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static short lerp(short x, short y, ushort s, int sFixedBits) { return (short)((x * ((1 << sFixedBits) - s) + (int)s * y) / (1 << sFixedBits)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint lerp(uint x, uint y, int s, int sFixedBits) { return (uint)((x * ((1 << sFixedBits) - s) + s * y) / (1 << sFixedBits)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint lerp(uint x, uint y, uint s, int sFixedBits) { return (x * ((1u << sFixedBits) - s) + s * y) / (1u << sFixedBits); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int lerp(int x, int y, int s, int sFixedBits) { return (x * ((1 << sFixedBits) - s) + s * y) / (1 << sFixedBits); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int lerp(int x, int y, uint s, int sFixedBits) { return (x * ((1 << sFixedBits) - (int)s) + (int)s * y) / (1 << sFixedBits); }
+
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float lerpsat(float x, float y, float s) { return x + saturate(s) * (y - x); }
 
@@ -1294,16 +1330,29 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 lerpsat(float4 x, float4 y, float s) { return x + saturate(s) * (y - x); }
 
-        /// <summary>Returns the result of linearly interpolating from x to y using the interpolation parameter s.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="x">The first endpoint, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="y">The second endpoint, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="s">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The interpolation from x to y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double lerp(double x, double y, double s) { return x + s * (y - x); }
+        public static ushort lerpsat(ushort x, ushort y, short s, int sFixedBits) { s = clamp(s, (short)0, (short)(1 << sFixedBits)); return (ushort)((x * ((1u << sFixedBits) - s) + (uint)s * y) / (1u << sFixedBits)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ushort lerpsat(ushort x, ushort y, ushort s, int sFixedBits) { s = min(s, (ushort)(1 << sFixedBits)); return (ushort)((x * ((1u << sFixedBits) - s) + (uint)s * y) / (1u << sFixedBits)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static short lerpsat(short x, short y, short s, int sFixedBits) { s = clamp(s, (short)0, (short)(1 << sFixedBits)); return (short)((x * ((1 << sFixedBits) - s) + (int)s * y) / (1 << sFixedBits)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static short lerpsat(short x, short y, ushort s, int sFixedBits) { s = min(s, (ushort)(1 << sFixedBits)); return (short)((x * ((1 << sFixedBits) - s) + (int)s * y) / (1 << sFixedBits)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint lerpsat(uint x, uint y, int s, int sFixedBits) { s = clamp(s, 0, 1 << sFixedBits); return (x * ((1u << sFixedBits) - (uint)s) + (uint)s * y) / (1u << sFixedBits); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint lerpsat(uint x, uint y, uint s, int sFixedBits) { s = min(s, 1u << sFixedBits); return (x * ((1u << sFixedBits) - s) + s * y) / (1u << sFixedBits); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int lerpsat(int x, int y, int s, int sFixedBits) { s = clamp(s, 0, 1 << sFixedBits); return (x * ((1 << sFixedBits) - s) + s * y) / (1 << sFixedBits); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int lerpsat(int x, int y, uint s, int sFixedBits) { s = min(s, 1u << sFixedBits); return (x * ((1 << sFixedBits) - (int)s) + (int)s * y) / (1 << sFixedBits); }
 
 
         /// <summary>Returns the result of normalizing a floating point value x to a range [a, b]. The opposite of lerp. Equivalent to (x - a) / (b - a).</summary>
@@ -1681,10 +1730,16 @@ namespace calco
         public static uint4 clamp(uint4 x, uint4 a, uint4 b) { return max(a, min(b, x)); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static short clamp(short x, short a, short b) { return max(a, min(b, x)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static short2 clamp(short2 x, short2 a, short2 b) { return max(a, min(b, x)); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static short4 clamp(short4 x, short4 a, short4 b) { return max(a, min(b, x)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ushort clamp(ushort x, ushort a, ushort b) { return max(a, min(b, x)); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ushort2 clamp(ushort2 x, ushort2 a, ushort2 b) { return max(a, min(b, x)); }
