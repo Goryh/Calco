@@ -1198,192 +1198,145 @@ namespace calco
         public static double max(double x, double y) { return x > y ? x : y; }
 
 		
-        /// <summary>Returns the result of linearly interpolating from x to y using the interpolation parameter s.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="x">The first endpoint, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="y">The second endpoint, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="s">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The interpolation from x to y.</returns>
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float lerp(float x, float y, float s) { return x + s * (y - x); }
+        public static float lerp(float from, float to, float x) { return from + x * (to - from); }
 
-        /// <summary>Returns the result of a componentwise linear interpolating from x to y using the interpolation parameter s.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="x">The first endpoint, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="y">The second endpoint, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="s">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The componentwise interpolation from x to y.</returns>
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 lerp(in float2 x, in float2 y, float s) { return x + s * (y - x); }
+        public static float2 lerp(in float2 from, in float2 to, float x) { return from + x * (to - from); }
 
-        /// <summary>Returns the result of a componentwise linear interpolating from x to y using the interpolation parameter s.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="x">The first endpoint, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="y">The second endpoint, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="s">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The componentwise interpolation from x to y.</returns>
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a lerp(in float3a x, in float3a y, float s) { return x + s * (y - x); }
+        public static float3a lerp(in float3a from, in float3a to, float x) { return from + x * (to - from); }
 
-        /// <summary>Returns the result of a componentwise linear interpolating from x to y using the interpolation parameter s.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="x">The first endpoint, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="y">The second endpoint, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="s">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The componentwise interpolation from x to y.</returns>
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 lerp(in float4 x, in float4 y, float s) { return x + s * (y - x); }
+        public static float4 lerp(in float4 from, in float4 to, float x) { return from + x * (to - from); }
 
-
-        /// <summary>Returns the result of a componentwise linear interpolating from x to y using the corresponding components of the interpolation parameter s.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="x">The first endpoint, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="y">The second endpoint, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="s">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The componentwise interpolation from x to y.</returns>
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 lerp(in float2 x, in float2 y, in float2 s) { return x + s * (y - x); }
+        public static float2 lerp(in float2 from, in float2 to, in float2 x) { return from + x * (to - from); }
 
-        /// <summary>Returns the result of a componentwise linear interpolating from x to y using the corresponding components of the interpolation parameter s.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="x">The first endpoint, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="y">The second endpoint, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="s">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The componentwise interpolation from x to y.</returns>
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a lerp(in float3a x, in float3a y, in float3a s) { return x + s * (y - x); }
+        public static float3a lerp(in float3a from, in float3a to, in float3a x) { return from + x * (to - from); }
 
-        /// <summary>Returns the result of a componentwise linear interpolating from x to y using the corresponding components of the interpolation parameter s.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="x">The first endpoint, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="y">The second endpoint, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="s">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The componentwise interpolation from x to y.</returns>
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 lerp(in float4 x, in float4 y, in float4 s) { return x + s * (y - x); }
+        public static float4 lerp(in float4 from, in float4 to, in float4 x) { return from + x * (to - from); }
 
-        /// <summary>Returns the result of linearly interpolating from x to y using the interpolation parameter s.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="x">The first endpoint, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="y">The second endpoint, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="s">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The interpolation from x to y.</returns>
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double lerp(double x, double y, double s) { return x + s * (y - x); }
+        public static double lerp(double from, double to, double x) { return from + x * (to - from); }
 
+        /// Linearly interpolates x over the range and beyound
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ushort lerp(ushort x, ushort y, short s, int sFixedBits) { return (ushort)((x * ((1 << sFixedBits) - s) + (int)s * y) / (1 << sFixedBits)); }
+        public static ushort lerp(ushort from, ushort to, short x, int xFixedBits) { return (ushort)((from * ((1 << xFixedBits) - x) + (int)x * to) / (1 << xFixedBits)); }
 
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ushort lerp(ushort x, ushort y, ushort s, int sFixedBits) { return (ushort)((x * ((1u << sFixedBits) - s) + (uint)s * y) / (1u << sFixedBits)); }
+        public static ushort lerp(ushort from, ushort to, ushort x, int xFixedBits) { return (ushort)((from * ((1u << xFixedBits) - x) + (uint)x * to) / (1u << xFixedBits)); }
 
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static short lerp(short x, short y, short s, int sFixedBits) { return (short)((x * ((1 << sFixedBits) - s) + (int)s * y) / (1 << sFixedBits)); }
+        public static short lerp(short from, short to, short x, int xFixedBits) { return (short)((from * ((1 << xFixedBits) - x) + (int)x * to) / (1 << xFixedBits)); }
 
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static short lerp(short x, short y, ushort s, int sFixedBits) { return (short)((x * ((1 << sFixedBits) - s) + (int)s * y) / (1 << sFixedBits)); }
+        public static short lerp(short from, short to, ushort x, int xFixedBits) { return (short)((from * ((1 << xFixedBits) - x) + (int)x * to) / (1 << xFixedBits)); }
 
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint lerp(uint x, uint y, int s, int sFixedBits) { return (uint)((x * ((1 << sFixedBits) - s) + s * y) / (1 << sFixedBits)); }
+        public static uint lerp(uint from, uint to, int x, int xFixedBits) { return (uint)((from * ((1 << xFixedBits) - x) + x * to) / (1 << xFixedBits)); }
 
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint lerp(uint x, uint y, uint s, int sFixedBits) { return (x * ((1u << sFixedBits) - s) + s * y) / (1u << sFixedBits); }
+        public static uint lerp(uint from, uint to, uint x, int xFixedBits) { return (from * ((1u << xFixedBits) - x) + x * to) / (1u << xFixedBits); }
 
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int lerp(int x, int y, int s, int sFixedBits) { return (x * ((1 << sFixedBits) - s) + s * y) / (1 << sFixedBits); }
+        public static int lerp(int from, int to, int x, int xFixedBits) { return (from * ((1 << xFixedBits) - x) + x * to) / (1 << xFixedBits); }
 
+        /// Linearly interpolates x over the range and beyound
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int lerp(int x, int y, uint s, int sFixedBits) { return (x * ((1 << sFixedBits) - (int)s) + (int)s * y) / (1 << sFixedBits); }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float lerpsat(float x, float y, float s) { return x + saturate(s) * (y - x); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 lerpsat(float2 x, float2 y, float2 s) { return x + saturate(s) * (y - x); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 lerpsat(float2 x, float2 y, float s) { return x + saturate(s) * (y - x); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a lerpsat(float3a x, float3a y, float3a s) { return x + saturate(s) * (y - x); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a lerpsat(float3a x, float3a y, float s) { return x + saturate(s) * (y - x); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 lerpsat(float4 x, float4 y, float4 s) { return x + saturate(s) * (y - x); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 lerpsat(float4 x, float4 y, float s) { return x + saturate(s) * (y - x); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ushort lerpsat(ushort x, ushort y, short s, int sFixedBits) { s = clamp(s, (short)0, (short)(1 << sFixedBits)); return (ushort)((x * ((1u << sFixedBits) - s) + (uint)s * y) / (1u << sFixedBits)); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ushort lerpsat(ushort x, ushort y, ushort s, int sFixedBits) { s = min(s, (ushort)(1 << sFixedBits)); return (ushort)((x * ((1u << sFixedBits) - s) + (uint)s * y) / (1u << sFixedBits)); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static short lerpsat(short x, short y, short s, int sFixedBits) { s = clamp(s, (short)0, (short)(1 << sFixedBits)); return (short)((x * ((1 << sFixedBits) - s) + (int)s * y) / (1 << sFixedBits)); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static short lerpsat(short x, short y, ushort s, int sFixedBits) { s = min(s, (ushort)(1 << sFixedBits)); return (short)((x * ((1 << sFixedBits) - s) + (int)s * y) / (1 << sFixedBits)); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint lerpsat(uint x, uint y, int s, int sFixedBits) { s = clamp(s, 0, 1 << sFixedBits); return (x * ((1u << sFixedBits) - (uint)s) + (uint)s * y) / (1u << sFixedBits); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint lerpsat(uint x, uint y, uint s, int sFixedBits) { s = min(s, 1u << sFixedBits); return (x * ((1u << sFixedBits) - s) + s * y) / (1u << sFixedBits); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int lerpsat(int x, int y, int s, int sFixedBits) { s = clamp(s, 0, 1 << sFixedBits); return (x * ((1 << sFixedBits) - s) + s * y) / (1 << sFixedBits); }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int lerpsat(int x, int y, uint s, int sFixedBits) { s = min(s, 1u << sFixedBits); return (x * ((1 << sFixedBits) - (int)s) + (int)s * y) / (1 << sFixedBits); }
+        public static int lerp(int from, int to, uint x, int xFixedBits) { return (from * ((1 << xFixedBits) - (int)x) + (int)x * to) / (1 << xFixedBits); }
 
 
-        /// <summary>Returns the result of normalizing a floating point value x to a range [a, b]. The opposite of lerp. Equivalent to (x - a) / (b - a).</summary>
-        /// <param name="a">The first endpoint of the range.</param>
-        /// <param name="b">The second endpoint of the range.</param>
-        /// <param name="x">The value to normalize to the range.</param>
-        /// <returns>The interpolation parameter of x with respect to the input range [a, b].</returns>
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float lerpsat(float from, float to, float x) { return from + saturate(x) * (to - from); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 lerpsat(float2 from, float2 to, float2 x) { return from + saturate(x) * (to - from); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 lerpsat(float2 from, float2 to, float x) { return from + saturate(x) * (to - from); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a lerpsat(float3a from, float3a to, float3a x) { return from + saturate(x) * (to - from); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a lerpsat(float3a from, float3a to, float x) { return from + saturate(x) * (to - from); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 lerpsat(float4 from, float4 to, float4 x) { return from + saturate(x) * (to - from); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 lerpsat(float4 from, float4 to, float x) { return from + saturate(x) * (to - from); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ushort lerpsat(ushort from, ushort to, short x, int xFixedBits) { x = clamp(x, (short)0, (short)(1 << xFixedBits)); return (ushort)((from * ((1u << xFixedBits) - x) + (uint)x * to) / (1u << xFixedBits)); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ushort lerpsat(ushort from, ushort to, ushort x, int xFixedBits) { x = min(x, (ushort)(1 << xFixedBits)); return (ushort)((from * ((1u << xFixedBits) - x) + (uint)x * to) / (1u << xFixedBits)); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static short lerpsat(short from, short to, short x, int xFixedBits) { x = clamp(x, (short)0, (short)(1 << xFixedBits)); return (short)((from * ((1 << xFixedBits) - x) + (int)x * to) / (1 << xFixedBits)); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static short lerpsat(short from, short to, ushort x, int xFixedBits) { x = min(x, (ushort)(1 << xFixedBits)); return (short)((from * ((1 << xFixedBits) - x) + (int)x * to) / (1 << xFixedBits)); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint lerpsat(uint from, uint to, int x, int xFixedBits) { x = clamp(x, 0, 1 << xFixedBits); return (from * ((1u << xFixedBits) - (uint)x) + (uint)x * to) / (1u << xFixedBits); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint lerpsat(uint from, uint to, uint x, int xFixedBits) { x = min(x, 1u << xFixedBits); return (from * ((1u << xFixedBits) - x) + x * to) / (1u << xFixedBits); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int lerpsat(int from, int to, int x, int xFixedBits) { x = clamp(x, 0, 1 << xFixedBits); return (from * ((1 << xFixedBits) - x) + x * to) / (1 << xFixedBits); }
+
+        /// Linearly interpolates x over the range and clamps the result
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int lerpsat(int from, int to, uint x, int xFixedBits) { x = min(x, 1u << xFixedBits); return (from * ((1 << xFixedBits) - (int)x) + (int)x * to) / (1 << xFixedBits); }
+
+
+        /// Interpolates parameter of x with respect to the input range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float unlerp(float a, float b, float x) { return (x - a) / (b - a); }
 
-        /// <summary>Returns the componentwise result of normalizing a floating point value x to a range [a, b]. The opposite of lerp. Equivalent to (x - a) / (b - a).</summary>
-        /// <param name="a">The first endpoint of the range.</param>
-        /// <param name="b">The second endpoint of the range.</param>
-        /// <param name="x">The value to normalize to the range.</param>
-        /// <returns>The componentwise interpolation parameter of x with respect to the input range [a, b].</returns>
+        /// Interpolates parameter of x with respect to the input range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 unlerp(in float2 a, in float2 b, in float2 x) { return (x - a) / (b - a); }
 
-        /// <summary>Returns the componentwise result of normalizing a floating point value x to a range [a, b]. The opposite of lerp. Equivalent to (x - a) / (b - a).</summary>
-        /// <param name="a">The first endpoint of the range.</param>
-        /// <param name="b">The second endpoint of the range.</param>
-        /// <param name="x">The value to normalize to the range.</param>
-        /// <returns>The componentwise interpolation parameter of x with respect to the input range [a, b].</returns>
+        /// Interpolates parameter of x with respect to the input range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a unlerp(in float3a a, in float3a b, in float3a x) { return (x - a) / (b - a); }
 
-        /// <summary>Returns the componentwise result of normalizing a floating point value x to a range [a, b]. The opposite of lerp. Equivalent to (x - a) / (b - a).</summary>
-        /// <param name="a">The first endpoint of the range.</param>
-        /// <param name="b">The second endpoint of the range.</param>
-        /// <param name="x">The value to normalize to the range.</param>
-        /// <returns>The componentwise interpolation parameter of x with respect to the input range [a, b].</returns>
+        /// Interpolates parameter of x with respect to the input range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 unlerp(in float4 a, in float4 b, in float4 x) { return (x - a) / (b - a); }
 
@@ -1409,105 +1362,74 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 unlerpsat(float4 a, float4 b, float4 x) { return saturate((x - a) / (b - a)); }
 
-        /// <summary>Returns the result of a non-clamping linear remapping of a value x from source range [a, b] to the destination range [c, d].</summary>
-        /// <param name="a">The first endpoint of the source range [a,b].</param>
-        /// <param name="b">The second endpoint of the source range [a, b].</param>
-        /// <param name="c">The first endpoint of the destination range [c, d].</param>
-        /// <param name="d">The second endpoint of the destination range [c, d].</param>
-        /// <param name="x">The value to remap from the source to destination range.</param>
-        /// <returns>The remap of input x from the source range to the destination range.</returns>
+
+        /// Remaps input x from the source range to the destination range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float remap(float a, float b, float c, float d, float x) { return lerp(c, d, unlerp(a, b, x)); }
+        public static float remap(float fromValue, float toValue, float fromRes, float toRes, float x) { return lerp(fromRes, toRes, unlerp(fromValue, toValue, x)); }
 
-        /// <summary>Returns the componentwise result of a non-clamping linear remapping of a value x from source range [a, b] to the destination range [c, d].</summary>
-        /// <param name="a">The first endpoint of the source range [a,b].</param>
-        /// <param name="b">The second endpoint of the source range [a, b].</param>
-        /// <param name="c">The first endpoint of the destination range [c, d].</param>
-        /// <param name="d">The second endpoint of the destination range [c, d].</param>
-        /// <param name="x">The value to remap from the source to destination range.</param>
-        /// <returns>The componentwise remap of input x from the source range to the destination range.</returns>
+        /// Remaps input x from the source range to the destination range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 remap(in float2 a, in float2 b, in float2 c, in float2 d, in float2 x) { return lerp(c, d, unlerp(a, b, x)); }
+        public static float2 remap(in float2 fromValue, in float2 toValue, in float2 fromRes, in float2 toRes, in float2 x) { return lerp(fromRes, toRes, unlerp(fromValue, toValue, x)); }
 
-        /// <summary>Returns the componentwise result of a non-clamping linear remapping of a value x from source range [a, b] to the destination range [c, d].</summary>
-        /// <param name="a">The first endpoint of the source range [a,b].</param>
-        /// <param name="b">The second endpoint of the source range [a, b].</param>
-        /// <param name="c">The first endpoint of the destination range [c, d].</param>
-        /// <param name="d">The second endpoint of the destination range [c, d].</param>
-        /// <param name="x">The value to remap from the source to destination range.</param>
-        /// <returns>The componentwise remap of input x from the source range to the destination range.</returns>
+        /// Remaps input x from the source range to the destination range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a remap(in float3a a, in float3a b, in float3a c, in float3a d, in float3a x) { return lerp(c, d, unlerp(a, b, x)); }
+        public static float3a remap(in float3a fromValue, in float3a toValue, in float3a fromRes, in float3a toRes, in float3a x) { return lerp(fromRes, toRes, unlerp(fromValue, toValue, x)); }
 
-        /// <summary>Returns the componentwise result of a non-clamping linear remapping of a value x from source range [a, b] to the destination range [c, d].</summary>
-        /// <param name="a">The first endpoint of the source range [a,b].</param>
-        /// <param name="b">The second endpoint of the source range [a, b].</param>
-        /// <param name="c">The first endpoint of the destination range [c, d].</param>
-        /// <param name="d">The second endpoint of the destination range [c, d].</param>
-        /// <param name="x">The value to remap from the source to destination range.</param>
-        /// <returns>The componentwise remap of input x from the source range to the destination range.</returns>
+        /// Remaps input x from the source range to the destination range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 remap(in float4 a, in float4 b, in float4 c, in float4 d, in float4 x) { return lerp(c, d, unlerp(a, b, x)); }
+        public static float4 remap(in float4 fromValue, in float4 toValue, in float4 fromRes, in float4 toRes, in float4 x) { return lerp(fromRes, toRes, unlerp(fromValue, toValue, x)); }
 
-        /// <summary>Returns the componentwise result of a clamped linear remapping of a value x from source range [a, b] to the destination range [c, d].</summary>
-        /// <param name="a">The first endpoint of the source range [a,b].</param>
-        /// <param name="b">The second endpoint of the source range [a, b].</param>
-        /// <param name="c">The first endpoint of the destination range [c, d].</param>
-        /// <param name="d">The second endpoint of the destination range [c, d].</param>
-        /// <param name="x">The value to remap from the source to destination range.</param>
-        /// <returns>The componentwise remap of input x from the source range to the destination range.</returns>
+        /// Remaps input x from the source range to the destination range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float remapsat(float a, float b, float c, float d, float x) { return lerp(c, d, unlerpsat(a, b, x)); }
+        public static double remap(double fromValue, double toValue, double fromRes, double toRes, double x) { return lerp(fromRes, toRes, unlerp(fromValue, toValue, x)); }
 
+
+        /// Remaps clamped input x from the source range to the destination range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 remapsat(float2 a, float2 b, float2 c, float2 d, float2 x) { return lerp(c, d, unlerpsat(a, b, x)); }
+        public static float remapsat(float fromValue, float toValue, float fromRes, float toRes, float x) { return lerp(fromRes, toRes, unlerpsat(fromValue, toValue, x)); }
 
+        /// Remaps clamped input x from the source range to the destination range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a remapsat(float3a a, float3a b, float3a c, float3a d, float3a x) { return lerp(c, d, unlerpsat(a, b, x)); }
+        public static float2 remapsat(float2 fromValue, float2 toValue, float2 fromRes, float2 toRes, float2 x) { return lerp(fromRes, toRes, unlerpsat(fromValue, toValue, x)); }
 
+        /// Remaps clamped input x from the source range to the destination range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 remapsat(float4 a, float4 b, float4 c, float4 d, float4 x) { return lerp(c, d, unlerpsat(a, b, x)); }
+        public static float3a remapsat(float3a fromValue, float3a toValue, float3a fromRes, float3a toRes, float3a x) { return lerp(fromRes, toRes, unlerpsat(fromValue, toValue, x)); }
 
-        /// <summary>Returns the result of a non-clamping linear remapping of a value x from source range [a, b] to the destination range [c, d].</summary>
-        /// <param name="a">The first endpoint of the source range [a,b].</param>
-        /// <param name="b">The second endpoint of the source range [a, b].</param>
-        /// <param name="c">The first endpoint of the destination range [c, d].</param>
-        /// <param name="d">The second endpoint of the destination range [c, d].</param>
-        /// <param name="x">The value to remap from the source to destination range.</param>
-        /// <returns>The remap of input x from the source range to the destination range.</returns>
+        /// Remaps clamped input x from the source range to the destination range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double remap(double a, double b, double c, double d, double x) { return lerp(c, d, unlerp(a, b, x)); }
+        public static float4 remapsat(float4 fromValue, float4 toValue, float4 fromRes, float4 toRes, float4 x) { return lerp(fromRes, toRes, unlerpsat(fromValue, toValue, x)); }
 
 
-        /// <summary>Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide).</summary>
+        /// Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide)
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float bimul(float x) { return x >= 0 ? (x + 1) : 1.0f / (-x + 1); }
 
-        /// <summary>Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide).</summary>
+        /// Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide)
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 bimul(float2 x) { return float2(bimul(x.x), bimul(x.y)); }
 
-        /// <summary>Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide).</summary>
+        /// Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide)
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a bimul(float3a x) { return float3a(bimul(x.x), bimul(x.y), bimul(x.z)); }
 
-        /// <summary>Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide).</summary>
+        /// Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide)
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 bimul(float4 x) { return float4(bimul(x.x), bimul(x.y), bimul(x.z), bimul(x.w)); }
 
-        /// <summary>Converts a multiplier to bi-multiplier that symmetrically scales the value.</summary>
+        /// Converts a multiplier to bi-multiplier that symmetrically scales the value
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float tobimul(float x) { return x >= 0 ? (x - 1) : -1.0f / (x + 1); }
 
-        /// <summary>Converts a multiplier to bi-multiplier that symmetrically scales the value.</summary>
+        /// Converts a multiplier to bi-multiplier that symmetrically scales the value
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 tobimul(float2 x) { return float2(tobimul(x.x), tobimul(x.y)); }
 
-        /// <summary>Converts a multiplier to bi-multiplier that symmetrically scales the value.</summary>
+        /// Converts a multiplier to bi-multiplier that symmetrically scales the value
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a tobimul(float3a x) { return float3a(tobimul(x.x), tobimul(x.y), tobimul(x.z)); }
 
-        /// <summary>Converts a multiplier to bi-multiplier that symmetrically scales the value.</summary>
+        /// Converts a multiplier to bi-multiplier that symmetrically scales the value
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 tobimul(float4 x) { return float4(tobimul(x.x), tobimul(x.y), tobimul(x.z), tobimul(x.w)); }
 
