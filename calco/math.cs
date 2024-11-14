@@ -2386,7 +2386,7 @@ namespace calco
         const float ChebyshevConstant2 = (float)(-0.1656700 * PI2_DBL * PI2_DBL * PI2_DBL);
         const float ChebyshevConstant3 = (float)(0.0075134 * PI2_DBL * PI2_DBL * PI2_DBL * PI2_DBL * PI2_DBL);
 
-        // Chebyshev approximation in range [-0.25, +0.25]
+        // Chebyshev approximation in range [-0.25, +0.25] or ([-PI/2; +PI/2] / 2PI) (so that for x in radians shall be divided 2PI)
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float sininrange025(float x)
         {
@@ -2825,51 +2825,51 @@ namespace calco
 
         /// <summary>Returns the result of dividing an integer number to another rounded up to the next integer.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int ceildiv(int value, int divider)
+        public static int divup(int value, int divider)
         {
             return (value + divider - 1) / divider;
         }
 
         /// <summary>Returns the result of dividing an integer number to another rounded up to the next integer.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint ceildiv(uint value, uint divider)
+        public static uint divup(uint value, uint divider)
         {
             return (value + divider - 1) / divider;
         }
 
         /// <summary>Returns a smallest aligned value.</summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static int alignstart(int start, int alignTo)
+		public static int aligndown(int value, int alignTo)
 		{
-			return (start / alignTo) * alignTo;
+			return (value / alignTo) * alignTo;
 		}
 
         /// <summary>Returns a smallest aligned value.</summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static uint alignstart(uint start, uint alignTo)
+		public static uint aligndown(uint value, uint alignTo)
 		{
-			return (start / alignTo) * alignTo;
+			return (value / alignTo) * alignTo;
 		}
 
         /// <summary>Returns a largest aligned value.</summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static int aligncount(int count, int alignTo)
+		public static int alignup(int value, int alignTo)
 		{
-			return ceildiv(count, alignTo) * alignTo;
+			return divup(value, alignTo) * alignTo;
 		}
 
         /// <summary>Returns a largest aligned value.</summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static uint aligncount(uint count, uint alignTo)
+		public static uint alignup(uint value, uint alignTo)
 		{
-			return ceildiv(count, alignTo) * alignTo;
+			return divup(value, alignTo) * alignTo;
 		}
 
         /// <summary>Returns a largest aligned value.</summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static float aligncount(float count, float alignTo)
+		public static float alignup(float value, float alignTo)
 		{
-			return ceil(count / alignTo) * alignTo;
+			return ceil(value / alignTo) * alignTo;
 		}
 
 
