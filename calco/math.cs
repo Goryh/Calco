@@ -67,30 +67,58 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathPow2(in float2 y, in float2 x, out float2 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathPow3(in float3 y, in float3 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathPow4(in float4 y, in float4 x, out float4 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathPowFast(float y, float x);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathPowFast2(in float2 y, in float2 x, out float2 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathPowFast3(in float3 y, in float3 x, out float3 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathPowFast4(in float4 y, in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathExp(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp_2(in float2 x, out float2 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp_3(in float3 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp_4(in float4 x, out float4 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathExpFast(float x);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExpFast_2(in float2 x, out float2 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExpFast_3(in float3 x, out float3 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExpFast_4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathExp2(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp2_2(in float2 x, out float2 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp2_3(in float3 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp2_4(in float4 x, out float4 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathExp2Fast(float x);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp2Fast_2(in float2 x, out float2 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp2Fast_3(in float3 x, out float3 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp2Fast_4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathExp10(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp10_2(in float2 x, out float2 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp10_3(in float3 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp10_4(in float4 x, out float4 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathExp10Fast(float x);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp10Fast_2(in float2 x, out float2 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp10Fast_3(in float3 x, out float3 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathExp10Fast_4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathLog(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog_2(in float2 x, out float2 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog_3(in float3 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog_4(in float4 x, out float4 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathLogFast(float x);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLogFast_2(in float2 x, out float2 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLogFast_3(in float3 x, out float3 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLogFast_4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathLog2(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog2_2(in float2 x, out float2 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog2_3(in float3 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog2_4(in float4 x, out float4 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathLog2Fast(float x);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog2Fast_2(in float2 x, out float2 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog2Fast_3(in float3 x, out float3 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog2Fast_4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathLog10(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog10_2(in float2 x, out float2 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog10_3(in float3 x, out float3 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog10_4(in float4 x, out float4 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathLog10Fast(float x);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog10Fast_2(in float2 x, out float2 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog10Fast_3(in float3 x, out float3 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathLog10Fast_4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathSqrt(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSqrt2(in float2 x, out float2 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSqrt3a(in float3a x, out float3a s);
@@ -3157,7 +3185,12 @@ namespace calco
         public static float4 signnozero(in float4 x) { return new float4(signnozero(x.x), signnozero(x.y), signnozero(x.z), signnozero(x.w)); }
 
 
-        /// <summary>Returns x raised to the power y.</summary>
+        /// pow(x, y) returns x raised to the power y
+		/// relative errors:
+		///		<3e-5 for x range [0.1, 100000] and y range [-5; 5]
+		///		<6e-5 for x range [0.1, 1000]   and y range [-10; 10]
+		///		<9e-5 for x range [0.1, 100]    and y range [-15; 15]
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float pow(float x, float y)
         {
@@ -3168,10 +3201,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise result of raising x to the power y.</summary>
-        /// <param name="x">The exponent base.</param>
-        /// <param name="y">The exponent power.</param>
-        /// <returns>The componentwise result of raising x to the power y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 pow(in float2 x, in float2 y)
         {
@@ -3183,10 +3212,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise result of raising x to the power y.</summary>
-        /// <param name="x">The exponent base.</param>
-        /// <param name="y">The exponent power.</param>
-        /// <returns>The componentwise result of raising x to the power y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 pow(in float3 x, in float3 y)
         {
@@ -3198,10 +3223,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise result of raising x to the power y.</summary>
-        /// <param name="x">The exponent base.</param>
-        /// <param name="y">The exponent power.</param>
-        /// <returns>The componentwise result of raising x to the power y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 pow(in float4 x, in float4 y)
         {
@@ -3213,15 +3234,63 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns x raised to the power y.</summary>
-        /// <param name="x">The exponent base.</param>
-        /// <param name="y">The exponent power.</param>
-        /// <returns>The result of raising x to the power y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double pow(double x, double y) { return System.Math.Pow(x, y); }
 
 
-        /// <returns>Returns the base-e exponential of x</returns>
+        /// powfast(x, y) returns x raised to the power y, faster than pow() with lower precision
+		/// relative errors:
+		///		<1.4e-3 for x range [0.1, 100000] and y range [-5; 5]
+		///		<3e-3   for x range [0.1, 1000]   and y range [-10; 10]
+		///		<4e-3   for x range [0.1, 100]    and y range [-15; 15]
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float powfast(float x, float y)
+        {
+        #if ENABLE_IL2CPP
+            return vecILMathPowFast(x, y);
+        #else
+            return (float)System.Math.Pow((float)x, (float)y);
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 powfast(in float2 x, in float2 y)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathPowFast2(in x, in y, out var res);
+            return res;
+        #else
+            return new float2(pow(x.x, y.x), pow(x.y, y.y));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 powfast(in float3 x, in float3 y)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathPowFast3(in x, in y, out var res);
+            return res;
+        #else
+            return new float3(pow(x.x, y.x), pow(x.y, y.y), pow(x.z, y.z));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 powfast(in float4 x, in float4 y)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathPowFast4(in x, in y, out var res);
+            return res;
+        #else
+            return new float4(pow(x.x, y.x), pow(x.y, y.y), pow(x.z, y.z), pow(x.w, y.w));
+        #endif
+        }
+
+
+        /// exp(x) returns the base-e exponential of x
+		/// relative error is < 1e-7
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float exp(float x)
         {
@@ -3232,9 +3301,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-e exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-e exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 exp(in float2 x)
         {
@@ -3246,9 +3312,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-e exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-e exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 exp(in float3 x)
         {
@@ -3260,9 +3323,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-e exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-e exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 exp(in float4 x)
         {
@@ -3274,14 +3334,60 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the base-e exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The base-e exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double exp(double x) { return System.Math.Exp(x); }
 
 
-        /// <returns>Returns the base-2 exponential of x</returns>
+        /// expfast(x) returns the base-e exponential of x, faster than exp() with lower precision
+		/// relative error is < 1e-4
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float expfast(float x)
+        {
+        #if ENABLE_IL2CPP
+            return vecILMathExpFast(x);
+        #else
+            return (float)System.Math.Exp((float)x);
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 expfast(in float2 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathExpFast_2(in x, out var res);
+            return res;
+        #else
+            return new float2(exp(x.x), exp(x.y));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 expfast(in float3 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathExpFast_3(in x, out var res);
+            return res;
+        #else
+            return new float3(exp(x.x), exp(x.y), exp(x.z));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 expfast(in float4 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathExpFast_4(in x, out var res);
+            return res;
+        #else
+            return new float4(exp(x.x), exp(x.y), exp(x.z), exp(x.w));
+        #endif
+        }
+
+
+        /// exp2(x) returns the base-2 exponential of x
+		/// relative error is < 1e-7
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float exp2(float x)
         {
@@ -3292,9 +3398,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-2 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-2 exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 exp2(in float2 x)
         {
@@ -3306,9 +3409,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-2 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-2 exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 exp2(in float3 x)
         {
@@ -3320,9 +3420,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-2 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-2 exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 exp2(in float4 x)
         {
@@ -3334,15 +3431,60 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the base-2 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The base-2 exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double exp2(double x) { return System.Math.Exp(x * 0.693147180559945309); }
 
 
+        /// exp2fast(x) returns the base-2 exponential of x, faster than exp2() with lower precision
+		/// relative error is < 1e-7
 
-        /// <returns>Returns the base-10 exponential of x</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float exp2fast(float x)
+        {
+        #if ENABLE_IL2CPP
+            return vecILMathExp2Fast(x);
+        #else
+            return (float)System.Math.Exp((float)x * 0.69314718f);
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 exp2fast(in float2 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathExp2Fast_2(in x, out var res);
+            return res;
+        #else
+            return new float2(exp2(x.x), exp2(x.y));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 exp2fast(in float3 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathExp2Fast_3(in x, out var res);
+            return res;
+        #else
+            return new float3(exp2(x.x), exp2(x.y), exp2(x.z));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 exp2fast(in float4 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathExp2Fast_4(in x, out var res);
+            return res;
+        #else
+            return new float4(exp2(x.x), exp2(x.y), exp2(x.z), exp2(x.w));
+        #endif
+        }
+
+
+        /// exp10(x) returns the base-10 exponential of x
+		/// relative error is < 1e-7
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float exp10(float x)
         {
@@ -3353,9 +3495,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-10 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-10 exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 exp10(in float2 x)
         {
@@ -3367,9 +3506,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-10 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-10 exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 exp10(in float3 x)
         {
@@ -3381,9 +3517,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-10 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-10 exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 exp10(in float4 x)
         {
@@ -3395,14 +3528,60 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the base-10 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The base-10 exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double exp10(double x) { return System.Math.Exp(x * 2.302585092994045684); }
 
 
-        /// <returns>Returns the natural logarithm of a float value.</returns>
+        /// exp10fast(x) returns the base-10 exponential of x, faster than exp10() with lower precision
+		/// relative error is < 1e-4
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float exp10fast(float x)
+        {
+        #if ENABLE_IL2CPP
+            return vecILMathExp10Fast(x);
+        #else
+            return (float)System.Math.Exp((float)x * 2.30258509f);
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 exp10fast(in float2 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathExp10Fast_2(in x, out var res);
+            return res;
+        #else
+            return new float2(exp10(x.x), exp10(x.y));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 exp10fast(in float3 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathExp10Fast_3(in x, out var res);
+            return res;
+        #else
+            return new float3(exp10(x.x), exp10(x.y), exp10(x.z));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 exp10fast(in float4 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathExp10Fast_4(in x, out var res);
+            return res;
+        #else
+            return new float4(exp10(x.x), exp10(x.y), exp10(x.z), exp10(x.w));
+        #endif
+        }
+
+
+        /// log(x) returns the natural logarithm of x
+		/// relative error is < 1e-5
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float log(float x)
         {
@@ -3413,9 +3592,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise natural logarithm of a float2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise natural logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 log(in float2 x)
         {
@@ -3427,9 +3603,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise natural logarithm of a float3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise natural logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 log(in float3 x)
         {
@@ -3441,9 +3614,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise natural logarithm of a float4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise natural logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 log(in float4 x)
         {
@@ -3455,14 +3625,60 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the natural logarithm of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The natural logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double log(double x) { return System.Math.Log(x); }
 
 
-        /// <returns>Returns base-2 logarithm of a float value</returns>
+        /// logfast(x) returns the natural logarithm of x, faster than log() with lower precision
+		/// relative error is < 4e-4
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float logfast(float x)
+        {
+        #if ENABLE_IL2CPP
+            return vecILMathLogFast(x);
+        #else
+            return (float)System.Math.Log((float)x);
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 logfast(in float2 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathLogFast_2(in x, out var res);
+            return res;
+        #else
+            return new float2(log(x.x), log(x.y));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 logfast(in float3 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathLogFast_3(in x, out var res);
+            return res;
+        #else
+            return new float3(log(x.x), log(x.y), log(x.z));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 logfast(in float4 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathLogFast_4(in x, out var res);
+            return res;
+        #else
+            return new float4(log(x.x), log(x.y), log(x.z), log(x.w));
+        #endif
+        }
+
+
+        /// log2(x) returns base-2 logarithm of x
+		/// relative error is < 1e-5
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float log2(float x)
         {
@@ -3473,9 +3689,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-2 logarithm of a float2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-2 logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 log2(in float2 x)
         {
@@ -3487,9 +3700,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-2 logarithm of a float3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-2 logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 log2(in float3 x)
         {
@@ -3501,9 +3711,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-2 logarithm of a float4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-2 logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 log2(in float4 x)
         {
@@ -3515,14 +3722,60 @@ namespace calco
         #endif
         }
 
-
-        /// <summary>Returns the base-2 logarithm of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The base-2 logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double log2(double x) { return System.Math.Log(x, 2.0); }
 
-        /// <returns>Returns the base-10 logarithm of a float value</returns>
+
+        /// log2fast(x) returns base-2 logarithm of x, faster than log2() with lower precision
+		/// relative error is < 4e-4
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float log2fast(float x)
+        {
+        #if ENABLE_IL2CPP
+            return vecILMathLog2Fast(x);
+        #else
+            return (float)System.Math.Log((float)x, 2.0f);
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 log2fast(in float2 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathLog2Fast_2(in x, out var res);
+            return res;
+        #else
+            return new float2(log2(x.x), log2(x.y));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 log2fast(in float3 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathLog2Fast_3(in x, out var res);
+            return res;
+        #else
+            return new float3(log2(x.x), log2(x.y), log2(x.z));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 log2fast(in float4 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathLog2Fast_4(in x, out var res);
+            return res;
+        #else
+            return new float4(log2(x.x), log2(x.y), log2(x.z), log2(x.w));
+        #endif
+        }
+
+
+        /// log10(x) returns the base-10 logarithm of x
+		/// relative error is < 1e-5
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float log10(float x)
         {
@@ -3533,9 +3786,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-10 logarithm of a float2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-10 logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 log10(in float2 x)
         {
@@ -3547,9 +3797,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-10 logarithm of a float3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-10 logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 log10(in float3 x)
         {
@@ -3561,9 +3808,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise base-10 logarithm of a float4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-10 logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 log10(in float4 x)
         {
@@ -3575,12 +3819,56 @@ namespace calco
         #endif
         }
 
-
-        /// <summary>Returns the base-10 logarithm of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The base-10 logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double log10(double x) { return System.Math.Log10(x); }
+
+
+        /// log10fast(x) returns the base-10 logarithm of x, faster than log10() with lower precision
+		/// relative error is < 4e-4
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float log10fast(float x)
+        {
+        #if ENABLE_IL2CPP
+            return vecILMathLog10Fast(x);
+        #else
+            return (float)System.Math.Log10((float)x);
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 log10fast(in float2 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathLog10Fast_2(in x, out var res);
+            return res;
+        #else
+            return new float2(log10(x.x), log10(x.y));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 log10fast(in float3 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathLog10Fast_3(in x, out var res);
+            return res;
+        #else
+            return new float3(log10(x.x), log10(x.y), log10(x.z));
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 log10fast(in float4 x)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathLog10Fast_4(in x, out var res);
+            return res;
+        #else
+            return new float4(log10(x.x), log10(x.y), log10(x.z), log10(x.w));
+        #endif
+        }
+
 
         /// <summary>Returns the floating point remainder of x/y.</summary>
         /// <param name="x">The dividend in x/y.</param>
