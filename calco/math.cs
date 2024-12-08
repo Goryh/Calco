@@ -1324,43 +1324,46 @@ namespace calco
         public static int lerpsat(int from, int to, uint x, int xFixedBits) { x = min(x, 1u << xFixedBits); return (from * ((1 << xFixedBits) - (int)x) + (int)x * to) / (1 << xFixedBits); }
 
 
-        /// Interpolates parameter of x with respect to the input range
+        /// Returns the result of normalizing a floating point value x to a range [from, to]. The opposite of lerp.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float unlerp(float a, float b, float x) { return (x - a) / (b - a); }
+        public static float unlerp(float from, float to, float x) { return (x - from) / (to - from); }
 
-        /// Interpolates parameter of x with respect to the input range
+        /// Returns the result of normalizing a floating point value x to a range [from, to]. The opposite of lerp.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 unlerp(in float2 a, in float2 b, in float2 x) { return (x - a) / (b - a); }
+        public static float2 unlerp(in float2 from, in float2 to, in float2 x) { return (x - from) / (to - from); }
 
-        /// Interpolates parameter of x with respect to the input range
+        /// Returns the result of normalizing a floating point value x to a range [from, to]. The opposite of lerp.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a unlerp(in float3a a, in float3a b, in float3a x) { return (x - a) / (b - a); }
+        public static float3a unlerp(in float3a from, in float3a to, in float3a x) { return (x - from) / (to - from); }
 
-        /// Interpolates parameter of x with respect to the input range
+        /// Returns the result of normalizing a floating point value x to a range [from, to]. The opposite of lerp.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 unlerp(in float4 a, in float4 b, in float4 x) { return (x - a) / (b - a); }
+        public static float4 unlerp(in float4 from, in float4 to, in float4 x) { return (x - from) / (to - from); }
 
-
-        /// <summary>Returns the result of normalizing a floating point value x to a range [a, b]. The opposite of lerp. Equivalent to (x - a) / (b - a).</summary>
-        /// <param name="a">The first endpoint of the range.</param>
-        /// <param name="b">The second endpoint of the range.</param>
-        /// <param name="x">The value to normalize to the range.</param>
-        /// <returns>The interpolation parameter of x with respect to the input range [a, b].</returns>
+        /// Returns the result of normalizing a floating point value x to a range [from, to]. The opposite of lerp.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double unlerp(double a, double b, double x) { return (x - a) / (b - a); }
+        public static double unlerp(double from, double to, double x) { return (x - from) / (to - from); }
 
 
+        /// Returns the clamped result of normalizing a floating point value x to a range [from, to]. The opposite of lerp.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float unlerpsat(float a, float b, float x) { return saturate((x - a) / (b - a)); }
+        public static float unlerpsat(float from, float to, float x) { return saturate((x - from) / (to - from)); }
 
+        /// Returns the clamped result of normalizing a floating point value x to a range [from, to]. The opposite of lerp.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 unlerpsat(float2 a, float2 b, float2 x) { return saturate((x - a) / (b - a)); }
+        public static float2 unlerpsat(float2 from, float2 to, float2 x) { return saturate((x - from) / (to - from)); }
 
+        /// Returns the clamped result of normalizing a floating point value x to a range [from, to]. The opposite of lerp.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a unlerpsat(float3a a, float3a b, float3a x) { return saturate((x - a) / (b - a)); }
+        public static float3a unlerpsat(float3a from, float3a to, float3a x) { return saturate((x - from) / (to - from)); }
 
+        /// Returns the clamped result of normalizing a floating point value x to a range [from, to]. The opposite of lerp.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 unlerpsat(float4 a, float4 b, float4 x) { return saturate((x - a) / (b - a)); }
+        public static float4 unlerpsat(float4 from, float4 to, float4 x) { return saturate((x - from) / (to - from)); }
+
+        /// Returns the result of normalizing a floating point value x to a range [from, to]. The opposite of lerp.
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double unlerpsat(double from, double to, double x) { return saturate((x - from) / (to - from)); }
 
 
         /// Remaps input x from the source range to the destination range
