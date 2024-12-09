@@ -3197,7 +3197,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathPow(x, y);
         #else
-            return (float)System.Math.Pow((float)x, (float)y);
+            return systemmath_emulation.pow(x, y);
         #endif
         }
 
@@ -3250,7 +3250,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathPowFast(x, y);
         #else
-            return (float)System.Math.Pow((float)x, (float)y);
+            return systemmath_emulation.powfast(x, y);
         #endif
         }
 
@@ -3261,7 +3261,7 @@ namespace calco
             vecILMathPowFast2(in x, in y, out var res);
             return res;
         #else
-            return new float2(pow(x.x, y.x), pow(x.y, y.y));
+            return new float2(powfast(x.x, y.x), powfast(x.y, y.y));
         #endif
         }
 
@@ -3272,7 +3272,7 @@ namespace calco
             vecILMathPowFast3(in x, in y, out var res);
             return res;
         #else
-            return new float3(pow(x.x, y.x), pow(x.y, y.y), pow(x.z, y.z));
+            return new float3(powfast(x.x, y.x), powfast(x.y, y.y), powfast(x.z, y.z));
         #endif
         }
 
@@ -3283,7 +3283,7 @@ namespace calco
             vecILMathPowFast4(in x, in y, out var res);
             return res;
         #else
-            return new float4(pow(x.x, y.x), pow(x.y, y.y), pow(x.z, y.z), pow(x.w, y.w));
+            return new float4(powfast(x.x, y.x), powfast(x.y, y.y), powfast(x.z, y.z), powfast(x.w, y.w));
         #endif
         }
 
@@ -3297,7 +3297,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathExp(x);
         #else
-            return (float)System.Math.Exp((float)x);
+            return systemmath_emulation.exp(x);
         #endif
         }
 
@@ -3347,7 +3347,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathExpFast(x);
         #else
-            return (float)System.Math.Exp((float)x);
+            return systemmath_emulation.expfast(x);
         #endif
         }
 
@@ -3358,7 +3358,7 @@ namespace calco
             vecILMathExpFast_2(in x, out var res);
             return res;
         #else
-            return new float2(exp(x.x), exp(x.y));
+            return new float2(expfast(x.x), expfast(x.y));
         #endif
         }
 
@@ -3369,7 +3369,7 @@ namespace calco
             vecILMathExpFast_3(in x, out var res);
             return res;
         #else
-            return new float3(exp(x.x), exp(x.y), exp(x.z));
+            return new float3(expfast(x.x), expfast(x.y), expfast(x.z));
         #endif
         }
 
@@ -3380,7 +3380,7 @@ namespace calco
             vecILMathExpFast_4(in x, out var res);
             return res;
         #else
-            return new float4(exp(x.x), exp(x.y), exp(x.z), exp(x.w));
+            return new float4(expfast(x.x), expfast(x.y), expfast(x.z), expfast(x.w));
         #endif
         }
 
@@ -3394,7 +3394,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathExp2(x);
         #else
-            return (float)System.Math.Exp((float)x * 0.69314718f);
+            return systemmath_emulation.exp2(x);
         #endif
         }
 
@@ -3444,7 +3444,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathExp2Fast(x);
         #else
-            return (float)System.Math.Exp((float)x * 0.69314718f);
+            return systemmath_emulation.exp2fast(x);
         #endif
         }
 
@@ -3455,7 +3455,7 @@ namespace calco
             vecILMathExp2Fast_2(in x, out var res);
             return res;
         #else
-            return new float2(exp2(x.x), exp2(x.y));
+            return new float2(exp2fast(x.x), exp2fast(x.y));
         #endif
         }
 
@@ -3466,7 +3466,7 @@ namespace calco
             vecILMathExp2Fast_3(in x, out var res);
             return res;
         #else
-            return new float3(exp2(x.x), exp2(x.y), exp2(x.z));
+            return new float3(exp2fast(x.x), exp2fast(x.y), exp2fast(x.z));
         #endif
         }
 
@@ -3477,7 +3477,7 @@ namespace calco
             vecILMathExp2Fast_4(in x, out var res);
             return res;
         #else
-            return new float4(exp2(x.x), exp2(x.y), exp2(x.z), exp2(x.w));
+            return new float4(exp2fast(x.x), exp2fast(x.y), exp2fast(x.z), exp2fast(x.w));
         #endif
         }
 
@@ -3491,7 +3491,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathExp10(x);
         #else
-            return (float)System.Math.Exp((float)x * 2.30258509f);
+            return systemmath_emulation.exp10(x);
         #endif
         }
 
@@ -3541,7 +3541,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathExp10Fast(x);
         #else
-            return (float)System.Math.Exp((float)x * 2.30258509f);
+            return systemmath_emulation.exp10fast(x);
         #endif
         }
 
@@ -3552,7 +3552,7 @@ namespace calco
             vecILMathExp10Fast_2(in x, out var res);
             return res;
         #else
-            return new float2(exp10(x.x), exp10(x.y));
+            return new float2(exp10fast(x.x), exp10fast(x.y));
         #endif
         }
 
@@ -3563,7 +3563,7 @@ namespace calco
             vecILMathExp10Fast_3(in x, out var res);
             return res;
         #else
-            return new float3(exp10(x.x), exp10(x.y), exp10(x.z));
+            return new float3(exp10fast(x.x), exp10fast(x.y), exp10fast(x.z));
         #endif
         }
 
@@ -3574,7 +3574,7 @@ namespace calco
             vecILMathExp10Fast_4(in x, out var res);
             return res;
         #else
-            return new float4(exp10(x.x), exp10(x.y), exp10(x.z), exp10(x.w));
+            return new float4(exp10fast(x.x), exp10fast(x.y), exp10fast(x.z), exp10fast(x.w));
         #endif
         }
 
@@ -3588,7 +3588,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathLog(x);
         #else
-            return (float)System.Math.Log((float)x);
+            return systemmath_emulation.log(x);
         #endif
         }
 
@@ -3638,7 +3638,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathLogFast(x);
         #else
-            return (float)System.Math.Log((float)x);
+            return systemmath_emulation.logfast(x);
         #endif
         }
 
@@ -3649,7 +3649,7 @@ namespace calco
             vecILMathLogFast_2(in x, out var res);
             return res;
         #else
-            return new float2(log(x.x), log(x.y));
+            return new float2(logfast(x.x), logfast(x.y));
         #endif
         }
 
@@ -3660,7 +3660,7 @@ namespace calco
             vecILMathLogFast_3(in x, out var res);
             return res;
         #else
-            return new float3(log(x.x), log(x.y), log(x.z));
+            return new float3(logfast(x.x), logfast(x.y), logfast(x.z));
         #endif
         }
 
@@ -3671,7 +3671,7 @@ namespace calco
             vecILMathLogFast_4(in x, out var res);
             return res;
         #else
-            return new float4(log(x.x), log(x.y), log(x.z), log(x.w));
+            return new float4(logfast(x.x), logfast(x.y), logfast(x.z), logfast(x.w));
         #endif
         }
 
@@ -3685,7 +3685,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathLog2(x);
         #else
-            return (float)System.Math.Log((float)x, 2.0f);
+            return systemmath_emulation.log2(x);
         #endif
         }
 
@@ -3735,7 +3735,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathLog2Fast(x);
         #else
-            return (float)System.Math.Log((float)x, 2.0f);
+            return systemmath_emulation.log2fast(x);
         #endif
         }
 
@@ -3746,7 +3746,7 @@ namespace calco
             vecILMathLog2Fast_2(in x, out var res);
             return res;
         #else
-            return new float2(log2(x.x), log2(x.y));
+            return new float2(log2fast(x.x), log2fast(x.y));
         #endif
         }
 
@@ -3757,7 +3757,7 @@ namespace calco
             vecILMathLog2Fast_3(in x, out var res);
             return res;
         #else
-            return new float3(log2(x.x), log2(x.y), log2(x.z));
+            return new float3(log2fast(x.x), log2fast(x.y), log2fast(x.z));
         #endif
         }
 
@@ -3768,7 +3768,7 @@ namespace calco
             vecILMathLog2Fast_4(in x, out var res);
             return res;
         #else
-            return new float4(log2(x.x), log2(x.y), log2(x.z), log2(x.w));
+            return new float4(log2fast(x.x), log2fast(x.y), log2fast(x.z), log2fast(x.w));
         #endif
         }
 
@@ -3782,7 +3782,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathLog10(x);
         #else
-            return (float)System.Math.Log10((float)x);
+            return systemmath_emulation.log10(x);
         #endif
         }
 
@@ -3832,7 +3832,7 @@ namespace calco
         #if ENABLE_IL2CPP
             return vecILMathLog10Fast(x);
         #else
-            return (float)System.Math.Log10((float)x);
+            return systemmath_emulation.log10fast(x);
         #endif
         }
 
@@ -3843,7 +3843,7 @@ namespace calco
             vecILMathLog10Fast_2(in x, out var res);
             return res;
         #else
-            return new float2(log10(x.x), log10(x.y));
+            return new float2(log10fast(x.x), log10fast(x.y));
         #endif
         }
 
@@ -3854,7 +3854,7 @@ namespace calco
             vecILMathLog10Fast_3(in x, out var res);
             return res;
         #else
-            return new float3(log10(x.x), log10(x.y), log10(x.z));
+            return new float3(log10fast(x.x), log10fast(x.y), log10fast(x.z));
         #endif
         }
 
@@ -3865,7 +3865,7 @@ namespace calco
             vecILMathLog10Fast_4(in x, out var res);
             return res;
         #else
-            return new float4(log10(x.x), log10(x.y), log10(x.z), log10(x.w));
+            return new float4(log10fast(x.x), log10fast(x.y), log10fast(x.z), log10fast(x.w));
         #endif
         }
 
