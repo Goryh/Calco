@@ -2000,7 +2000,7 @@ namespace calco
         #endif
         }
 
-        /// <returns>Returns the tangent of a float value</returns>
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float tan(float x)
         {
@@ -2011,9 +2011,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise tangent of a float2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise tangent of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 tan(in float2 x)
         {
@@ -2025,9 +2022,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise tangent of a float3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise tangent of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 tan(in float3 x)
         {
@@ -2039,9 +2033,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise tangent of a float4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise tangent of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 tan(in float4 x)
         {
@@ -2054,13 +2045,9 @@ namespace calco
         }
 
 
-        /// <summary>Returns the tangent of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The tangent of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double tan(double x) { return System.Math.Tan(x); }
 
-        /// <returns>Returns the hyperbolic tangent of a float value</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float tanh(float x)
         {
@@ -2071,32 +2058,19 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise hyperbolic tangent of a float2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic tangent of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 tanh(float2 x) { return new float2(tanh(x.x), tanh(x.y)); }
 
-        /// <summary>Returns the componentwise hyperbolic tangent of a float3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic tangent of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 tanh(in float3 x) { return new float3(tanh(x.x), tanh(x.y), tanh(x.z)); }
 
-        /// <summary>Returns the componentwise hyperbolic tangent of a float4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic tangent of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 tanh(in float4 x) { return new float4(tanh(x.x), tanh(x.y), tanh(x.z), tanh(x.w)); }
 
-        /// <summary>Returns the hyperbolic tangent of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The hyperbolic tangent of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double tanh(double x) { return System.Math.Tanh(x); }
 
 
-        /// <returns>Returns the arctangent of a float value</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float atan(float x)
         {
@@ -2107,9 +2081,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise arctangent of a float2 vector.</summary>
-        /// <param name="x">A tangent value, usually the ratio y/x on the unit circle.</param>
-        /// <returns>The componentwise arctangent of the input, in radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 atan(in float2 x)
         {
@@ -2121,9 +2092,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise arctangent of a float3 vector.</summary>
-        /// <param name="x">A tangent value, usually the ratio y/x on the unit circle.</param>
-        /// <returns>The componentwise arctangent of the input, in radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 atan(in float3 x)
         {
@@ -2135,9 +2103,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise arctangent of a float4 vector.</summary>
-        /// <param name="x">A tangent value, usually the ratio y/x on the unit circle.</param>
-        /// <returns>The componentwise arctangent of the input, in radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 atan(in float4 x)
         {
@@ -2149,17 +2114,10 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the arctangent of a double value.</summary>
-        /// <param name="x">A tangent value, usually the ratio y/x on the unit circle.</param>
-        /// <returns>The arctangent of the input, in radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double atan(double x) { return System.Math.Atan(x); }
 
 
-        /// <summary>Returns the 2-argument arctangent of a pair of float values.</summary>
-        /// <param name="y">Numerator of the ratio y/x, usually the y component on the unit circle.</param>
-        /// <param name="x">Denominator of the ratio y/x, usually the x component on the unit circle.</param>
-        /// <returns>The arctangent of the ratio y/x, in radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float atan2(float y, float x)
         {
@@ -2170,10 +2128,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise 2-argument arctangent of a pair of floats2 vectors.</summary>
-        /// <param name="y">Numerator of the ratio y/x, usually the y component on the unit circle.</param>
-        /// <param name="x">Denominator of the ratio y/x, usually the x component on the unit circle.</param>
-        /// <returns>The componentwise arctangent of the ratio y/x, in radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 atan2(in float2 y, in float2 x)
         {
@@ -2185,10 +2139,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise 2-argument arctangent of a pair of floats3 vectors.</summary>
-        /// <param name="y">Numerator of the ratio y/x, usually the y component on the unit circle.</param>
-        /// <param name="x">Denominator of the ratio y/x, usually the x component on the unit circle.</param>
-        /// <returns>The componentwise arctangent of the ratio y/x, in radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 atan2(in float3 y, in float3 x)
         {
@@ -2200,10 +2150,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise 2-argument arctangent of a pair of floats4 vectors.</summary>
-        /// <param name="y">Numerator of the ratio y/x, usually the y component on the unit circle.</param>
-        /// <param name="x">Denominator of the ratio y/x, usually the x component on the unit circle.</param>
-        /// <returns>The componentwise arctangent of the ratio y/x, in radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 atan2(in float4 y, in float4 x)
         {
@@ -2215,16 +2161,21 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the 2-argument arctangent of a pair of double values.</summary>
-        /// <param name="y">Numerator of the ratio y/x, usually the y component on the unit circle.</param>
-        /// <param name="x">Denominator of the ratio y/x, usually the x component on the unit circle.</param>
-        /// <returns>The arctangent of the ratio y/x, in radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double atan2(double y, double x) { return System.Math.Atan2(y, x); }
 
-        /// <summary>Returns the componentwise cosine of a float2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise cosine cosine of the input.</returns>
+
+        /// cos Chebyshev approximation, max error 6.86E-5 in range +-2PI
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float cos(float x)
+        {
+        #if ENABLE_IL2CPP
+            return vecILMathCos(x);
+        #else
+            return systemmath_emulation.cosfast(x);
+        #endif
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 cos(in float2 x)
         {
@@ -2236,9 +2187,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise cosine of a float3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise cosine cosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 cos(in float3 x)
         {
@@ -2250,9 +2198,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise cosine of a float4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise cosine cosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 cos(in float4 x)
         {
@@ -2264,25 +2209,21 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the cosine of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The cosine cosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double cos(double x) { return System.Math.Cos(x); }
 
 
-        /// <returns>Returns the cosine of a float value.</returns>
+        /// max precision version of cos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float cosprecise(float x)
         {
         #if ENABLE_IL2CPP
             return vecILMathCosPrecise(x);
         #else
-           return (float)System.Math.Cos((float)x);
+           return systemmath_emulation.cosprecise(x);
         #endif
         }
 
-        /// <summary>Returns the componentwise cosine of a float2 vector.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 cosprecise(in float2 x)
         {
@@ -2294,7 +2235,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise cosine of a float3 vector.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 cosprecise(in float3 x)
         {
@@ -2306,7 +2246,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise cosine of a float4 vector.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 cosprecise(in float4 x)
         {
@@ -2318,7 +2257,7 @@ namespace calco
         #endif
         }
 
-        /// <returns>Returns the hyperbolic cosine of a float value</returns>
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float cosh(float x)
         {
@@ -2329,31 +2268,19 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise hyperbolic cosine of a float2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic cosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 cosh(in float2 x) { return new float2(cosh(x.x), cosh(x.y)); }
 
-        /// <summary>Returns the componentwise hyperbolic cosine of a float3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic cosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 cosh(in float3 x) { return new float3(cosh(x.x), cosh(x.y), cosh(x.z)); }
 
-        /// <summary>Returns the componentwise hyperbolic cosine of a float4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic cosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 cosh(in float4 x) { return new float4(cosh(x.x), cosh(x.y), cosh(x.z), cosh(x.w)); }
 
-        /// <summary>Returns the hyperbolic cosine of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The hyperbolic cosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double cosh(double x) { return System.Math.Cosh(x); }
 
-        /// <returns>Returns the arccosine of a float value</returns>
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float acos(float x)
         {
@@ -2364,9 +2291,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise arccosine of a float2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise arccosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 acos(in float2 x)
         {
@@ -2378,9 +2302,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise arccosine of a float3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise arccosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 acos(in float3 x)
         {
@@ -2392,9 +2313,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise arccosine of a float4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise arccosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 acos(in float4 x)
         {
@@ -2406,117 +2324,33 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the arccosine of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The arccosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double acos(double x) { return System.Math.Acos(x); }
 
 
-        const float ChebyshevConstant1 = (float)(0.9996949 * PI2_DBL);
-        const float ChebyshevConstant2 = (float)(-0.1656700 * PI2_DBL * PI2_DBL * PI2_DBL);
-        const float ChebyshevConstant3 = (float)(0.0075134 * PI2_DBL * PI2_DBL * PI2_DBL * PI2_DBL * PI2_DBL);
-
-        // Chebyshev approximation in range [-0.25, +0.25] or ([-PI/2; +PI/2] / 2PI) (so that for x in radians shall be divided 2PI)
+        // the fastest version of the sin Chebyshev approximation in range [-0.25, +0.25] or ([-PI/2; +PI/2] / 2PI) (so that for x in radians shall be divided 2PI)
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float sininrange025(float x)
         {
         #if ENABLE_IL2CPP
             return vecILMathSininrange025(x);
         #else
-            float x2 = x * x;
-            return    ChebyshevConstant1 * x 
-                    + ChebyshevConstant2 * x2 * x
-                    + ChebyshevConstant3 * x2 * x2 * x;
+            return systemmath_emulation.sininrange025(x);
         #endif
         }
 
-        // Chebyshev approximation, max error 6.86E-5 in range +-2PI
+
+        // sin Chebyshev approximation, max error 6.86E-5 in range +-2PI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float sin(float x)
         {
         #if ENABLE_IL2CPP
             return vecILMathSin(x);
         #else
-            x *= INVPI2;
-            x += 0.25f;
-            x -= (int)x;
-
-            if( x <= 0 )
-                x += 1;
-
-            x -= 0.25f;
-            if( x >= 0.25f )
-                x = 0.5f - x;
-
-            return sininrange025(x);
+            return systemmath_emulation.sinfast(x);
         #endif
         }
 
-        // slightly faster version of sin for the range [0; 2PI]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float sininrange(float x)
-        {
-            x *= INVPI2;
-            x -= 1;
-
-            if( x <= -0.25f )
-                x += 1;
-            if( x >= 0.25f )
-                x = 0.5f - x;
-
-            return sininrange025(x);
-        }
-
-        // Chebyshev approximation, max error 6.86E-5 in range +-2PI
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void sincos(float x, out float s, out float c)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathSinCos(x, out s, out c);
-        #else
-            x *= INVPI2;
-            x += 0.25f;
-            x -= (int)x;
-
-            if( x <= 0.0f )
-                x += 1;
-
-            float cx = x;
-
-            x -= 0.25f;
-            if( x >= 0.25f )
-                x = 0.5f - x;
-
-            s = sininrange025(x);
-
-            if( cx >= 0.75f )
-                cx -= 1.0f;
-            else if( cx >= 0.25f )
-                cx = 0.5f - cx;
-
-            c = sininrange025(cx);
-        #endif
-        }
-
-        // Chebyshev approximation, max error 6.86E-5 in range +-2PI
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float cos(float x)
-        {
-        #if ENABLE_IL2CPP
-            return vecILMathCos(x);
-        #else
-            return sin(x + PIHALF);
-        #endif
-        }
-
-        // slightly faster version of cos for the range [0; 2PI]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float cosinrange(float x) => sininrange(x + PIHALF);
-
-        /// <summary>Returns the componentwise sine of a float2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise sine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 sin(in float2 x)
         {
@@ -2528,9 +2362,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise sine of a float3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise sine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 sin(in float3 x)
         {
@@ -2542,9 +2373,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise sine of a float4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise sine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 sin(in float4 x)
         {
@@ -2556,24 +2384,21 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the sine of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The sine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double sin(double x) { return System.Math.Sin(x); }
 
-        /// <returns>Returns the sine of a float value.</returns>
+
+        /// max precision version of sin
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float sinprecise(float x)
         {
         #if ENABLE_IL2CPP
             return vecILMathSinPrecise(x);
         #else
-            return (float)System.Math.Sin((float)x);
+            return systemmath_emulation.sinprecise(x);
         #endif
         }
 
-        /// <summary>Returns the componentwise sine of a float2 vector.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 sinprecise(in float2 x)
         {
@@ -2585,7 +2410,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise sine of a float3 vector.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 sinprecise(in float3 x)
         {
@@ -2597,7 +2421,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise sine of a float4 vector.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 sinprecise(in float4 x)
         {
@@ -2609,7 +2432,7 @@ namespace calco
         #endif
         }
 
-        /// <returns>Returns the hyperbolic sine of a float value.</returns>
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float sinh(float x)
         {
@@ -2620,31 +2443,19 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise hyperbolic sine of a float2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic sine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 sinh(in float2 x) { return new float2(sinh(x.x), sinh(x.y)); }
 
-        /// <summary>Returns the componentwise hyperbolic sine of a float3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic sine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 sinh(in float3 x) { return new float3(sinh(x.x), sinh(x.y), sinh(x.z)); }
 
-        /// <summary>Returns the componentwise hyperbolic sine of a float4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic sine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 sinh(in float4 x) { return new float4(sinh(x.x), sinh(x.y), sinh(x.z), sinh(x.w)); }
 
-        /// <summary>Returns the hyperbolic sine of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The hyperbolic sine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double sinh(double x) { return System.Math.Sinh(x); }
 
-        /// <returns>Returns the arcsine of a float value.</returns>
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float asin(float x)
         {
@@ -2655,9 +2466,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise arcsine of a float2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise arcsine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 asin(in float2 x)
         {
@@ -2669,9 +2477,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise arcsine of a float3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise arcsine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 asin(in float3 x)
         {
@@ -2683,9 +2488,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise arcsine of a float4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise arcsine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 asin(in float4 x)
         {
@@ -2697,14 +2499,100 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the arcsine of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The arcsine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double asin(double x) { return System.Math.Asin(x); }
 
 
-        /// <returns>The round down to nearest integral value of the input.</returns>
+        // sincos Chebyshev approximation, max error 6.86E-5 in range +-2PI
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void sincos(float x, out float s, out float c)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathSinCos(x, out s, out c);
+        #else
+            systemmath_emulation.sincosfast(x, out s, out c);
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 sincosf2(in float x) { sincos(x, out float s, out float c); return float2(s, c); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void sincos(in float2 x, out float2 s, out float2 c)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathSinCos2(in x, out s, out c);
+        #else
+            sincos(x.x, out s.x, out c.x); sincos(x.y, out s.y, out c.y);
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void sincos(in float3 x, out float3 s, out float3 c)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathSinCos3(in x, out s, out c);
+        #else
+            sincos(x.x, out s.x, out c.x); sincos(x.y, out s.y, out c.y); sincos(x.z, out s.z, out c.z);
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void sincos(in float4 x, out float4 s, out float4 c)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathSinCos4(in x, out s, out c);
+        #else
+            sincos(x.x, out s.x, out c.x); sincos(x.y, out s.y, out c.y); sincos(x.z, out s.z, out c.z); sincos(x.w, out s.w, out c.w);
+        #endif
+        }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void sincosprecise(float x, out float s, out float c)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathSinCosPrecise(x, out s, out c);
+        #else
+            s = sinprecise(x);
+            c = cosprecise(x);
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void sincosprecise2(in float2 x, out float2 s, out float2 c)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathSinCosPrecise2(in x, out s, out c);
+        #else
+            s = sinprecise(x);
+            c = cosprecise(x);
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void sincosprecise(in float3 x, out float3 s, out float3 c)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathSinCosPrecise3(in x, out s, out c);
+        #else
+            s = sinprecise(x);
+            c = cosprecise(x);
+        #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void sincosprecise(in float4 x, out float4 s, out float4 c)
+        {
+        #if ENABLE_IL2CPP
+            vecILMathSinCosPrecise4(in x, out s, out c);
+        #else
+            s = sinprecise(x);
+            c = cosprecise(x);
+        #endif
+        }
+
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float floor(float x)
         {
@@ -2715,9 +2603,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the result of rounding each component of a float2 vector value down to the nearest value less or equal to the original value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise round down to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 floor(in float2 x)
         {
@@ -2729,9 +2614,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the result of rounding each component of a float3 vector value down to the nearest value less or equal to the original value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise round down to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a floor(in float3a x)
         {
@@ -2743,9 +2625,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the result of rounding each component of a float4 vector value down to the nearest value less or equal to the original value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise round down to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 floor(in float4 x)
         {
@@ -2781,9 +2660,6 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int4 floortoi(float4 x) { return int4(floortoi(x.x), floortoi(x.y), floortoi(x.z), floortoi(x.w)); }
 
-        /// <summary>Returns the result of rounding a double value up to the nearest integral value less or equal to the original value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The round down to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double floor(double x) { return System.Math.Floor(x); }
 
@@ -4993,107 +4869,6 @@ namespace calco
         /// <returns>-n if i and ng point in the same direction; otherwise return n unchanged.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 faceforward(in float4 n, in float4 i, in float4 ng) { return select(n, -n, dot(ng, i) >= 0.0f); }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 sincosf2(in float x) { sincos(x, out float s, out float c); return float2(s, c); }
-
-        /// <summary>Returns the sine and cosine of the input float value x through the out parameters s and c.</summary>
-        /// <remarks>When Burst compiled, his method is faster than calling sin() and cos() separately.</remarks>
-        /// <param name="x">Input angle in radians.</param>
-        /// <param name="s">Output sine of the input.</param>
-        /// <param name="c">Output cosine of the input.</param>
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //public static void sincos(float x, out float s, out float c) { s = sin(x); c = cos(x); }
-
-        /// <summary>Returns the componentwise sine and cosine of the input float2 vector x through the out parameters s and c.</summary>
-        /// <remarks>When Burst compiled, his method is faster than calling sin() and cos() separately.</remarks>
-        /// <param name="x">Input vector containing angles in radians.</param>
-        /// <param name="s">Output vector containing the componentwise sine of the input.</param>
-        /// <param name="c">Output vector containing the componentwise cosine of the input.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void sincos(in float2 x, out float2 s, out float2 c)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathSinCos2(in x, out s, out c);
-        #else
-            sincos(x.x, out s.x, out c.x); sincos(x.y, out s.y, out c.y);
-        #endif
-        }
-
-        /// <summary>Returns the componentwise sine and cosine of the input float3 vector x through the out parameters s and c.</summary>
-        /// <remarks>When Burst compiled, his method is faster than calling sin() and cos() separately.</remarks>
-        /// <param name="x">Input vector containing angles in radians.</param>
-        /// <param name="s">Output vector containing the componentwise sine of the input.</param>
-        /// <param name="c">Output vector containing the componentwise cosine of the input.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void sincos(in float3 x, out float3 s, out float3 c)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathSinCos3(in x, out s, out c);
-        #else
-            sincos(x.x, out s.x, out c.x); sincos(x.y, out s.y, out c.y); sincos(x.z, out s.z, out c.z);
-        #endif
-        }
-
-        /// <summary>Returns the componentwise sine and cosine of the input float4 vector x through the out parameters s and c.</summary>
-        /// <remarks>When Burst compiled, his method is faster than calling sin() and cos() separately.</remarks>
-        /// <param name="x">Input vector containing angles in radians.</param>
-        /// <param name="s">Output vector containing the componentwise sine of the input.</param>
-        /// <param name="c">Output vector containing the componentwise cosine of the input.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void sincos(in float4 x, out float4 s, out float4 c)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathSinCos4(in x, out s, out c);
-        #else
-            sincos(x.x, out s.x, out c.x); sincos(x.y, out s.y, out c.y); sincos(x.z, out s.z, out c.z); sincos(x.w, out s.w, out c.w);
-        #endif
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void sincosprecise(float x, out float s, out float c)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathSinCosPrecise(x, out s, out c);
-        #else
-            s = sinprecise(x);
-            c = cosprecise(x);
-        #endif
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void sincosprecise2(in float2 x, out float2 s, out float2 c)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathSinCosPrecise2(in x, out s, out c);
-        #else
-            s = sinprecise(x);
-            c = cosprecise(x);
-        #endif
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void sincosprecise(in float3 x, out float3 s, out float3 c)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathSinCosPrecise3(in x, out s, out c);
-        #else
-            s = sinprecise(x);
-            c = cosprecise(x);
-        #endif
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void sincosprecise(in float4 x, out float4 s, out float4 c)
-        {
-        #if ENABLE_IL2CPP
-            vecILMathSinCosPrecise4(in x, out s, out c);
-        #else
-            s = sinprecise(x);
-            c = cosprecise(x);
-        #endif
-        }
 
 
         /// <summary>Returns number of 1-bits in the binary representation of an int value. Also known as the Hamming weight, popcnt on x86, and vcnt on ARM.</summary>

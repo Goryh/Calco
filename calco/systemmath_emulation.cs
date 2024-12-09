@@ -230,5 +230,83 @@ namespace calco
 			float ret = exp2EstP3(log2EstP3(x) * y);
 			return ret;
 		}
+
+		const float ChebyshevConstant1 = (float)(0.9996949 * PI2_DBL);
+		const float ChebyshevConstant2 = (float)(-0.1656700 * PI2_DBL * PI2_DBL * PI2_DBL);
+		const float ChebyshevConstant3 = (float)(0.0075134 * PI2_DBL * PI2_DBL * PI2_DBL * PI2_DBL * PI2_DBL);
+
+		// Chebyshev approximation in range [-0.25, +0.25] or ([-PI/2; +PI/2] / 2PI) (so that for x in radians shall be divided 2PI)
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float sininrange025(float x)
+		{
+			float x2 = x * x;
+			return	ChebyshevConstant1 * x 
+					+ ChebyshevConstant2 * x2 * x
+					+ ChebyshevConstant3 * x2 * x2 * x;
+		}
+
+		// Chebyshev approximation, max error 6.86E-5 in range +-2PI
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float sinfast(float x)
+		{
+			x *= INVPI2;
+			x += 0.25f;
+			x -= (int)x;
+
+			if( x <= 0 )
+				x += 1;
+
+			x -= 0.25f;
+			if( x >= 0.25f )
+				x = 0.5f - x;
+
+			return sininrange025(x);
+		}
+
+		// Chebyshev approximation, max error 6.86E-5 in range +-2PI
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float cosfast(float x)
+		{
+			return sinfast(x + PIHALF);
+		}
+
+		// Chebyshev approximation, max error 6.86E-5 in range +-2PI
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static void sincosfast(float x, out float s, out float c)
+		{
+			x *= INVPI2;
+			x += 0.25f;
+			x -= (int)x;
+
+			if( x <= 0.0f )
+				x += 1;
+
+			float cx = x;
+
+			x -= 0.25f;
+			if( x >= 0.25f )
+				x = 0.5f - x;
+
+			s = sininrange025(x);
+
+			if( cx >= 0.75f )
+				cx -= 1.0f;
+			else if( cx >= 0.25f )
+				cx = 0.5f - cx;
+
+			c = sininrange025(cx);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float sinprecise(float x)
+		{
+			return (float)System.Math.Sin((float)x);
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float cosprecise(float x)
+		{
+			return (float)System.Math.Cos((float)x);
+		}
 	}
 }
