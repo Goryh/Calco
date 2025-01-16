@@ -156,6 +156,10 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathMin4(in float4 a, in float4 b, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathMax3a(in float3a a, in float3a b, out float3a s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathMax4(in float4 a, in float4 b, out float4 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSelect3a(in float3a a, in float3a b, in bool3 c, out float3a s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSelect4(in float4 a, in float4 b, in bool4 c, out float4 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSelectIfLess3a(in float3a a, in float3a b, in float3a cmpA, in float3a cmpB, out float3a s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSelectIfLess4(in float4 a, in float4 b, in float4 cmpA, in float4 cmpB, out float4 s);
 
         /// <summary>Extrinsic rotation order. Specifies in which order rotations around the principal axes (x, y and z) are to be applied.</summary>
         public enum RotationOrder : byte
@@ -4419,252 +4423,142 @@ namespace calco
         public static bool all(in float4 x) { return x.x != 0.0f && x.y != 0.0f && x.z != 0.0f && x.w != 0.0f; }
 
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int select(int a, int b, bool c)    { return c ? b : a; }
+        public static int select(int whenfalse, int whentrue, bool cmp)    { return cmp ? whentrue : whenfalse; }
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int2 select(int2 a, int2 b, bool c) { return c ? b : a; }
+        public static int2 select(int2 whenfalse, int2 whentrue, bool cmp) { return cmp ? whentrue : whenfalse; }
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int3 select(int3 a, int3 b, bool c) { return c ? b : a; }
+        public static int3 select(int3 whenfalse, int3 whentrue, bool cmp) { return cmp ? whentrue : whenfalse; }
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int4 select(int4 a, int4 b, bool c) { return c ? b : a; }
+        public static int4 select(int4 whenfalse, int4 whentrue, bool cmp) { return cmp ? whentrue : whenfalse; }
 
 
-        /// <summary>
-        /// Returns a componentwise selection between two int2 vectors a and b based on a bool4 selection mask c.
-        /// Per component, the component from b is selected when c is true, otherwise the component from a is selected.
-        /// </summary>
-        /// <param name="a">Values to use if c is false.</param>
-        /// <param name="b">Values to use if c is true.</param>
-        /// <param name="c">Selection mask to choose between a and b.</param>
-        /// <returns>The componentwise selection between a and b according to selection mask c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int2 select(int2 a, int2 b, bool2 c) { return new int2(c.x ? b.x : a.x, c.y ? b.y : a.y); }
+        public static int2 select(int2 whenfalse, int2 whentrue, bool2 cmp) { return new int2(cmp.x ? whentrue.x : whenfalse.x, cmp.y ? whentrue.y : whenfalse.y); }
 
-        /// <summary>
-        /// Returns a componentwise selection between two int3 vectors a and b based on a bool4 selection mask c.
-        /// Per component, the component from b is selected when c is true, otherwise the component from a is selected.
-        /// </summary>
-        /// <param name="a">Values to use if c is false.</param>
-        /// <param name="b">Values to use if c is true.</param>
-        /// <param name="c">Selection mask to choose between a and b.</param>
-        /// <returns>The componentwise selection between a and b according to selection mask c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int3 select(int3 a, int3 b, bool3 c) { return new int3(c.x ? b.x : a.x, c.y ? b.y : a.y, c.z ? b.z : a.z); }
+        public static int3 select(int3 whenfalse, int3 whentrue, bool3 cmp) { return new int3(cmp.x ? whentrue.x : whenfalse.x, cmp.y ? whentrue.y : whenfalse.y, cmp.z ? whentrue.z : whenfalse.z); }
 
-        /// <summary>
-        /// Returns a componentwise selection between two int4 vectors a and b based on a bool4 selection mask c.
-        /// Per component, the component from b is selected when c is true, otherwise the component from a is selected.
-        /// </summary>
-        /// <param name="a">Values to use if c is false.</param>
-        /// <param name="b">Values to use if c is true.</param>
-        /// <param name="c">Selection mask to choose between a and b.</param>
-        /// <returns>The componentwise selection between a and b according to selection mask c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int4 select(int4 a, int4 b, bool4 c) { return new int4(c.x ? b.x : a.x, c.y ? b.y : a.y, c.z ? b.z : a.z, c.w ? b.w : a.w); }
+        public static int4 select(int4 whenfalse, int4 whentrue, bool4 cmp) { return new int4(cmp.x ? whentrue.x : whenfalse.x, cmp.y ? whentrue.y : whenfalse.y, cmp.z ? whentrue.z : whenfalse.z, cmp.w ? whentrue.w : whenfalse.w); }
 
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint select(uint a, uint b, bool c) { return c ? b : a; }
+        public static uint select(uint whenfalse, uint whentrue, bool cmp) { return cmp ? whentrue : whenfalse; }
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint2 select(uint2 a, uint2 b, bool c) { return c ? b : a; }
+        public static uint2 select(uint2 whenfalse, uint2 whentrue, bool cmp) { return cmp ? whentrue : whenfalse; }
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint3 select(uint3 a, uint3 b, bool c) { return c ? b : a; }
+        public static uint3 select(uint3 whenfalse, uint3 whentrue, bool cmp) { return cmp ? whentrue : whenfalse; }
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint4 select(uint4 a, uint4 b, bool c) { return c ? b : a; }
+        public static uint4 select(uint4 whenfalse, uint4 whentrue, bool cmp) { return cmp ? whentrue : whenfalse; }
 
 
-        /// <summary>
-        /// Returns a componentwise selection between two uint2 vectors a and b based on a bool4 selection mask c.
-        /// Per component, the component from b is selected when c is true, otherwise the component from a is selected.
-        /// </summary>
-        /// <param name="a">Values to use if c is false.</param>
-        /// <param name="b">Values to use if c is true.</param>
-        /// <param name="c">Selection mask to choose between a and b.</param>
-        /// <returns>The componentwise selection between a and b according to selection mask c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint2 select(uint2 a, uint2 b, bool2 c) { return new uint2(c.x ? b.x : a.x, c.y ? b.y : a.y); }
+        public static uint2 select(uint2 whenfalse, uint2 whentrue, bool2 cmp) { return new uint2(cmp.x ? whentrue.x : whenfalse.x, cmp.y ? whentrue.y : whenfalse.y); }
 
-        /// <summary>
-        /// Returns a componentwise selection between two uint3 vectors a and b based on a bool4 selection mask c.
-        /// Per component, the component from b is selected when c is true, otherwise the component from a is selected.
-        /// </summary>
-        /// <param name="a">Values to use if c is false.</param>
-        /// <param name="b">Values to use if c is true.</param>
-        /// <param name="c">Selection mask to choose between a and b.</param>
-        /// <returns>The componentwise selection between a and b according to selection mask c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint3 select(uint3 a, uint3 b, bool3 c) { return new uint3(c.x ? b.x : a.x, c.y ? b.y : a.y, c.z ? b.z : a.z); }
+        public static uint3 select(uint3 whenfalse, uint3 whentrue, bool3 cmp) { return new uint3(cmp.x ? whentrue.x : whenfalse.x, cmp.y ? whentrue.y : whenfalse.y, cmp.z ? whentrue.z : whenfalse.z); }
 
-        /// <summary>
-        /// Returns a componentwise selection between two uint4 vectors a and b based on a bool4 selection mask c.
-        /// Per component, the component from b is selected when c is true, otherwise the component from a is selected.
-        /// </summary>
-        /// <param name="a">Values to use if c is false.</param>
-        /// <param name="b">Values to use if c is true.</param>
-        /// <param name="c">Selection mask to choose between a and b.</param>
-        /// <returns>The componentwise selection between a and b according to selection mask c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint4 select(uint4 a, uint4 b, bool4 c) { return new uint4(c.x ? b.x : a.x, c.y ? b.y : a.y, c.z ? b.z : a.z, c.w ? b.w : a.w); }
+        public static uint4 select(uint4 whenfalse, uint4 whentrue, bool4 cmp) { return new uint4(cmp.x ? whentrue.x : whenfalse.x, cmp.y ? whentrue.y : whenfalse.y, cmp.z ? whentrue.z : whenfalse.z, cmp.w ? whentrue.w : whenfalse.w); }
 
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static long select(long a, long b, bool c) { return c ? b : a; }
+        public static long select(long whenfalse, long whentrue, bool cmp) { return cmp ? whentrue : whenfalse; }
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ulong select(ulong a, ulong b, bool c) { return c ? b : a; }
+        public static ulong select(ulong whenfalse, ulong whentrue, bool cmp) { return cmp ? whentrue : whenfalse; }
 
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float select(float a, float b, bool c)    { return c ? b : a; }
+        public static float select(float whenfalse, float whentrue, bool cmp)    { return cmp ? whentrue : whenfalse; }
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 select(in float2 a, in float2 b, bool c) { return c ? b : a; }
+        public static float2 select(in float2 whenfalse, in float2 whentrue, bool cmp) { return cmp ? whentrue : whenfalse; }
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a select(in float3a a, in float3a b, bool c) { return c ? b : a; }
+        public static float3a select(in float3a whenfalse, in float3a whentrue, bool cmp) { return cmp ? whentrue : whenfalse; }
 
-        /// <summary>Returns b if c is true, a otherwise.</summary>
-        /// <param name="a">Value to use if c is false.</param>
-        /// <param name="b">Value to use if c is true.</param>
-        /// <param name="c">Bool value to choose between a and b.</param>
-        /// <returns>The selection between a and b according to bool c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 select(in float4 a, in float4 b, bool c) { return c ? b : a; }
+        public static float4 select(in float4 whenfalse, in float4 whentrue, bool cmp) { return cmp ? whentrue : whenfalse; }
 
 
-        /// <summary>
-        /// Returns a componentwise selection between two float2 vectors a and b based on a bool4 selection mask c.
-        /// Per component, the component from b is selected when c is true, otherwise the component from a is selected.
-        /// </summary>
-        /// <param name="a">Values to use if c is false.</param>
-        /// <param name="b">Values to use if c is true.</param>
-        /// <param name="c">Selection mask to choose between a and b.</param>
-        /// <returns>The componentwise selection between a and b according to selection mask c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 select(in float2 a, in float2 b, bool2 c) { return new float2(c.x ? b.x : a.x, c.y ? b.y : a.y); }
+        public static float2 select(in float2 whenfalse, in float2 whentrue, bool2 cmp) { return new float2(cmp.x ? whentrue.x : whenfalse.x, cmp.y ? whentrue.y : whenfalse.y); }
 
-        /// <summary>
-        /// Returns a componentwise selection between two float3 vectors a and b based on a bool4 selection mask c.
-        /// Per component, the component from b is selected when c is true, otherwise the component from a is selected.
-        /// </summary>
-        /// <param name="a">Values to use if c is false.</param>
-        /// <param name="b">Values to use if c is true.</param>
-        /// <param name="c">Selection mask to choose between a and b.</param>
-        /// <returns>The componentwise selection between a and b according to selection mask c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 select(in float3 a, in float3 b, bool3 c) { return new float3(c.x ? b.x : a.x, c.y ? b.y : a.y, c.z ? b.z : a.z); }
+        public static float3a select(in float3a whenfalse, in float3a whentrue, bool3 cmp)
+		{
+        #if ENABLE_IL2CPP
+            vecILMathSelect3a(in whenfalse, in whentrue, in cmp, out var res);
+            return res;
+        #else
+            return new float3a(cmp.x ? whentrue.x : whenfalse.x, cmp.y ? whentrue.y : whenfalse.y, cmp.z ? whentrue.z : whenfalse.z);
+        #endif
+		}
 
-        /// <summary>
-        /// Returns a componentwise selection between two float4 vectors a and b based on a bool4 selection mask c.
-        /// Per component, the component from b is selected when c is true, otherwise the component from a is selected.
-        /// </summary>
-        /// <param name="a">Values to use if c is false.</param>
-        /// <param name="b">Values to use if c is true.</param>
-        /// <param name="c">Selection mask to choose between a and b.</param>
-        /// <returns>The componentwise selection between a and b according to selection mask c.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 select(in float4 a, in float4 b, bool4 c) { return new float4(c.x ? b.x : a.x, c.y ? b.y : a.y, c.z ? b.z : a.z, c.w ? b.w : a.w); }
+        public static float4 select(in float4 whenfalse, in float4 whentrue, bool4 cmp)
+		{
+        #if ENABLE_IL2CPP
+            vecILMathSelect4(in whenfalse, in whentrue, in cmp, out var res);
+            return res;
+        #else
+            return new float4(cmp.x ? whentrue.x : whenfalse.x, cmp.y ? whentrue.y : whenfalse.y, cmp.z ? whentrue.z : whenfalse.z, cmp.w ? whentrue.w : whenfalse.w);
+		#endif
+		}
 
 
-
-        /// <summary>Returns the result of a step function where the result is 1.0f when x &gt;= y and 0.0f otherwise.</summary>
-        /// <param name="y">Value to be used as a threshold for returning 1.</param>
-        /// <param name="x">Value to compare against threshold y.</param>
-        /// <returns>1 if the comparison x &gt;= y is true, otherwise 0.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float step(float y, float x) { return select(0.0f, 1.0f, x >= y); }
+        public static float selectifless(float whengreatherequal, float whenless, float cmpA, float cmpB) { return select(whengreatherequal, whenless, cmpA < cmpB); }
 
-        /// <summary>Returns the result of a componentwise step function where each component is 1.0f when x &gt;= y and 0.0f otherwise.</summary>
-        /// <param name="y">Vector of values to be used as a threshold for returning 1.</param>
-        /// <param name="x">Vector of values to compare against threshold y.</param>
-        /// <returns>1 if the componentwise comparison x &gt;= y is true, otherwise 0.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 step(in float2 y, in float2 x) { return select(float2(0.0f), float2(1.0f), x >= y); }
+        public static float2 selectifless(in float2 whengreatherequal, in float2 whenless, in float2 cmpA, in float2 cmpB) { return select(whengreatherequal, whenless, cmpA < cmpB); }
 
-        /// <summary>Returns the result of a componentwise step function where each component is 1.0f when x &gt;= y and 0.0f otherwise.</summary>
-        /// <param name="y">Vector of values to be used as a threshold for returning 1.</param>
-        /// <param name="x">Vector of values to compare against threshold y.</param>
-        /// <returns>1 if the componentwise comparison x &gt;= y is true, otherwise 0.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a step(in float3a y, in float3a x) { return select(float3a(0.0f), float3a(1.0f), x >= y); }
+        public static float3a selectifless(in float3a whengreatherequal, in float3a whenless, in float3a cmpA, in float3a cmpB)
+		{
+        #if ENABLE_IL2CPP
+            vecILMathSelectIfLess3a(in whengreatherequal, in whenless, in cmpA, in cmpB, out var res);
+            return res;
+        #else
+            return select(whengreatherequal, whenless, cmpA < cmpB);
+        #endif
+		}
 
-        /// <summary>Returns the result of a componentwise step function where each component is 1.0f when x &gt;= y and 0.0f otherwise.</summary>
-        /// <param name="y">Vector of values to be used as a threshold for returning 1.</param>
-        /// <param name="x">Vector of values to compare against threshold y.</param>
-        /// <returns>1 if the componentwise comparison x &gt;= y is true, otherwise 0.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 step(in float4 y, in float4 x) { return select(float4(0.0f), float4(1.0f), x >= y); }
+        public static float4 selectifless(in float4 whengreatherequal, in float4 whenless, in float4 cmpA, in float4 cmpB)
+		{
+        #if ENABLE_IL2CPP
+            vecILMathSelectIfLess4(in whengreatherequal, in whenless, in cmpA, in cmpB, out var res);
+            return res;
+        #else
+            return select(whengreatherequal, whenless, cmpA < cmpB);
+		#endif
+		}
+
+
+        /// returns 1 if low <= high, otherwise 0
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float step(float low, float high) { return selectifless(1.0f, 0.0f, high, low); }
+
+        /// returns 1 if low <= high, otherwise 0
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 step(in float2 low, in float2 high) { return selectifless(float2c.one, float2c.zero, high, low); }
+
+        /// returns 1 if low <= high, otherwise 0
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a step(in float3a low, in float3a high) { return selectifless(float3c.one, float3c.zero, high, low); }
+
+        /// returns 1 if low <= high, otherwise 0
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 step(in float4 low, in float4 high) { return selectifless(float4c.one, float4c.zero, high, low); }
 
 
         /// <summary>Given an incident vector i and a normal vector n, returns the reflection vector r = i - 2.0f * dot(i, n) * n.</summary>
@@ -4846,7 +4740,7 @@ namespace calco
             return select(defaultValue, proj, all(isfinite(proj)));
         }
 
-        /// <summary>Conditionally flips a vector n if two vectors i and ng are pointing in the same direction. Returns n if dot(i, ng) &lt; 0, -n otherwise.</summary>
+        /// <summary>Conditionally flips a vector n if two vectors i and ng are pointing in the same direction. Returns n if dot(i, ng) < 0, -n otherwise.</summary>
         /// <param name="n">Vector to conditionally flip.</param>
         /// <param name="i">First vector in direction comparison.</param>
         /// <param name="ng">Second vector in direction comparison.</param>
@@ -4854,7 +4748,7 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 faceforward(in float2 n, in float2 i, in float2 ng) { return select(n, -n, dot(ng, i) >= 0.0f); }
 
-        /// <summary>Conditionally flips a vector n if two vectors i and ng are pointing in the same direction. Returns n if dot(i, ng) &lt; 0, -n otherwise.</summary>
+        /// <summary>Conditionally flips a vector n if two vectors i and ng are pointing in the same direction. Returns n if dot(i, ng) < 0, -n otherwise.</summary>
         /// <param name="n">Vector to conditionally flip.</param>
         /// <param name="i">First vector in direction comparison.</param>
         /// <param name="ng">Second vector in direction comparison.</param>
@@ -4862,7 +4756,7 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a faceforward(in float3a n, in float3a i, in float3a ng) { return select(n, -n, dot(ng, i) >= 0.0f); }
 
-        /// <summary>Conditionally flips a vector n if two vectors i and ng are pointing in the same direction. Returns n if dot(i, ng) &lt; 0, -n otherwise.</summary>
+        /// <summary>Conditionally flips a vector n if two vectors i and ng are pointing in the same direction. Returns n if dot(i, ng) < 0, -n otherwise.</summary>
         /// <param name="n">Vector to conditionally flip.</param>
         /// <param name="i">First vector in direction comparison.</param>
         /// <param name="ng">Second vector in direction comparison.</param>
@@ -6143,7 +6037,7 @@ namespace calco
         /// Computes the square (x * x) of the input argument x.
         /// </summary>
         /// <remarks>
-        /// Due to integer overflow, it's not always guaranteed that <c>square(x) &gt;= x</c>. For example, <c>square(4294967295u)</c>
+        /// Due to integer overflow, it's not always guaranteed that <c>square(x) >= x</c>. For example, <c>square(4294967295u)</c>
         /// will return <c>1u</c>.
         /// </remarks>
         /// <param name="x">Value to square.</param>
@@ -6158,7 +6052,7 @@ namespace calco
         /// Computes the component-wise square (x * x) of the input argument x.
         /// </summary>
         /// <remarks>
-        /// Due to integer overflow, it's not always guaranteed that <c>square(x) &gt;= x</c>. For example, <c>square(new uint2(4294967295u))</c>
+        /// Due to integer overflow, it's not always guaranteed that <c>square(x) >= x</c>. For example, <c>square(new uint2(4294967295u))</c>
         /// will return <c>new uint2(1u)</c>.
         /// </remarks>
         /// <param name="x">Value to square.</param>
@@ -6173,7 +6067,7 @@ namespace calco
         /// Computes the component-wise square (x * x) of the input argument x.
         /// </summary>
         /// <remarks>
-        /// Due to integer overflow, it's not always guaranteed that <c>square(x) &gt;= x</c>. For example, <c>square(new uint3(4294967295u))</c>
+        /// Due to integer overflow, it's not always guaranteed that <c>square(x) >= x</c>. For example, <c>square(new uint3(4294967295u))</c>
         /// will return <c>new uint3(1u)</c>.
         /// </remarks>
         /// <param name="x">Value to square.</param>
@@ -6188,7 +6082,7 @@ namespace calco
         /// Computes the component-wise square (x * x) of the input argument x.
         /// </summary>
         /// <remarks>
-        /// Due to integer overflow, it's not always guaranteed that <c>square(x) &gt;= x</c>. For example, <c>square(new uint4(4294967295u))</c>
+        /// Due to integer overflow, it's not always guaranteed that <c>square(x) >= x</c>. For example, <c>square(new uint4(4294967295u))</c>
         /// will return <c>new uint4(1u)</c>.
         /// </remarks>
         /// <param name="x">Value to square.</param>

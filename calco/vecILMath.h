@@ -99,6 +99,21 @@ struct float4_internal
 	}
 };
 
+struct bool3_internal
+{
+	bool x;
+	bool y;
+	bool z;
+};
+
+struct bool4_internal
+{
+	bool x;
+	bool y;
+	bool z;
+	bool w;
+};
+
 struct plane3d_internal
 {
 	float nx;
@@ -190,6 +205,8 @@ struct float3x3_t84A7DC860959A02869A55DE6870D63EB0E2EC440;
 struct float3ax3_tC89BE68F0241ADBD139AB7620C8C61D1C4D0E485;
 struct float4x4_tF0078536D08F43E8A991471E52D705E73BCBC566;
 struct uint2_tAA4B64493002FBF807B8A7FA259C801232DF28B7;
+struct bool3_t8AAD824157056240F38820C1629FD1BB2676CD42;
+struct bool4_tFBB30AD88A3FCDB7207250A3CC870521666847A4;
 
 FORCEINLINE void __cdecl vecILMathFloat4ToFloat3a(float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inV, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF)
 {
@@ -1871,6 +1888,50 @@ FORCEINLINE void __cdecl vecILMathMax4(float4_tC63C89D1F1B7B6D22808075482704BC90
 	float4_internal* res	= (float4_internal*)resF;
 
 	res->store(vecMax(a->load(), b->load()));
+}
+
+FORCEINLINE void __cdecl vecILMathSelect3a(float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inA, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inB, bool3_t8AAD824157056240F38820C1629FD1BB2676CD42* RESTRICT inS, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF)
+{
+	float3a_internal* a 	= (float3a_internal*)inA;
+	float3a_internal* b 	= (float3a_internal*)inB;
+	bool3_internal* s	 	= (bool3_internal*)inS;
+	float3a_internal* res	= (float3a_internal*)resF;
+
+	Vec bits = vecCmpNE(intVecCastToVec(intVec((int)s->x, (int)s->y, (int)s->z, 0)), vecZero());
+	res->store(vecSel(a->load(), b->load(), (Vec)bits));
+}
+
+FORCEINLINE void __cdecl vecILMathSelect4(float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inA, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inB, bool4_tFBB30AD88A3FCDB7207250A3CC870521666847A4* RESTRICT inS, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT resF)
+{
+	float4_internal* a 		= (float4_internal*)inA;
+	float4_internal* b 		= (float4_internal*)inB;
+	bool4_internal* s	 	= (bool4_internal*)inS;
+	float4_internal* res	= (float4_internal*)resF;
+
+	Vec bits = vecCmpNE(intVecCastToVec(intVec((int)s->x, (int)s->y, (int)s->z, (int)s->w)), vecZero());
+	res->store(vecSel(a->load(), b->load(), (Vec)bits));
+}
+
+FORCEINLINE void __cdecl vecILMathSelectIfLess3a(float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inA, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inB, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inCmpA, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inCmpB, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF)
+{
+	float3a_internal* a 	= (float3a_internal*)inA;
+	float3a_internal* b 	= (float3a_internal*)inB;
+	float3a_internal* cmpA 	= (float3a_internal*)inCmpA;
+	float3a_internal* cmpB 	= (float3a_internal*)inCmpB;
+	float3a_internal* res	= (float3a_internal*)resF;
+
+	res->store(vecSel(a->load(), b->load(), vecCmpLT(cmpA->load(), cmpB->load())));
+}
+
+FORCEINLINE void __cdecl vecILMathSelectIfLess4(float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inA, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inB, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inCmpA, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inCmpB, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT resF)
+{
+	float4_internal* a 		= (float4_internal*)inA;
+	float4_internal* b 		= (float4_internal*)inB;
+	float4_internal* cmpA 	= (float4_internal*)inCmpA;
+	float4_internal* cmpB 	= (float4_internal*)inCmpB;
+	float4_internal* res	= (float4_internal*)resF;
+
+	res->store(vecSel(a->load(), b->load(), vecCmpLT(cmpA->load(), cmpB->load())));
 }
 
 } // extern "C"
