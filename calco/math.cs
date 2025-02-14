@@ -1454,7 +1454,7 @@ namespace calco
 
         /// Converts a multiplier to bi-multiplier that symmetrically scales the value
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float tobimul(float x) { return x >= 0 ? (x - 1) : -1.0f / (x + 1); }
+        public static float tobimul(float x) { return x >= 1 ? (x - 1) : 1.0f - 1.0f / x; }
 
         /// Converts a multiplier to bi-multiplier that symmetrically scales the value
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
