@@ -128,6 +128,9 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float log(float x)
 		{
+			if( x <= 0 )
+				return float.NaN;
+
 			return log2EstP5(x) * 0.6931471805599453f; // 1/log2(e)
 		}
 
@@ -135,6 +138,9 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float logfast(float x)
 		{
+			if( x <= 0 )
+				return float.NaN;
+
 			return log2EstP3(x) * 0.6931471805599453f; // 1/log2(e)
 		}
 
@@ -142,6 +148,9 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float log2(float x)
 		{
+			if( x <= 0 )
+				return float.NaN;
+
 			return log2EstP5(x);
 		}
 
@@ -149,6 +158,9 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float log2fast(float x)
 		{
+			if( x <= 0 )
+				return float.NaN;
+
 			return log2EstP3(x);
 		}
 
@@ -156,6 +168,9 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float log10(float x)
 		{
+			if( x <= 0 )
+				return float.NaN;
+
 			return log2EstP5(x) * 0.301029995664f; // 1/log2(10)
 		}
 
@@ -163,6 +178,9 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float log10fast(float x)
 		{
+			if( x <= 0 )
+				return float.NaN;
+
 			return log2EstP3(x) * 0.301029995664f; // 1/log2(10)
 		}
 
@@ -215,6 +233,9 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float pow(float x, float y)
 		{
+			if( x < 0 )
+				return float.NaN;
+
 			float ret = exp2EstP5(log2EstP5(x) * y);
 			ret = select(ret, 1, y == 0.0f);
 			return ret;
@@ -227,6 +248,9 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float powfast(float x, float y)
 		{
+			if( x < 0 )
+				return float.NaN;
+
 			float ret = exp2EstP3(log2EstP3(x) * y);
 			return ret;
 		}
