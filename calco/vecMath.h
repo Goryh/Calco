@@ -29,7 +29,7 @@ FORCEINLINE Vec vecMathQuaternionTransformVec3(Vec q, Vec v)
 	Vec q_cross_v = vecCross(q, v);
 	Vec ret = vecMulAdd(qW, v, q_cross_v);
 	ret = vecCross(q, ret);
-	ret = vecMulAdd(vecTwo(), ret, v);
+	ret = vecMulAdd(vecTwo, ret, v);
 	return ret;
 }
 
@@ -66,7 +66,7 @@ FORCEINLINE void vecNormalizingQuatToMatrix(Vec& xAxis, Vec& yAxis, Vec& zAxis, 
 	Vec zxy_2 = vecShuffle<VecMask::_zxyz>(xyz_2);
 
 	Vec tmp0 = vecMul(yzx_2, www);
-	Vec tmp1 = vecSub(vecOne(), vecMul(yzx, yzx_2));
+	Vec tmp1 = vecSub(vecOne, vecMul(yzx, yzx_2));
 	Vec tmp2 = vecMul(yzx, xyz_2);
 	tmp0 = vecMulAdd(zxy, xyz_2, tmp0);
 	tmp1 = vecSub(tmp1, vecMul(zxy, zxy_2));
@@ -95,7 +95,7 @@ FORCEINLINE Vec vecMathMatrixToQuaternion(Vec u, Vec v, Vec w)
 					intVecCastToVec(vecXor(vecCastToIntVec(w_z), u_sign)));
 	IntVec t_mask = vecCmpEQ(vecAnd(vecCastToIntVec(t), sign_mask), sign_mask);
 
-	Vec tr = vecAdd(vecOne(), 
+	Vec tr = vecAdd(vecOne, 
 					intVecCastToVec(vecXor(vecCastToIntVec(u_x), u_sign)));
 
 	IntVec sign_flips =	vecXor(						intVec(0x00000000, 0x80000000, 0x80000000, 0x80000000),
@@ -156,7 +156,7 @@ FORCEINLINE void vecMatrix33Inverse(Vec& outX, Vec& outY, Vec& outZ,
 	Vec transposeX, transposeY, transposeZ;
 	vecTranspose3x3(transposeX, transposeY, transposeZ, crossYZ, crossZX, crossXY);
 
-	const Vec recipDet = vecDiv(vecOne(), det);
+	const Vec recipDet = vecDiv(vecOne, det);
 	outX = vecMul(transposeX, recipDet);
 	outY = vecMul(transposeY, recipDet);
 	outZ = vecMul(transposeZ, recipDet);
@@ -326,29 +326,19 @@ const float INVPI = (float)(1 / PI_DBL);
 const float INVPI2 = (float)(1 / PI2_DBL);
 const float INVHALFPI = (float)(1 / HALFPI_DBL);
 const float INVQUARTPI = (float)(2.0 / HALFPI_DBL);
-const Vec vecPI = vec(PI, PI, PI, PI);
-const Vec vecHALFPI = vec(HALFPI, HALFPI, HALFPI, HALFPI);
-const Vec vecHALFPIYW = vec(0, HALFPI, 0, HALFPI);
-const Vec vecQUARTPI = vec(QUARTPI, QUARTPI, QUARTPI, QUARTPI);
-const Vec vecINVPI2 = vec(INVPI2, INVPI2, INVPI2, INVPI2);
-const Vec vecINVHALFPI = vec(INVHALFPI, INVHALFPI, INVHALFPI, INVHALFPI);
-const Vec vecINVQUARTPI = vec(INVQUARTPI, INVQUARTPI, INVQUARTPI, INVQUARTPI);
 
 const float ChebyshevConstant1 = (float)(0.9996949 * PI2_DBL);
 const float ChebyshevConstant2 = (float)(-0.1656700 * PI2_DBL * PI2_DBL * PI2_DBL);
 const float ChebyshevConstant3 = (float)(0.0075134 * PI2_DBL * PI2_DBL * PI2_DBL * PI2_DBL * PI2_DBL);
-const Vec vecChebyshevConstant1 = vec(ChebyshevConstant1, ChebyshevConstant1, ChebyshevConstant1, ChebyshevConstant1);
-const Vec vecChebyshevConstant2 = vec(ChebyshevConstant2, ChebyshevConstant2, ChebyshevConstant2, ChebyshevConstant2);
-const Vec vecChebyshevConstant3 = vec(ChebyshevConstant3, ChebyshevConstant3, ChebyshevConstant3, ChebyshevConstant3);
 
 FORCEINLINE Vec vecSininrange025(Vec x)
 {
 	Vec x2 = vecMul(x, x);
 	Vec x3 = vecMul(x2, x);
 	Vec x5 = vecMul(x3, x2);
-	Vec res = vecMul(vecChebyshevConstant1, x);
-	res =  vecMulAdd(vecChebyshevConstant2, x3, res);
-	res =  vecMulAdd(vecChebyshevConstant3, x5, res);
+	Vec res = vecMul(vec(ChebyshevConstant1), x);
+	res =  vecMulAdd(vec(ChebyshevConstant2), x3, res);
+	res =  vecMulAdd(vec(ChebyshevConstant3), x5, res);
 
 	return res;
 }
@@ -356,11 +346,11 @@ FORCEINLINE Vec vecSininrange025(Vec x)
 FORCEINLINE Vec vecSin(Vec x)
 {
 	const Vec zero = vecZero();
-	const Vec one = vecOne();
-	const Vec half = vecHalf();
-	const Vec quater = vecQuarter();
+	const Vec one = vecOne;
+	const Vec half = vecHalf;
+	const Vec quater = vecQuarter;
 
-	x = vecMulAdd(x, vecINVPI2, quater);
+	x = vecMulAdd(x, vec(INVPI2), quater);
 	x = vecSub(x, vecTrunc(x));
 
 	x = vecAdd(x, vecAnd(one, vecCmpLE(x, zero)));
@@ -373,12 +363,12 @@ FORCEINLINE Vec vecSin(Vec x)
 
 FORCEINLINE Vec vecCos(Vec x)
 {
-	return vecSin(vecAdd(x, vecHALFPI));
+	return vecSin(vecAdd(x, vec(HALFPI)));
 }
 
 FORCEINLINE Vec vecSinCosYW(Vec x)
 {
-	return vecSin(vecAdd(x, vecHALFPIYW));
+	return vecSin(vecAdd(x, vec(0, HALFPI, 0, HALFPI)));
 }
 
 const float  SINCOS_CC0 = -0.0013602249f;
@@ -400,8 +390,8 @@ FORCEINLINE void vecSinCosPrecise(Vec ang, Vec& s, Vec& c)
 	IntVec C3 = intVec(3);
 
 	Vec xl;
-	xl = vecMul(ang, vecINVHALFPI);
-	xl = vecAdd(xl, vecBitSel(vecHalf(), ang, vecSignMaskXYZW()));
+	xl = vecMul(ang, vec(INVHALFPI));
+	xl = vecAdd(xl, vecBitSel(vecHalf, ang, vecSignMaskXYZW()));
 
 	q = vecTruncToInt(xl);
 
@@ -421,7 +411,7 @@ FORCEINLINE void vecSinCosPrecise(Vec ang, Vec& s, Vec& c)
 	Vec ct2 = vecMulAdd(ct1, xl2, vec(SINCOS_CC2));
 	Vec st2 = vecMulAdd(st1, xl2, vec(SINCOS_SC2));
 
-	Vec cx = vecMulAdd(ct2, xl2, vecOne());
+	Vec cx = vecMulAdd(ct2, xl2, vecOne);
 	Vec sx = vecMulAdd(st2, xl3, xl);
 
 	Vec sinMask = intVecCastToVec(vecCmpEQ(vecAnd(offsetSin, C1), C0));
@@ -453,7 +443,7 @@ FORCEINLINE Vec vecTan(Vec ang)
 {
 	Vec x = vecAbs(ang);
 	Vec signBit = vecAnd(ang, vecSignMaskXYZW());
-	Vec xl = vecMul(x, vecINVQUARTPI);
+	Vec xl = vecMul(x, vec(INVQUARTPI));
 	Vec cmp = vecCmpGT(x, vec(TAN_B0));
 
 	IntVec q = vecTruncToInt(xl);
@@ -481,7 +471,7 @@ FORCEINLINE Vec vecTan(Vec ang)
 	q = vecCmpEQ(q, vecZeroInt());
 	cmp = intVecCastToVec(q);
 
-	Vec z = vecDiv(vecNegOne(), y);
+	Vec z = vecDiv(vecNegOne, y);
 	y = vecSel(z, y, cmp);
 	return vecXor(y, signBit);
 }
@@ -496,10 +486,10 @@ FORCEINLINE Vec vecASin(Vec ang)
 {
 	Vec x = vecAbs(ang);
 	Vec signBit = vecAnd(ang, vecSignMaskXYZW());
-	Vec invalidMask = vecCmpGT(x, vecOne());
-	Vec cmp = vecCmpGE(x, vecHalf());
+	Vec invalidMask = vecCmpGT(x, vecOne);
+	Vec cmp = vecCmpGE(x, vecHalf);
 
-	Vec z1 = vecMul(vecHalf(), vecSub(vecOne(), x));
+	Vec z1 = vecMul(vecHalf, vecSub(vecOne, x));
 	Vec x1 = vecSqrt(z1);
 	Vec z2 = vecMul(x, x);
 
@@ -513,7 +503,7 @@ FORCEINLINE Vec vecASin(Vec ang)
 	y = vecMul(y, z);
 	y = vecMulAdd(y, x, x);
 
-	Vec y2 = vecSub(vecHALFPI, vecAdd(y, y));
+	Vec y2 = vecSub(vec(HALFPI), vecAdd(y, y));
 	y2 = vecAnd(cmp, y2);
 	y = vecSel(y, y2, cmp);
 
@@ -523,16 +513,16 @@ FORCEINLINE Vec vecASin(Vec ang)
 
 FORCEINLINE Vec vecACos(Vec ang)
 {
-	Vec polyMask1 = vecCmpGE(vecNeg(vecHalf()), ang);
-	Vec polyMask2 = vecCmpGE(ang, vecHalf());
+	Vec polyMask1 = vecCmpGE(vecNeg(vecHalf), ang);
+	Vec polyMask2 = vecCmpGE(ang, vecHalf);
 
-	Vec x1 = vecAdd(vecOne(), ang);
-	Vec x2 = vecSub(vecOne(), ang);
+	Vec x1 = vecAdd(vecOne, ang);
+	Vec x2 = vecSub(vecOne, ang);
 
 	x1 = vecAnd(polyMask1, x1);
 	x2 = vecAnd(polyMask2, x2);
 	Vec x = vecOr(x1, x2);
-	x = vecSqrt(vecMul(vecHalf(), x));
+	x = vecSqrt(vecMul(vecHalf, x));
 
 	Vec polyMask3 = vecOr(polyMask1, polyMask2);
 	Vec x3 = vecAndNot(polyMask3, ang);
@@ -551,28 +541,28 @@ FORCEINLINE Vec vecACos(Vec ang)
 
 	x = vecXor(y, signBit);
 
-	Vec fact1 = vecAnd(polyMask1, vecNeg(vecTwo()));
-	Vec fact2 = vecAnd(polyMask2, vecTwo());
+	Vec fact1 = vecAnd(polyMask1, vecNeg(vecTwo));
+	Vec fact2 = vecAnd(polyMask2, vecTwo);
 	Vec fact = vecOr(fact1, fact2);
-	Vec fact3 = vecAndNot(polyMask3, vecNegOne());
+	Vec fact3 = vecAndNot(polyMask3, vecNegOne);
 	fact = vecAdd(fact, fact3);
 	x = vecMul(x, fact);
-	Vec offs1 = vecAnd(polyMask1, vecPI);
-	Vec offs3 = vecAndNot(polyMask3, vecHALFPI);
+	Vec offs1 = vecAnd(polyMask1, vec(PI));
+	Vec offs3 = vecAndNot(polyMask3, vec(HALFPI));
 	offs1 = vecOr(offs1, offs3);
 	x = vecAdd(x, offs1);
 
 	Vec absVal = vecAbs(ang);
-	Vec invalidMask = vecCmpGT(absVal, vecOne());
+	Vec invalidMask = vecCmpGT(absVal, vecOne);
 	return vecOr(x, invalidMask);
 }
 
-const float  ATAN_Q0 =  2.414213562373095f;
-const float  ATAN_Q1 =  0.414213562373095f;
-const float  ATAN_P0 =  8.05374449538e-2f;
-const float  ATAN_P1 = -1.38776856032e-1f;
-const float  ATAN_P2 =  1.99777106478e-1f;
-const float  ATAN_P3 = -3.33329491539e-1f;
+const float ATAN_Q0 =  2.414213562373095f;
+const float ATAN_Q1 =  0.414213562373095f;
+const float ATAN_P0 =  8.05374449538e-2f;
+const float ATAN_P1 = -1.38776856032e-1f;
+const float ATAN_P2 =  1.99777106478e-1f;
+const float ATAN_P3 = -3.33329491539e-1f;
 
 FORCEINLINE Vec vecATan(Vec x)
 {
@@ -583,10 +573,10 @@ FORCEINLINE Vec vecATan(Vec x)
 	Vec mask2 = vecAndNot(mask1, vecCmpGE(x, vec(ATAN_Q1)));
 	Vec mask3 = vecOr(mask1, mask2);
 
-	Vec y = vecAnd(mask1, vecHALFPI);
-	y = vecOr(y, vecAnd(mask2, vecQUARTPI));
-	Vec x1 = vecDiv(vecNegOne(), x);
-	Vec x2 = vecDiv(vecSub(x, vecOne()), vecAdd(x, vecOne()));
+	Vec y = vecAnd(mask1, vec(HALFPI));
+	y = vecOr(y, vecAnd(mask2, vec(QUARTPI)));
+	Vec x1 = vecDiv(vecNegOne, x);
+	Vec x2 = vecDiv(vecSub(x, vecOne), vecAdd(x, vecOne));
 	x = vecAndNot(mask3, x);
 	x = vecOr(x, vecAnd(mask1, x1));
 	x = vecOr(x, vecAnd(mask2, x2));
@@ -602,14 +592,14 @@ FORCEINLINE Vec vecATan(Vec x)
 	return vecXor(tmp, signBit);
 }
 
-const float  ATAN_EST_T0 = 0.91646118527267623468e-1f;
-const float  ATAN_EST_T1 = 0.13956945682312098640e1f;
-const float  ATAN_EST_T2 = 0.94393926122725531747e2f;
-const float  ATAN_EST_T3 = 0.12888383034157279340e2f;
-const float  ATAN_EST_S0 = 0.12797564625607904396e1f;
-const float  ATAN_EST_S1 = 0.21972168858277355914e1f;
-const float  ATAN_EST_S2 = 0.68193064729268275701e1f;
-const float  ATAN_EST_S3 = 0.28205206687035841409e2f;
+const float ATAN_EST_T0 = 0.91646118527267623468e-1f;
+const float ATAN_EST_T1 = 0.13956945682312098640e1f;
+const float ATAN_EST_T2 = 0.94393926122725531747e2f;
+const float ATAN_EST_T3 = 0.12888383034157279340e2f;
+const float ATAN_EST_S0 = 0.12797564625607904396e1f;
+const float ATAN_EST_S1 = 0.21972168858277355914e1f;
+const float ATAN_EST_S2 = 0.68193064729268275701e1f;
+const float ATAN_EST_S3 = 0.28205206687035841409e2f;
 
 // approximate atan_est |error| is < 0.00045
 // calculates 4 in ~2.81x speed of win libc implementation for 1, with same precision
@@ -617,7 +607,7 @@ FORCEINLINE Vec vecATanEst(Vec x)  // any x
 {
 	Vec xRcp = vecRecipEst(x);
 
-	Vec isOut1m1 = vecOr(vecCmpGT(x, vecOne()), vecCmpGE(vecNegOne(), x));
+	Vec isOut1m1 = vecOr(vecCmpGT(x, vecOne), vecCmpGE(vecNegOne, x));
 	Vec xUsed = vecSel(x, xRcp, isOut1m1);
 
 	Vec xUsedSq = vecMul(xUsed, xUsed);
@@ -634,7 +624,7 @@ FORCEINLINE Vec vecATanEst(Vec x)  // any x
 	atanPoly = vecAdd(atanPoly, vecAdd(xUsedSq, vec(ATAN_EST_S3)));
 	atanPoly = vecMul(vecRecipEst(atanPoly), vecMul(xUsed, vec(ATAN_EST_T3)));
 
-	Vec res = vecOr(vecAnd(xUsed, vecSignMaskXYZW()), vecHALFPI);
+	Vec res = vecOr(vecAnd(xUsed, vecSignMaskXYZW()), vec(HALFPI));
 	res = vecSub(res, atanPoly);
 	return vecSel(atanPoly, res, isOut1m1);
 }
@@ -643,15 +633,15 @@ FORCEINLINE Vec vecATan2(Vec y, Vec x)
 {
 	Vec maskYgt0 = vecCmpGE(y, vecZero());
 	Vec maskYlt0 = vecCmpGE(vecZero(), y);
-	Vec tmp1 = vecAnd(maskYgt0, vecHALFPI);
-	Vec tmp2 = vecAnd(maskYlt0, vecHALFPI);
+	Vec tmp1 = vecAnd(maskYgt0, vec(HALFPI));
+	Vec tmp2 = vecAnd(maskYlt0, vec(HALFPI));
 	Vec val = vecSub(tmp1, tmp2);
 
 	Vec maskXlt0 = vecCmpGE(vecZero(), x);
 	maskYgt0 = vecAndNot(maskYlt0, maskXlt0);
 	maskYlt0 = vecAnd(maskYlt0, maskXlt0);
-	tmp1 = vecAnd(maskYgt0, vecPI);
-	tmp2 = vecAnd(maskYlt0, vecPI);
+	tmp1 = vecAnd(maskYgt0, vec(PI));
+	tmp2 = vecAnd(maskYlt0, vec(PI));
 	Vec offs = vecSub(tmp1, tmp2);
 
 	Vec maskXeq0 = vecCmpEQ(x, vecZero());
@@ -676,18 +666,22 @@ FORCEINLINE Vec vecATan2Est(Vec y, Vec x)
 	Vec neg_y = vecSignMask(y);
 
 	Vec in_quad2 = vecAndNot(neg_y, neg_x);
-	Vec quad2_fixed = vecSel(raw_atan, vecAdd(raw_atan, vecPI), in_quad2);
+	Vec quad2_fixed = vecSel(raw_atan, vecAdd(raw_atan, vec(PI)), in_quad2);
 
 	// move from quadrant 1 to 3 by subtracting PI
 	Vec in_quad3 = vecAnd(neg_x, neg_y);
-	Vec quad23_fixed = vecSel(quad2_fixed, vecSub(raw_atan, vecPI), in_quad3);
+	Vec quad23_fixed = vecSel(quad2_fixed, vecSub(raw_atan, vec(PI)), in_quad3);
 
 	Vec y_zero = vecCmpEQ(x, vecZero());
-	Vec yzeropos_fixed = vecSel(quad23_fixed, vecHALFPI, vecAnd(y_zero, vecCmpGT(y, vecZero())));
-	Vec yzeroneg_fixed = vecSel(yzeropos_fixed, vecNeg(vecHALFPI), vecAnd(y_zero, vecCmpGE(vecZero(), y)));
+	Vec yzeropos_fixed = vecSel(quad23_fixed, vec(HALFPI), vecAnd(y_zero, vecCmpGT(y, vecZero())));
+	Vec yzeroneg_fixed = vecSel(yzeropos_fixed, vecNeg(vec(HALFPI)), vecAnd(y_zero, vecCmpGE(vecZero(), y)));
 	return yzeroneg_fixed;
 }
 
+const unsigned int FloatExponentMask = 0x7F800000;
+const unsigned int FloatMantissaMask = 0x007FFFFF;
+const unsigned int FloatExponentSignOffset = 127;
+const unsigned int FloatMantissaBits = 23;
 
 #define POLY0(x, c0) vec(c0)
 #define POLY1(x, c0, c1) vecMulAdd(POLY0(x, c1), x, vec(c0))
@@ -703,45 +697,67 @@ FORCEINLINE Vec vecATan2Est(Vec y, Vec x)
 	x = vecMax(x, vec(-126.99999f));\
 	ipart = vecRoundToInt(vecSub(x, bias));\
 	fpart = vecSub(x, intVecToVec(ipart));\
-	expipart = intVecCastToVec(vecShiftLeftLogical(vecAdd(ipart, intVec(127)), 23));\
+	expipart = intVecCastToVec(vecShiftLeftLogical(vecAdd(ipart, intVec(FloatExponentSignOffset)), FloatMantissaBits));\
+
+const float Exp2Poly5C1 = 9.9999994e-1f;
+const float Exp2Poly5C2 = 6.9315308e-1f;
+const float Exp2Poly5C3 = 2.4015361e-1f;
+const float Exp2Poly5C4 = 5.5826318e-2f;
+const float Exp2Poly5C5 = 8.9893397e-3f;
+const float Exp2Poly5C6 = 1.8775767e-3f;
 
 // relative error is < 1e-7
 FORCEINLINE Vec vecExp2EstP5Int(Vec x)
 {
 	EXP_DEF_PART(vec(0.5f - 1.192092896e-07f * 32)); // half minus some epsilon
-	expfpart = POLY5(fpart, 9.9999994e-1f, 6.9315308e-1f, 2.4015361e-1f, 5.5826318e-2f, 8.9893397e-3f, 1.8775767e-3f);
+	expfpart = POLY5(fpart, Exp2Poly5C1, Exp2Poly5C2, Exp2Poly5C3, Exp2Poly5C4, Exp2Poly5C5, Exp2Poly5C6);
 	return vecSel(vecMul(expipart, expfpart), expipart, vecCmpEQ(fpart, vecZero())); //ensure that exp2(int) = 2^int
 }
 
 // relative error is < 1e-7
 FORCEINLINE Vec vecExp2EstP5(Vec x)
 {
-	EXP_DEF_PART(vecHalf());
-	expfpart = POLY5(fpart, 9.9999994e-1f, 6.9315308e-1f, 2.4015361e-1f, 5.5826318e-2f, 8.9893397e-3f, 1.8775767e-3f);
+	EXP_DEF_PART(vecHalf);
+	expfpart = POLY5(fpart, Exp2Poly5C1, Exp2Poly5C2, Exp2Poly5C3, Exp2Poly5C4, Exp2Poly5C5, Exp2Poly5C6);
 	return vecMul(expipart, expfpart);
 }
+
+const float Exp2Poly4C1 = 1.0000026f;
+const float Exp2Poly4C2 = 6.9300383e-1f;
+const float Exp2Poly4C3 = 2.4144275e-1f;
+const float Exp2Poly4C4 = 5.2011464e-2f;
+const float Exp2Poly4C5 = 1.3534167e-2f;
 
 // relative error is < 2.6e-6
 FORCEINLINE Vec vecExp2EstP4(Vec x)
 {
-	EXP_DEF_PART(vecHalf());
-	expfpart = POLY4(fpart, 1.0000026f, 6.9300383e-1f, 2.4144275e-1f, 5.2011464e-2f, 1.3534167e-2f);
+	EXP_DEF_PART(vecHalf);
+	expfpart = POLY4(fpart, Exp2Poly4C1, Exp2Poly4C2, Exp2Poly4C3, Exp2Poly4C4, Exp2Poly4C5);
 	return vecMul(expipart, expfpart);
 }
+
+const float Exp2Poly3C1 = 9.9992520e-1f;
+const float Exp2Poly3C2 = 6.9583356e-1f;
+const float Exp2Poly3C3 = 2.2606716e-1f;
+const float Exp2Poly3C4 = 7.8024521e-2f;
 
 // relative error is < 1e-4
 FORCEINLINE Vec vecExp2EstP3(Vec x)
 {
-	EXP_DEF_PART(vecHalf());
-	expfpart = POLY3(fpart, 9.9992520e-1f, 6.9583356e-1f, 2.2606716e-1f, 7.8024521e-2f);
+	EXP_DEF_PART(vecHalf);
+	expfpart = POLY3(fpart, Exp2Poly3C1, Exp2Poly3C2, Exp2Poly3C3, Exp2Poly3C4);
 	return vecMul(expipart, expfpart);
 }
+
+const float Exp2Poly2C1 = 1.0017247f;
+const float Exp2Poly2C2 = 6.5763628e-1f;
+const float Exp2Poly2C3 = 3.3718944e-1f;
 
 // relative error is < 2e-3
 FORCEINLINE Vec vecExp2EstP2(Vec x)
 {
-	EXP_DEF_PART(vecHalf());
-	expfpart = POLY2(fpart, 1.0017247f, 6.5763628e-1f, 3.3718944e-1f);
+	EXP_DEF_PART(vecHalf);
+	expfpart = POLY2(fpart, Exp2Poly2C1, Exp2Poly2C2, Exp2Poly2C3);
 	return vecMul(expipart, expfpart);
 }
 
@@ -749,39 +765,61 @@ FORCEINLINE Vec vecExp2EstP2(Vec x)
 
 #define LOG_DEF_PART\
 	IntVec i = vecCastToIntVec(x);\
-	Vec e = intVecToVec(vecSub(vecShiftRightLogical(vecAnd(i, intVec(0x7F800000)), 23), intVec(127)));\
-	Vec m = vecOr(intVecCastToVec(vecAnd(i, intVec(0x007FFFFF))), vecOne());\
+	Vec e = intVecToVec(vecSub(vecShiftRightLogical(vecAnd(i, intVec(FloatExponentMask)), FloatMantissaBits), intVec(FloatExponentSignOffset)));\
+	Vec m = vecOr(intVecCastToVec(vecAnd(i, intVec(FloatMantissaMask))), vecOne);
+
+const float Log2Poly5C1 = 3.1157899f;
+const float Log2Poly5C2 = -3.3241990f;
+const float Log2Poly5C3 = 2.5988452f;
+const float Log2Poly5C4 = -1.2315303f;
+const float Log2Poly5C5 = 3.1821337e-1f;
+const float Log2Poly5C6 = -3.4436006e-2f;
 
 // relative error is < 1.0e-5
 FORCEINLINE Vec vecLog2EstP5(Vec x)
 {
 	LOG_DEF_PART
-	Vec p = POLY5(m, 3.1157899f, -3.3241990f, 2.5988452f, -1.2315303f,  3.1821337e-1f, -3.4436006e-2f);
-	return vecAdd(vecMul(p, vecSub(m, vecOne())), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
+	Vec p = POLY5(m, Log2Poly5C1, Log2Poly5C2, Log2Poly5C3, Log2Poly5C4, Log2Poly5C5, Log2Poly5C6);
+	return vecAdd(vecMul(p, vecSub(m, vecOne)), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
 }
+
+const float Log2Poly4C1 = 2.8882704548164776201f;
+const float Log2Poly4C2 = -2.52074962577807006663f;
+const float Log2Poly4C3 = 1.48116647521213171641f;
+const float Log2Poly4C4 = -0.465725644288844778798f;
+const float Log2Poly4C5 = 0.0596515482674574969533f;
 
 // relative error is < 5.7e-5
 FORCEINLINE Vec vecLog2EstP4(Vec x)
 {
 	LOG_DEF_PART
-	Vec p = POLY4(m, 2.8882704548164776201f, -2.52074962577807006663f, 1.48116647521213171641f, -0.465725644288844778798f, 0.0596515482674574969533f);
-	return vecAdd(vecMul(p, vecSub(m, vecOne())), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
+	Vec p = POLY4(m, Log2Poly4C1, Log2Poly4C2, Log2Poly4C3, Log2Poly4C4, Log2Poly4C5);
+	return vecAdd(vecMul(p, vecSub(m, vecOne)), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
 }
+
+const float Log2Poly3C1 = 2.61761038894603480148f;
+const float Log2Poly3C2 = -1.75647175389045657003f;
+const float Log2Poly3C3 = 0.688243882994381274313f;
+const float Log2Poly3C4 = -0.107254423828329604454f;
 
 // relative error is < 4e-4
 FORCEINLINE Vec vecLog2EstP3(Vec x)
 {
 	LOG_DEF_PART
-	Vec p = POLY3(m, 2.61761038894603480148f, -1.75647175389045657003f, 0.688243882994381274313f, -0.107254423828329604454f);
-	return vecAdd(vecMul(p, vecSub(m, vecOne())), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
+	Vec p = POLY3(m, Log2Poly3C1, Log2Poly3C2, Log2Poly3C3, Log2Poly3C4);
+	return vecAdd(vecMul(p, vecSub(m, vecOne)), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
 }
+
+const float Log2Poly2C1 = 2.28330284476918490682f;
+const float Log2Poly2C2 = -1.04913055217340124191f;
+const float Log2Poly2C3 = 0.204446009836232697516f;
 
 // relative error is < 3e-3
 FORCEINLINE Vec vecLog2EstP2(Vec x)
 {
 	LOG_DEF_PART
-	Vec p = POLY2(m, 2.28330284476918490682f, -1.04913055217340124191f, 0.204446009836232697516f);
-	return vecAdd(vecMul(p, vecSub(m, vecOne())), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
+	Vec p = POLY2(m, Log2Poly2C1, Log2Poly2C2, Log2Poly2C3);
+	return vecAdd(vecMul(p, vecSub(m, vecOne)), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
 }
 
 #undef LOG_DEF_PART
@@ -792,16 +830,21 @@ FORCEINLINE Vec vecLog2EstP2(Vec x)
 #undef POLY4
 #undef POLY5
 
+const float Log2OfE = 1.4426950408889634073599f; // log2(e)
+const float Log2Of10 = 3.321928094887f; // log2(10)
+const float InvLog2OfE = 2.28330284476918490682f; // 1/log2(e)
+const float InvLog2Of10 = 0.301029995664f; // 1/log2(10)
+
 // relative error is < 1e-5
 FORCEINLINE Vec vecLog(Vec x)
 {
-	return vecMul(vecLog2EstP5(x), vec(0.6931471805599453f)); // 1/log2(e)
+	return vecMul(vecLog2EstP5(x), vec(InvLog2OfE));
 }
 
 // relative error is < 4e-4
 FORCEINLINE Vec vecLogFast(Vec x)
 {
-	return vecMul(vecLog2EstP3(x), vec(0.6931471805599453f)); // 1/log2(e)
+	return vecMul(vecLog2EstP3(x), vec(InvLog2OfE));
 }
 
 // relative error is < 1e-5
@@ -819,25 +862,25 @@ FORCEINLINE Vec vecLog2Fast(Vec x)
 // relative error is < 1e-5
 FORCEINLINE Vec vecLog10(Vec x)
 {
-	return vecMul(vecLog2EstP5(x), vec(0.301029995664f)); // 1/log2(10)
+	return vecMul(vecLog2EstP5(x), vec(InvLog2Of10));
 }
 
 // relative error is < 4e-4
 FORCEINLINE Vec vecLog10Fast(Vec x)
 {
-	return vecMul(vecLog2EstP3(x), vec(0.301029995664f)); // 1/log2(10)
+	return vecMul(vecLog2EstP3(x), vec(InvLog2Of10));
 }
 
 // relative error is < 1e-7
 FORCEINLINE Vec vecExp(Vec x)
 {
-	return vecExp2EstP5(vecMul(x, vec(1.4426950408889634073599f))); // log2(e)
+	return vecExp2EstP5(vecMul(x, vec(Log2OfE)));
 }
 
 // relative error is < 1e-4
 FORCEINLINE Vec vecExpFast(Vec x)
 {
-	return vecExp2EstP3(vecMul(x, vec(1.4426950408889634073599f))); // log2(e)
+	return vecExp2EstP3(vecMul(x, vec(Log2OfE)));
 }
 
 // relative error is < 1e-7
@@ -855,13 +898,13 @@ FORCEINLINE Vec vecExp2Fast(Vec x)
 // relative error is < 1e-7
 FORCEINLINE Vec vecExp10(Vec x)
 {
-	return vecExp2EstP5(vecMul(x, vec(3.321928094887f))); // log2(10)
+	return vecExp2EstP5(vecMul(x, vec(Log2Of10)));
 }
 
 // relative error is < 1e-4
 FORCEINLINE Vec vecExp10Fast(Vec x)
 {
-	return vecExp2EstP3(vecMul(x, vec(3.321928094887f))); // log2(10)
+	return vecExp2EstP3(vecMul(x, vec(Log2Of10)));
 }
 
 // relative errors:
@@ -871,7 +914,7 @@ FORCEINLINE Vec vecExp10Fast(Vec x)
 FORCEINLINE Vec vecPow(Vec x, Vec y)
 {
 	Vec ret = vecExp2EstP5(vecMul(vecLog2EstP5(x), y));
-	ret = vecSel(ret, vecOne(), vecCmpEQ(y, vecZero()));
+	ret = vecSel(ret, vecOne, vecCmpEQ(y, vecZero()));
 	return ret;
 }
 

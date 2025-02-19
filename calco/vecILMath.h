@@ -329,7 +329,7 @@ FORCEINLINE void __cdecl vecILMathQuatFromAxisAngle(float3a_t925C03B5EB8C57EB0A1
 	float3a_internal* axis   = (float3a_internal*)inAxis;
 	quaternion_internal* res = (quaternion_internal*)resQ;
 
-	Vec sinCos = vecSinCosYW(vecMul(vec(angle), vecHalf()));
+	Vec sinCos = vecSinCosYW(vecMul(vec(angle), vecHalf));
 
 	res->store(vecMul(axis->load1(), vecShuffle<VecMask::_xxxy>(sinCos)));
 }

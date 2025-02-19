@@ -118,30 +118,11 @@ FORCEINLINE IntVec vecZeroInt()
 	return _mm_setzero_si128();
 }
 
-FORCEINLINE Vec vecOne()
-{
-    return vec(1.0f);
-}
-
-FORCEINLINE Vec vecHalf()
-{
-	return vec(0.5f);
-}
-
-FORCEINLINE Vec vecQuarter()
-{
-	return vec(0.25f);
-}
-
-FORCEINLINE Vec vecTwo()
-{
-	return vec(2.0f);
-}
-
-FORCEINLINE Vec vecNegOne()
-{
-	return vec(-1.0f);
-}
+const Vec vecOne = vec(1.0f);
+const Vec vecHalf = vec(0.5f);
+const Vec vecQuarter = vec(0.25f);
+const Vec vecTwo = vec(2.0f);
+const Vec vecNegOne = vec(-1.0f);
 
 struct VecMask
 {
@@ -1342,7 +1323,7 @@ struct VecMask
 	{
 		static FORCEINLINE Vec apply(Vec v)
 		{
-			return VecShuffleInnerInternal<(T >> 3) & 0xf, T>::apply(v, vecOne());
+			return VecShuffleInnerInternal<(T >> 3) & 0xf, T>::apply(v, vecOne);
 		}
 	};
 };
@@ -1354,7 +1335,7 @@ template<VecMask::Mask T> FORCEINLINE Vec vecShuffle(Vec v)
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_x1y1>(Vec v)
 {
-	return _mm_unpacklo_ps(v, vecOne());
+	return _mm_unpacklo_ps(v, vecOne);
 }
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_x0y0>(Vec v)
@@ -1364,7 +1345,7 @@ template<> FORCEINLINE Vec vecShuffle<VecMask::_x0y0>(Vec v)
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_1x1y>(Vec v)
 {
-	return _mm_unpacklo_ps(vecOne(), v);
+	return _mm_unpacklo_ps(vecOne, v);
 }
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_0x0y>(Vec v)
@@ -1374,7 +1355,7 @@ template<> FORCEINLINE Vec vecShuffle<VecMask::_0x0y>(Vec v)
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_z1w1>(Vec v)
 {
-	return _mm_unpackhi_ps(v, vecOne());
+	return _mm_unpackhi_ps(v, vecOne);
 }
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_z0w0>(Vec v)
@@ -1384,7 +1365,7 @@ template<> FORCEINLINE Vec vecShuffle<VecMask::_z0w0>(Vec v)
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_1z1w>(Vec v)
 {
-	return _mm_unpackhi_ps(vecOne(), v);
+	return _mm_unpackhi_ps(vecOne, v);
 }
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_0z0w>(Vec v)
@@ -1402,7 +1383,7 @@ template<> FORCEINLINE Vec vecShuffle<VecMask::_xyz0>(Vec v)
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_xyz1>(Vec v)
 {
-	return _mm_blend_ps(v, vecOne(), 8);
+	return _mm_blend_ps(v, vecOne, 8);
 }
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_x0z0>(Vec v)
@@ -1668,7 +1649,7 @@ FORCEINLINE Vec vecMulSub(Vec subFrom, Vec mul1, Vec mul2)
 
 FORCEINLINE Vec vecLerp(Vec a, Vec b, Vec t)
 {
-	const Vec one_minus_t = vecSub(vecOne(), t);
+	const Vec one_minus_t = vecSub(vecOne, t);
 	return vecAdd(vecMul(a, one_minus_t), vecMul(b, t));
 }
 
@@ -1700,7 +1681,7 @@ FORCEINLINE Vec vecRecipEst(Vec r)
 FORCEINLINE Vec vecRecipFast(Vec r)
 {
 	// Do one iteration of Newton-Raphson
-	const Vec two = vecTwo();
+	const Vec two = vecTwo;
 
 	const Vec est = vecRecipNoNewtonRaphson(r);
 
@@ -1712,7 +1693,7 @@ FORCEINLINE Vec vecRecipFast(Vec r)
 FORCEINLINE Vec vecRecip(Vec r)
 {
 	// Do two iterations of Newton-Raphson
-	const Vec two = vecTwo();
+	const Vec two = vecTwo;
 
 	const Vec recipEst = vecRecipEst(r);
 
@@ -1729,7 +1710,7 @@ FORCEINLINE Vec vecRecipSqrtEst(Vec v)
 FORCEINLINE Vec vecRecipSqrtFast(Vec v)
 {
 	// Do one iteration of Newton-Raphson
-	const Vec half = vecHalf();
+	const Vec half = vecHalf;
 
 	const Vec estimate = vecRecipSqrtNoNewtonRaphson(v);
 
@@ -1745,7 +1726,7 @@ FORCEINLINE Vec vecRecipSqrtFast(Vec v)
 FORCEINLINE Vec vecRecipSqrt(Vec v)
 {
 	// Do two iterations of Newton-Raphson
-	const Vec half = vecHalf();
+	const Vec half = vecHalf;
 
     const Vec estimate = vecRecipSqrtFast(v);
 
@@ -1761,7 +1742,7 @@ FORCEINLINE Vec vecRecipSqrt(Vec v)
 FORCEINLINE Vec vecRecipSqrtFast1(Vec v)
 {
 	// Do one iteration of Newton-Raphson
-	const Vec half = vecHalf();
+	const Vec half = vecHalf;
 	const Vec estimate = vecRecipSqrtNoNewtonRaphson1(v);
 	const Vec halfV = _mm_mul_ss(v, half);
     const Vec estimateSqr = _mm_mul_ss(estimate, estimate);
@@ -1772,7 +1753,7 @@ FORCEINLINE Vec vecRecipSqrtFast1(Vec v)
 FORCEINLINE Vec vecRecipSqrt1(Vec v)
 {
 	// Do two iterations of Newton-Raphson
-	const Vec half = vecHalf();
+	const Vec half = vecHalf;
     const Vec estimate = vecRecipSqrtFast1(v);
 	const Vec halfV = _mm_mul_ss(v, half);
     const Vec estimateSqr = _mm_mul_ss(estimate, estimate);

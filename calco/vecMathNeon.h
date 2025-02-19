@@ -179,30 +179,11 @@ FORCEINLINE IntVec vecZeroInt()
 	return vdupq_n_u32(0);
 }
 
-FORCEINLINE Vec vecOne()
-{
-    return vec(1.0f);
-}
-
-FORCEINLINE Vec vecHalf()
-{
-	return vec(0.5f);
-}
-
-FORCEINLINE Vec vecQuarter()
-{
-	return vec(0.25f);
-}
-
-FORCEINLINE Vec vecTwo()
-{
-	return vec(2.0f);
-}
-
-FORCEINLINE Vec vecNegOne()
-{
-	return vec(-1.0f);
-}
+const Vec vecOne = vec(1.0f);
+const Vec vecHalf = vec(0.5f);
+const Vec vecQuarter = vec(0.25f);
+const Vec vecTwo = vec(2.0f);
+const Vec vecNegOne = vec(-1.0f);
 
 FORCEINLINE Vec vecMin(Vec a, Vec b)
 {
