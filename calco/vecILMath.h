@@ -1014,7 +1014,6 @@ FORCEINLINE void __cdecl vecILMathATan2Est4(float4_tC63C89D1F1B7B6D2280807548270
 	res->store(vecATan2Est(y->load(), x->load()));
 }
 
-
 FORCEINLINE float __cdecl vecILMathLog(float x)
 {
 	return vecStore1(vecLog(vec(x)));

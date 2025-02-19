@@ -1919,17 +1919,20 @@ FORCEINLINE Vec vecCross(Vec u, Vec v)
 	return vecShuffle<VecMask::_yzxw>(r);
 }
 
-FORCEINLINE IntVec vecShiftLeftLogical(IntVec v, int bits)
+template<int bits>
+FORCEINLINE IntVec vecShiftLeftLogical(IntVec v)
 {
 	return _mm_slli_epi32(v, bits);
 }
 
-FORCEINLINE IntVec vecShiftRightLogical(IntVec v, int bits)
+template<int bits>
+FORCEINLINE IntVec vecShiftRightLogical(IntVec v)
 {
 	return _mm_srli_epi32(v, bits);
 }
 
-FORCEINLINE IntVec vecShiftRightArithmetic(IntVec v, int bits)
+template<int bits>
+FORCEINLINE IntVec vecShiftRightArithmetic(IntVec v)
 {
 	return _mm_srai_epi32(v, bits);
 }

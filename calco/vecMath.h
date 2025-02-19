@@ -697,7 +697,7 @@ const unsigned int FloatMantissaBits = 23;
 	x = vecMax(x, vec(-126.99999f));\
 	ipart = vecRoundToInt(vecSub(x, bias));\
 	fpart = vecSub(x, intVecToVec(ipart));\
-	expipart = intVecCastToVec(vecShiftLeftLogical(vecAdd(ipart, intVec(FloatExponentSignOffset)), FloatMantissaBits));\
+	expipart = intVecCastToVec(vecShiftLeftLogical<FloatMantissaBits>(vecAdd(ipart, intVec(FloatExponentSignOffset))));\
 
 const float Exp2Poly5C1 = 9.9999994e-1f;
 const float Exp2Poly5C2 = 6.9315308e-1f;
@@ -765,7 +765,7 @@ FORCEINLINE Vec vecExp2EstP2(Vec x)
 
 #define LOG_DEF_PART\
 	IntVec i = vecCastToIntVec(x);\
-	Vec e = intVecToVec(vecSub(vecShiftRightLogical(vecAnd(i, intVec(FloatExponentMask)), FloatMantissaBits), intVec(FloatExponentSignOffset)));\
+	Vec e = intVecToVec(vecSub(vecShiftRightLogical<FloatMantissaBits>(vecAnd(i, intVec(FloatExponentMask))), intVec(FloatExponentSignOffset)));\
 	Vec m = vecOr(intVecCastToVec(vecAnd(i, intVec(FloatMantissaMask))), vecOne);
 
 const float Log2Poly5C1 = 3.1157899f;
@@ -780,7 +780,7 @@ FORCEINLINE Vec vecLog2EstP5(Vec x)
 {
 	LOG_DEF_PART
 	Vec p = POLY5(m, Log2Poly5C1, Log2Poly5C2, Log2Poly5C3, Log2Poly5C4, Log2Poly5C5, Log2Poly5C6);
-	return vecAdd(vecMul(p, vecSub(m, vecOne)), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
+	return vecMulAdd(p, vecSub(m, vecOne), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
 }
 
 const float Log2Poly4C1 = 2.8882704548164776201f;
@@ -794,7 +794,7 @@ FORCEINLINE Vec vecLog2EstP4(Vec x)
 {
 	LOG_DEF_PART
 	Vec p = POLY4(m, Log2Poly4C1, Log2Poly4C2, Log2Poly4C3, Log2Poly4C4, Log2Poly4C5);
-	return vecAdd(vecMul(p, vecSub(m, vecOne)), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
+	return vecMulAdd(p, vecSub(m, vecOne), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
 }
 
 const float Log2Poly3C1 = 2.61761038894603480148f;
@@ -807,7 +807,7 @@ FORCEINLINE Vec vecLog2EstP3(Vec x)
 {
 	LOG_DEF_PART
 	Vec p = POLY3(m, Log2Poly3C1, Log2Poly3C2, Log2Poly3C3, Log2Poly3C4);
-	return vecAdd(vecMul(p, vecSub(m, vecOne)), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
+	return vecMulAdd(p, vecSub(m, vecOne), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
 }
 
 const float Log2Poly2C1 = 2.28330284476918490682f;
@@ -819,7 +819,7 @@ FORCEINLINE Vec vecLog2EstP2(Vec x)
 {
 	LOG_DEF_PART
 	Vec p = POLY2(m, Log2Poly2C1, Log2Poly2C2, Log2Poly2C3);
-	return vecAdd(vecMul(p, vecSub(m, vecOne)), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
+	return vecMulAdd(p, vecSub(m, vecOne), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
 }
 
 #undef LOG_DEF_PART
@@ -939,7 +939,7 @@ FORCEINLINE IntVec vecF32tof16(Vec x)
 
 	// Clamp to signed infinity if overflowed
 	IntVec h = vecCastToIntVec(vecMin(vecMul(intVecCastToVec(uux), vec(1.92592994e-34f)), vec(260042752.0f)));
-	h = vecShiftRightLogical(vecAdd(h, intVec(0x1000u)), 13);
+	h = vecShiftRightLogical<13>(vecAdd(h, intVec(0x1000u)));
 
 	// NaN->qNaN and Inf->Inf
 	h = vecSel( 
@@ -948,14 +948,14 @@ FORCEINLINE IntVec vecF32tof16(Vec x)
 				vecCmpGT(infinity_32, uux)
 	);
 
-	return vecOr(h, vecShiftRightLogical(vecAnd(ux, notMsk), 16));
+	return vecOr(h, vecShiftRightLogical<16>(vecAnd(ux, notMsk)));
 }
 
 FORCEINLINE Vec vecF16tof32(IntVec x)
 {
 	IntVec shifted_exp = intVec(0x7c00u << 13);
 	IntVec offset_exp = intVec((128u - 16u) << 23);
-	IntVec uf = vecShiftLeftLogical(vecAnd(x, intVec(0x7fffu)), 13);
+	IntVec uf = vecShiftLeftLogical<13>(vecAnd(x, intVec(0x7fffu)));
 	IntVec e = vecAnd(uf, shifted_exp);
 	uf = vecAdd(uf, offset_exp);
 	uf = vecAdd(uf, vecSel(vecZeroInt(), offset_exp, vecCmpEQ(e, shifted_exp)));
@@ -967,5 +967,5 @@ FORCEINLINE Vec vecF16tof32(IntVec x)
 				)),
 				vecCmpEQ(e, vecZeroInt())
 	);
-	return intVecCastToVec(vecOr(uf, vecShiftLeftLogical(vecShiftRightLogical(x, 15), 31))); // move sign from 15th to 31th bit
+	return intVecCastToVec(vecOr(uf, vecShiftLeftLogical<31>(vecShiftRightLogical<15>(x)))); // move sign from 15th to 31th bit
 }

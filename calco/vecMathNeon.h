@@ -417,7 +417,7 @@ FORCEINLINE Vec vecAndNot(Vec mask, Vec v)
 {
 	const uint32x4_t vAsUint = vreinterpretq_u32_f32(v);
 	const uint32x4_t maskAsUint = vreinterpretq_u32_f32(mask);
-	const uint32x4_t result = vbicq_u32(vAsUint, maskAsUint);
+	const uint32x4_t result = vandq_s32(vmvnq_s32(maskAsUint), vAsUint);
 
 	return vreinterpretq_f32_u32(result);
 }
@@ -1907,26 +1907,23 @@ FORCEINLINE Vec vecInsert<VecMask::_1111>(Vec v1, Vec v2)
 	return v2;
 }
 
-#if __APPLE__ || defined(__clang__) // fix error 'bits is not imm'
-#define vecShiftLeftLogical(v, bits) (int32x4_t)vshlq_n_u32((uint32x4_t)(v), bits)
-#define vecShiftRightLogical(v, bits) (int32x4_t)vshrq_n_u32((uint32x4_t)(v), bits)
-#define vecShiftRightArithmetic(v, bits) vshrq_n_s32(v, bits)
-#else
-FORCEINLINE IntVec vecShiftLeftLogical(IntVec v, int bits)
+template<int bits>
+FORCEINLINE IntVec vecShiftLeftLogical(IntVec v)
 {
 	return (int32x4_t)vshlq_n_u32((uint32x4_t)v, bits);
 }
 
-FORCEINLINE IntVec vecShiftRightLogical(IntVec v, int bits)
+template<int bits>
+FORCEINLINE IntVec vecShiftRightLogical(IntVec v)
 {
 	return (int32x4_t)vshrq_n_u32((uint32x4_t)v, bits);
 }
 
-FORCEINLINE IntVec vecShiftRightArithmetic(IntVec v, int bits)
+template<int bits>
+FORCEINLINE IntVec vecShiftRightArithmetic(IntVec v)
 {
 	return vshrq_n_s32(v, bits);
 }
-#endif
 
 FORCEINLINE IntVec vecPackU32ToU16(IntVec a)
 {
