@@ -17,7 +17,7 @@ namespace calco
 	[DebuggerDisplay("{normal}, {distance}")]
 	[Serializable]
 	[Il2CppEagerStaticClassConstruction]
-	public partial struct Plane3d : IEquatable<Plane3d>
+	public partial struct Plane3 : IEquatable<Plane3>
 	{
 		/// <summary>
 		/// A plane in the form Ax + By + Cz + Dw = 0.
@@ -39,7 +39,7 @@ namespace calco
 		/// <param name="coefficientC">Coefficient C from plane equation.</param>
 		/// <param name="coefficientD">Coefficient D from plane equation.</param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public Plane3d(float coefficientA, float coefficientB, float coefficientC, float coefficientD)
+		public Plane3(float coefficientA, float coefficientB, float coefficientC, float coefficientD)
 		{
 			normalAndDistance = new float4(coefficientA, coefficientB, coefficientC, coefficientD);
 			this = normalize(this);
@@ -49,21 +49,21 @@ namespace calco
 		/// Constructs a plane with a normal vector and distance from the origin.
 		/// </summary>
 		/// <remarks>
-		/// !!!WARNING!!! consider using Plane3d.CreateFromUnitNormalAndDistance instead
+		/// !!!WARNING!!! consider using Plane3.CreateFromUnitNormalAndDistance instead
 		/// The constructed plane will be the normalized form of the plane specified by the inputs.
 		/// </remarks>
 		/// <param name="normal">A non-zero vector that is perpendicular to the plane.  It may be any length.</param>
 		/// <param name="distance">Distance from the origin along the normal.  A negative value moves the plane in the
 		/// same direction as the normal while a positive value moves it in the opposite direction.</param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public Plane3d(in float3a normal, float distance)
+		public Plane3(in float3a normal, float distance)
 		{
 			normalAndDistance = new float4(normal, distance);
 			this = normalize(this);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public Plane3d(in float4 normalAndDistance)
+		public Plane3(in float4 normalAndDistance)
 		{
 			this.normalAndDistance = normalAndDistance;
 		}
@@ -72,13 +72,13 @@ namespace calco
 		/// Constructs a plane with a normal vector and a point that lies in the plane.
 		/// </summary>
 		/// <remarks>
-		/// !!!WARNING!!! consider using Plane3d.CreateFromUnitNormalAndPointInPlane instead
+		/// !!!WARNING!!! consider using Plane3.CreateFromUnitNormalAndPointInPlane instead
 		/// The constructed plane will be the normalized form of the plane specified by the inputs.
 		/// </remarks>
 		/// <param name="normal">A non-zero vector that is perpendicular to the plane.  It may be any length.</param>
 		/// <param name="pointInPlane">A point that lies in the plane.</param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public Plane3d(in float3a normal, in float3a pointInPlane)
+		public Plane3(in float3a normal, in float3a pointInPlane)
 			: this(normal, -dot(normal, pointInPlane))
 		{
 		}
@@ -93,7 +93,7 @@ namespace calco
 		/// <param name="vector2InPlane">A non-zero vector that lies in the plane.  It may be any length and must not be a scalar multiple of <paramref name="vector1InPlane"/>.</param>
 		/// <param name="pointInPlane">A point that lies in the plane.</param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public Plane3d(in float3a vector1InPlane, in float3a vector2InPlane, in float3a pointInPlane)
+		public Plane3(in float3a vector1InPlane, in float3a vector2InPlane, in float3a pointInPlane)
 			: this(cross(vector1InPlane, vector2InPlane), pointInPlane)
 		{
 		}
@@ -110,9 +110,9 @@ namespace calco
 		/// same direction as the normal while a positive value moves it in the opposite direction.</param>
 		/// <returns>Normalized Plane constructed from given inputs.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d CreateFromUnitNormalAndDistance(in float3a unitNormal, float distance)
+		public static Plane3 CreateFromUnitNormalAndDistance(in float3a unitNormal, float distance)
 		{
-			return new Plane3d { normalAndDistance = new float4(unitNormal, distance) };
+			return new Plane3 { normalAndDistance = new float4(unitNormal, distance) };
 		}
 
 		/// <summary>
@@ -126,19 +126,19 @@ namespace calco
 		/// <param name="pointInPlane">A point that lies in the plane.</param>
 		/// <returns>Normalized Plane constructed from given inputs.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d CreateFromUnitNormalAndPointInPlane(in float3a unitNormal, in float3a pointInPlane)
+		public static Plane3 CreateFromUnitNormalAndPointInPlane(in float3a unitNormal, in float3a pointInPlane)
 		{
-			return new Plane3d { normalAndDistance = new float4(unitNormal, -dot(unitNormal, pointInPlane)) };
+			return new Plane3 { normalAndDistance = new float4(unitNormal, -dot(unitNormal, pointInPlane)) };
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d CreateFrom3Points(in float3a p0, in float3a p1, in float3a p2)
+		public static Plane3 CreateFrom3Points(in float3a p0, in float3a p1, in float3a p2)
 		{
-			return new Plane3d(p1 - p0, p2 - p0, p0);
+			return new Plane3(p1 - p0, p2 - p0, p0);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d CreateNonUnitFrom3Points(in float3a p0, in float3a p1, in float3a p2)
+		public static Plane3 CreateNonUnitFrom3Points(in float3a p0, in float3a p1, in float3a p2)
 		{
 			var vector1InPlane = p1 - p0;
 			var vector2InPlane = p2 - p0;
@@ -146,7 +146,7 @@ namespace calco
 			var N = cross(vector1InPlane, vector2InPlane);
 			float d = -dot(N, p0);
 
-			return new Plane3d(float4(N, d));
+			return new Plane3(float4(N, d));
 		}
 
 		/// <summary>
@@ -237,10 +237,10 @@ namespace calco
 		/// <summary>
 		/// Flips the plane so the normal points in the opposite direction.
 		/// </summary>
-		public readonly Plane3d Flipped { [MethodImpl(MethodImplOptions.AggressiveInlining)] get => new(-normalAndDistance); }
+		public readonly Plane3 Flipped { [MethodImpl(MethodImplOptions.AggressiveInlining)] get => new(-normalAndDistance); }
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Raycast(in Ray3da ray, out float hitDist)
+		public readonly bool Raycast(in Ray3a ray, out float hitDist)
 		{
 			float num = dot(ray.dir, normal);
 			float num2 = -SignedDistanceToPoint(ray.origin);
@@ -257,7 +257,7 @@ namespace calco
 		//Find the line of intersection between two planes.	The planes are defined by a normal and a point on that plane.
 		//The outputs are a point on the line and a vector which indicates it's direction. If the planes are not parallel, 
 		//the function outputs true, otherwise false.
-		public readonly bool Intersection(in Plane3d other, out Ray3da intersectionRay)
+		public readonly bool Intersection(in Plane3 other, out Ray3a intersectionRay)
 		{
 			var plane1Normal = this.normal;
 			var plane2Normal = other.normal;
@@ -284,24 +284,24 @@ namespace calco
 				float t = dot(plane1Normal, plane1ToPlane2) / denominator;
 				var resLinePoint = pointOnThePlane2 + t * ldir;
 
-				intersectionRay = new Ray3da(resLinePoint, resLineVec);
+				intersectionRay = new Ray3a(resLinePoint, resLineVec);
 				return true;
 			}
 			else // output is not valid
 			{
-				intersectionRay = new Ray3da(float3c.zero, float3c.zero);
+				intersectionRay = new Ray3a(float3c.zero, float3c.zero);
 				return false;
 			}
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Equals(Plane3d other)
+		public readonly bool Equals(Plane3 other)
 		{
 			return normalAndDistance.Equals(other.normalAndDistance);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool SameNormalized(Plane3d other, float tolerance = 1e-3f)
+		public readonly bool SameNormalized(Plane3 other, float tolerance = 1e-3f)
 		{
 			return dot(normal, other.normal) > (1 - tolerance) && abs(distance - other.distance) < tolerance;
 		}
@@ -327,46 +327,46 @@ namespace calco
 	public static partial class math
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-		static extern void vecILMathRigidTransformMulPlane(in RigidTransforma t, in Plane3d p, out Plane3d res);
+		static extern void vecILMathRigidTransformMulPlane(in RigidTransforma t, in Plane3 p, out Plane3 res);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d Plane3d(float coefficientA, float coefficientB, float coefficientC, float coefficientD) => new Plane3d(coefficientA, coefficientB, coefficientC, coefficientD);
+		public static Plane3 Plane3(float coefficientA, float coefficientB, float coefficientC, float coefficientD) => new Plane3(coefficientA, coefficientB, coefficientC, coefficientD);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d Plane3d(in float3a normal, float distance) => new Plane3d(normal, distance);
+		public static Plane3 Plane3(in float3a normal, float distance) => new Plane3(normal, distance);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d Plane3d(in float4 normalAndDistance) => new Plane3d(normalAndDistance);
+		public static Plane3 Plane3(in float4 normalAndDistance) => new Plane3(normalAndDistance);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d Plane3d(in float3a normal, in float3a pointInPlane) => new Plane3d(normal, pointInPlane);
+		public static Plane3 Plane3(in float3a normal, in float3a pointInPlane) => new Plane3(normal, pointInPlane);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d Plane3d(in float3a vector1InPlane, in float3a vector2InPlane, in float3a pointInPlane) => new Plane3d(vector1InPlane, vector2InPlane, pointInPlane);
+		public static Plane3 Plane3(in float3a vector1InPlane, in float3a vector2InPlane, in float3a pointInPlane) => new Plane3(vector1InPlane, vector2InPlane, pointInPlane);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Plane3d Plane3d(in UnityEngine.Plane p) { return calco.Plane3d.CreateFromUnitNormalAndDistance(float3(p.normal), p.distance); }
+        public static Plane3 Plane3(in UnityEngine.Plane p) { return calco.Plane3.CreateFromUnitNormalAndDistance(float3(p.normal), p.distance); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UnityEngine.Plane Plane(in Plane3d p) { return new UnityEngine.Plane(Vec3(p.normal), p.distance); }
+        public static UnityEngine.Plane Plane(in Plane3 p) { return new UnityEngine.Plane(Vec3(p.normal), p.distance); }
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d transform(in RigidTransforma transf, in Plane3d p)
+		public static Plane3 transform(in RigidTransforma transf, in Plane3 p)
 		{
 		#if ENABLE_IL2CPP
 			vecILMathRigidTransformMulPlane(in transf, in p, out var res);
 			return res;
         #else
 			var normal = rotate(in transf, p.normal);
-			return new Plane3d(normal, normal * -p.distance + transf.pos);
+			return new Plane3(normal, normal * -p.distance + transf.pos);
         #endif
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d transform(in float4x4 transf, in Plane3d p)
+		public static Plane3 transform(in float4x4 transf, in Plane3 p)
 		{
 			var pp = p.normal * -p.distance;
-			return new Plane3d(rotate(in transf, p.normal), transform(in transf, pp));
+			return new Plane3(rotate(in transf, p.normal), transform(in transf, pp));
 		}
 	}
 }

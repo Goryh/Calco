@@ -3968,14 +3968,14 @@ namespace calco
         public static float4 normalize(in float4 x) { return rsqrt(dot(x, x)) * x; }
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Plane3d normalize(in Plane3d plane)
+		public static Plane3 normalize(in Plane3 plane)
 		{
         	float recipLength = rsqrt(lengthsq(plane.normal));
-			return new Plane3d(plane.normalAndDistance * recipLength);
+			return new Plane3(plane.normalAndDistance * recipLength);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Ray3da normalize(Ray3da ray)
+		public static Ray3a normalize(Ray3a ray)
 		{
             ray.dir = normalize(ray.dir);
             return ray;

@@ -65,7 +65,7 @@ namespace calco
 		public readonly bool Contains(float3a point) => distancesq(point, position) <= radiussq;
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Raycast(in Ray3da unitRay, out float hitDistMin, out float hitDistMax)
+		public readonly bool Raycast(in Ray3a unitRay, out float hitDistMin, out float hitDistMax)
 		{
 			unitRay.CheckRayIsNormalized();
 
@@ -95,7 +95,7 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Intersects(in Ray3da unitRay)
+		public readonly bool Intersects(in Ray3a unitRay)
 		{
 			unitRay.CheckRayIsNormalized();
 
@@ -106,18 +106,18 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Intersects(in Plane3d plane)
+		public readonly bool Intersects(in Plane3 plane)
 		{
 			float dist = plane.SignedDistanceToPoint(position);
 			return abs(dist) <= radius;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Intersects(in LineSegmenta segment)
+		public readonly bool Intersects(in Segmenta segment)
 		{
 			var dir = normalize(segment.dir);
-			return	Intersects(Ray3da(segment.p0, dir))
-				&&  Intersects(Ray3da(segment.p1, -dir));
+			return	Intersects(Ray3a(segment.p0, dir))
+				&&  Intersects(Ray3a(segment.p1, -dir));
 		}
 
 		public readonly bool Intersects(in Trianglea triangle)
@@ -130,11 +130,11 @@ namespace calco
 			if( triangle.Contains(trianglePlane.ClosestPoint(position)) )
 				return true;
 
-			if( Intersects(LineSegmenta(triangle.v0, triangle.v1)) )
+			if( Intersects(Segmenta(triangle.v0, triangle.v1)) )
 				return true;
-			if( Intersects(LineSegmenta(triangle.v1, triangle.v2)) )
+			if( Intersects(Segmenta(triangle.v1, triangle.v2)) )
 				return true;
-			if( Intersects(LineSegmenta(triangle.v2, triangle.v0)) )
+			if( Intersects(Segmenta(triangle.v2, triangle.v0)) )
 				return true;
 
 			return false;

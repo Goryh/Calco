@@ -7,38 +7,38 @@ using static calco.math;
 namespace calco
 {
 	[Il2CppEagerStaticClassConstruction]
-	public ref struct Ray3da
+	public ref struct Ray3a
 	{
 		public float3a origin;
 		public float3a dir;
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public Ray3da(in float3a origin, in float3a dir)
+		public Ray3a(in float3a origin, in float3a dir)
 		{
 			this.origin = origin;
 			this.dir = dir;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static implicit operator Ray3d(in Ray3da v)
+		public static implicit operator Ray3(in Ray3a v)
 		{
-			return new Ray3d {origin = v.origin, dir = v.dir};
+			return new Ray3 {origin = v.origin, dir = v.dir};
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static implicit operator Ray3da(in Ray3d v)
+		public static implicit operator Ray3a(in Ray3 v)
 		{
-			return new Ray3da {origin = v.origin, dir = v.dir};
+			return new Ray3a {origin = v.origin, dir = v.dir};
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static implicit operator Ray3da(in UnityEngine.Ray r)
+		public static implicit operator Ray3a(in UnityEngine.Ray r)
 		{
-			return new Ray3da(r.origin, r.direction);
+			return new Ray3a(r.origin, r.direction);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static implicit operator UnityEngine.Ray(in Ray3da r)
+		public static implicit operator UnityEngine.Ray(in Ray3a r)
 		{
 			return new UnityEngine.Ray(r.origin, r.dir);
 		}
@@ -85,7 +85,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly float ClosestPointUnitRayDist(in float3a pt) => sqrt(ClosestPointUnitRayDistSq(pt));
 
-		public readonly bool ClosestPoint(in Ray3da other, out float thisRayT, out float otherRayT)
+		public readonly bool ClosestPoint(in Ray3a other, out float thisRayT, out float otherRayT)
 		{
 			var ray1Dir = dir;
 			var ray2Dir = other.dir;
@@ -137,20 +137,20 @@ namespace calco
 	public static partial class math
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Ray3da Ray3da(in float3a origin, in float3a dir) => new Ray3da(origin, dir);
+		public static Ray3a Ray3a(in float3a origin, in float3a dir) => new Ray3a(origin, dir);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Ray3da transform(in RigidTransforma transf, in Ray3da r)
+		public static Ray3a transform(in RigidTransforma transf, in Ray3a r)
 		{
-			return new Ray3da {
+			return new Ray3a {
 				origin = transform(in transf, r.origin),
 				dir = rotate(in transf, r.dir) };
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static Ray3da transform(in float4x4 transf, in Ray3da r)
+		public static Ray3a transform(in float4x4 transf, in Ray3a r)
 		{
-			return new Ray3da {
+			return new Ray3a {
 				origin = transform(in transf, r.origin),
 				dir = rotate(in transf, r.dir) };
 		}

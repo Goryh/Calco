@@ -194,7 +194,7 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Raycast(in Ray3da r, out float hitDistMin, out float hitDistMax)
+		public readonly bool Raycast(in Ray3a r, out float hitDistMin, out float hitDistMax)
 		{
 			var t1 = (min - r.origin) / r.dir;
 			var t2 = (max - r.origin) / r.dir;
@@ -206,7 +206,7 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Intersects(in Ray3da r)
+		public readonly bool Intersects(in Ray3a r)
 		{
 			var t1 = (min - r.origin) / r.dir;
 			var t2 = (max - r.origin) / r.dir;
@@ -220,7 +220,7 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Intersects(in LineSegmenta segment, out float hitDistMin, out float hitDistMax)
+		public readonly bool Intersects(in Segmenta segment, out float hitDistMin, out float hitDistMax)
 		{
 			var invRayDir = float3c.one / segment.dir;
 
@@ -236,13 +236,13 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Intersects(in LineSegmenta segment)
+		public readonly bool Intersects(in Segmenta segment)
 		{
 			return Intersects(segment, out var _, out var _);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Intersects(in Plane3d plane)
+		public readonly bool Intersects(in Plane3 plane)
 		{
 			var projSize = dot(halfExtents, abs(plane.normal));
 			var dist = plane.SignedDistanceToPoint(center);
@@ -259,18 +259,18 @@ namespace calco
 			if( triangle.Contains(trianglePlane.ClosestPoint(center)) )
 				return true;
 
-			if( Intersects(LineSegmenta(triangle.v0, triangle.v1)) )
+			if( Intersects(Segmenta(triangle.v0, triangle.v1)) )
 				return true;
-			if( Intersects(LineSegmenta(triangle.v1, triangle.v2)) )
+			if( Intersects(Segmenta(triangle.v1, triangle.v2)) )
 				return true;
-			if( Intersects(LineSegmenta(triangle.v2, triangle.v0)) )
+			if( Intersects(Segmenta(triangle.v2, triangle.v0)) )
 				return true;
 
 			return false;
 		}
 
 		// gives some false-positives
-		public readonly bool IsOutsideFrustum(Plane3d[] frustumPlanes5)
+		public readonly bool IsOutsideFrustum(Plane3[] frustumPlanes5)
 		{
 			for( int i = 0; i < 5; ++i )
 			{

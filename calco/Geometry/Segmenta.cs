@@ -6,7 +6,7 @@ using static calco.math;
 namespace calco
 {
 	[Il2CppEagerStaticClassConstruction]
-	public ref struct LineSegmenta
+	public ref struct Segmenta
 	{
 		public float3a p0;
 		public float3a p1;
@@ -14,22 +14,22 @@ namespace calco
 		public readonly float3a dir	{ [MethodImpl(MethodImplOptions.AggressiveInlining)] get => p1 - p0; }
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public LineSegmenta(in float3a p0, in float3a p1)
+		public Segmenta(in float3a p0, in float3a p1)
 		{
 			this.p0 = p0;
 			this.p1 = p1;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static implicit operator LineSegment(in LineSegmenta v)
+		public static implicit operator Segment(in Segmenta v)
 		{
-			return new LineSegment(v.p0, v.p1);
+			return new Segment(v.p0, v.p1);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static implicit operator LineSegmenta(in LineSegment v)
+		public static implicit operator Segmenta(in Segment v)
 		{
-			return new LineSegmenta(v.p0, v.p1);
+			return new Segmenta(v.p0, v.p1);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -54,13 +54,13 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly override string ToString()
 		{
-			return string.Format("LineSegment({0}, {1})", float3(p0), float3(p1));
+			return string.Format("Segment({0}, {1})", float3(p0), float3(p1));
 		}
 	}
 
 	public static partial class math
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static LineSegmenta LineSegmenta(in float3 p0, in float3 p1) { return new LineSegmenta(p0, p1); }
+		public static Segmenta Segmenta(in float3 p0, in float3 p1) { return new Segmenta(p0, p1); }
 	}
 }

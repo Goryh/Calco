@@ -12,8 +12,8 @@ namespace calco
 		public float3a v1;
 		public float3a v2;
 
-		public readonly Plane3d plane { [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Plane3d.CreateFrom3Points(v0, v1, v2); }
-		public readonly Plane3d nonUnitPlane { [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Plane3d.CreateNonUnitFrom3Points(v0, v1, v2); }
+		public readonly Plane3 plane { [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Plane3.CreateFrom3Points(v0, v1, v2); }
+		public readonly Plane3 nonUnitPlane { [MethodImpl(MethodImplOptions.AggressiveInlining)] get => Plane3.CreateNonUnitFrom3Points(v0, v1, v2); }
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public Trianglea(in float3a v0, in float3a v1, in float3a v2)
@@ -46,13 +46,13 @@ namespace calco
 	    }
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Raycast(in Ray3da ray, out float hitDist)
+		public readonly bool Raycast(in Ray3a ray, out float hitDist)
 		{
 			return Raycast(ray, nonUnitPlane, out hitDist);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Raycast(in Ray3da ray, in Plane3d precalculatedTriangleNonUnitPlane, out float hitDist)
+		public readonly bool Raycast(in Ray3a ray, in Plane3 precalculatedTriangleNonUnitPlane, out float hitDist)
 		{
 			var n = precalculatedTriangleNonUnitPlane.normal;
 			var d = precalculatedTriangleNonUnitPlane.distance;
@@ -81,7 +81,7 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Intersects(in LineSegmenta segment)
+		public readonly bool Intersects(in Segmenta segment)
 		{
 			float s1 = SignedTetraVolume(segment.p0, v0, v1, v2);
 			float s2 = SignedTetraVolume(segment.p1, v0, v1, v2);
