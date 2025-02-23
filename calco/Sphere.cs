@@ -26,6 +26,12 @@ namespace calco
 			posRadius = positionAndRadius;
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static explicit operator Sphere(in float4 positionAndRadius)
+		{
+			return new Sphere(positionAndRadius);
+		}
+
 		public float3 position
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)] readonly get => posRadius.xyz;
