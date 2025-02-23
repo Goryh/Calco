@@ -190,7 +190,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool Intersects(in Sphere sphere)
 		{
-			return ClosestPointDistSq(sphere.positiona) <= sphere.radiussq;
+			return ClosestPointDistSq(sphere.position) <= sphere.radiussq;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -245,7 +245,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool Intersects(in Plane3d plane)
 		{
-			var projSize = dot(halfExtents, abs(plane.normala));
+			var projSize = dot(halfExtents, abs(plane.normal));
 			var dist = plane.SignedDistanceToPoint(center);
 			return abs(dist) <= projSize;
 		}
@@ -275,7 +275,7 @@ namespace calco
 		{
 			for( int i = 0; i < 5; ++i )
 			{
-				var projSize = dot(halfExtents, abs(frustumPlanes5[i].normala));
+				var projSize = dot(halfExtents, abs(frustumPlanes5[i].normal));
 				var dist = frustumPlanes5[i].SignedDistanceToPoint(center);
 				if( dist <= -projSize )
 					return true;

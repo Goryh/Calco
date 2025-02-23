@@ -54,7 +54,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool Raycast(in Ray3da ray, in Plane3d precalculatedTriangleNonUnitPlane, out float hitDist)
 		{
-			var n = precalculatedTriangleNonUnitPlane.normala;
+			var n = precalculatedTriangleNonUnitPlane.normal;
 			var d = precalculatedTriangleNonUnitPlane.distance;
 
 			float nDotRayDirection = dot(n, ray.dir);

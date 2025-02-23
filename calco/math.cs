@@ -3970,7 +3970,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Plane3d normalize(in Plane3d plane)
 		{
-        	float recipLength = rsqrt(lengthsq(plane.normala));
+        	float recipLength = rsqrt(lengthsq(plane.normal));
 			return new Plane3d(plane.normalAndDistance * recipLength);
 		}
 

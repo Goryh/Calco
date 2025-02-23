@@ -156,13 +156,7 @@ namespace calco
 		/// It is assumed that the normal is unit length.  If you set a new plane such that Ax + By + Cz + Dw = 0 but
 		/// (A, B, C) is not unit length, then you must normalize the plane by calling <see cref="Normalize(Plane)"/>.
 		/// </remarks>
-		public float3 normal
-		{
-			[MethodImpl(MethodImplOptions.AggressiveInlining)] readonly get => normalAndDistance.xyz;
-			[MethodImpl(MethodImplOptions.AggressiveInlining)] set => normalAndDistance.xyz = value;
-		}
-
-		public float3a normala
+		public float3a normal
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)] readonly get => normalAndDistance.xyza;
 			[MethodImpl(MethodImplOptions.AggressiveInlining)] set => normalAndDistance.xyz = value;
@@ -190,7 +184,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void Translate(float3a translation)
 		{
-			distance += dot(normala, translation);
+			distance += dot(normal, translation);
 		}
 
 		/// <summary>
@@ -231,7 +225,7 @@ namespace calco
 		public readonly float3a Projection(float3a point)
 		{
 			CheckPlaneIsNormalized();
-			return point - normala * SignedDistanceToPoint(point);
+			return point - normal * SignedDistanceToPoint(point);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -248,7 +242,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool Raycast(in Ray3da ray, out float hitDist)
 		{
-			float num = dot(ray.dir, normala);
+			float num = dot(ray.dir, normal);
 			float num2 = -SignedDistanceToPoint(ray.origin);
 			if( abs(num) < EPSILON * 4 )
 			{
@@ -265,8 +259,8 @@ namespace calco
 		//the function outputs true, otherwise false.
 		public readonly bool Intersection(in Plane3d other, out Ray3da intersectionRay)
 		{
-			var plane1Normal = this.normala;
-			var plane2Normal = other.normala;
+			var plane1Normal = this.normal;
+			var plane2Normal = other.normal;
 			//We can get the direction of the line of intersection of the two planes by calculating the 
 			//cross product of the normals of the two planes. Note that this is just a direction and the line
 			//is not fixed in space yet. We need a point for that to go with the line vector.
@@ -315,7 +309,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool IsNormalized()
 		{
-			float ll = lengthsq(normala);
+			float ll = lengthsq(normal);
 			const float lowerBound = 0.999f * 0.999f;
 			const float upperBound = 1.001f * 1.001f;
 

@@ -32,13 +32,7 @@ namespace calco
 			return new Sphere(positionAndRadius);
 		}
 
-		public float3 position
-		{
-			[MethodImpl(MethodImplOptions.AggressiveInlining)] readonly get => posRadius.xyz;
-			[MethodImpl(MethodImplOptions.AggressiveInlining)] set => posRadius.xyz = value;
-		}
-
-		public float3a positiona
+		public float3a position
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)] readonly get => posRadius.xyza;
 			[MethodImpl(MethodImplOptions.AggressiveInlining)] set => posRadius.xyz = value;
@@ -58,24 +52,24 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void Translate(float3a translation)
 		{
-			positiona += translation;
+			position += translation;
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly float3a ClosestPoint(float3a point) => normalize(point - positiona) * radius;
+		public readonly float3a ClosestPoint(float3a point) => normalize(point - position) * radius;
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly float ClosestPointDist(float3a point) => abs(distance(positiona, point) - radius);
+		public readonly float ClosestPointDist(float3a point) => abs(distance(position, point) - radius);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly bool Contains(float3a point) => distancesq(point, positiona) <= radiussq;
+		public readonly bool Contains(float3a point) => distancesq(point, position) <= radiussq;
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool Raycast(in Ray3da unitRay, out float hitDistMin, out float hitDistMax)
 		{
 			unitRay.CheckRayIsNormalized();
 
-			var center = positiona;
+			var center = position;
 			var l = center - unitRay.origin;
 			float oToD = dot(l, unitRay.dir);
 			float cToD2 = dot(l, l) - oToD * oToD;
@@ -97,7 +91,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool Intersects(in Sphere other)
 		{
-			return distancesq(positiona, other.positiona) <= square(radius + other.radius);
+			return distancesq(position, other.position) <= square(radius + other.radius);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -105,7 +99,7 @@ namespace calco
 		{
 			unitRay.CheckRayIsNormalized();
 
-			var center = positiona;
+			var center = position;
 			var closestPointOnRay = unitRay.dir * max(0, dot(center - unitRay.origin, unitRay.dir));
 			var centerToRay = unitRay.origin + closestPointOnRay - center;
 			return lengthsq(centerToRay) <= radiussq;
@@ -114,7 +108,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool Intersects(in Plane3d plane)
 		{
-			float dist = plane.SignedDistanceToPoint(positiona);
+			float dist = plane.SignedDistanceToPoint(position);
 			return abs(dist) <= radius;
 		}
 
@@ -133,7 +127,7 @@ namespace calco
 			if( !Intersects(trianglePlane) )
 				return false;
 
-			if( triangle.Contains(trianglePlane.ClosestPoint(positiona)) )
+			if( triangle.Contains(trianglePlane.ClosestPoint(position)) )
 				return true;
 
 			if( Intersects(LineSegmenta(triangle.v0, triangle.v1)) )
@@ -161,14 +155,14 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Sphere transform(in RigidTransforma transf, in Sphere sphere)
 		{
-			var pos = transform(in transf, sphere.positiona);
+			var pos = transform(in transf, sphere.position);
 			return new Sphere(pos, sphere.radius);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Sphere transformWithUniformScale(in float4x4 transf, in Sphere sphere)
 		{
-			var pos = transform(in transf, sphere.positiona);
+			var pos = transform(in transf, sphere.position);
 			return new Sphere(pos, sphere.radius * transf.UniformScale());
 		}
 	}
