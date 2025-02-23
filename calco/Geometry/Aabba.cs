@@ -194,7 +194,6 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-
 		public readonly bool Raycast(in Ray3da r, out float hitDistMin, out float hitDistMax)
 		{
 			var t1 = (min - r.origin) / r.dir;
