@@ -28,7 +28,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly override string ToString()
 		{
-			return string.Format("Ray({0}, {1})", origin, dir);
+			return string.Format("Ray3({0}, {1})", origin, dir);
 		}
 	}
 

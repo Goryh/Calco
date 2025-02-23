@@ -52,7 +52,9 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly float3a ClosestPoint(in float3a pt)
 		{
-			float l = dot(pt - origin, dir) / dot(dir, dir);
+			CheckRayIsNormalized();
+
+			float l = dot(pt - origin, dir);
 			return GetPoint(l);
 		}
 
@@ -65,25 +67,6 @@ namespace calco
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly float ClosestPointDist(in float3a pt) => sqrt(ClosestPointDistSq(pt));
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly float3a ClosestPointUnitRay(in float3a pt)
-		{
-			CheckRayIsNormalized();
-
-			float l = dot(pt - origin, dir);
-			return GetPoint(l);
-		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly float ClosestPointUnitRayDistSq(in float3a pt)
-		{
-			var diff = ClosestPointUnitRay(pt) - pt;
-			return dot(diff, diff);
-		}
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly float ClosestPointUnitRayDist(in float3a pt) => sqrt(ClosestPointUnitRayDistSq(pt));
 
 		public readonly bool ClosestPoint(in Ray3a other, out float thisRayT, out float otherRayT)
 		{
@@ -117,13 +100,17 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly override string ToString()
 		{
-			return string.Format("Ray({0}, {1})", float3(origin), float3(dir));
+			return string.Format("Ray3({0}, {1})", float3(origin), float3(dir));
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool IsNormalized()
 		{
-			return false;
+			float ll = lengthsq(dir);
+			const float lowerBound = 0.999f * 0.999f;
+			const float upperBound = 1.001f * 1.001f;
+
+			return ll >= lowerBound && ll <= upperBound;
 		}
 
 		[Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
