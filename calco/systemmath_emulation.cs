@@ -129,7 +129,7 @@ namespace calco
 		public static float log(float x)
 		{
 			if( x <= 0 )
-				return float.NaN;
+				throw new System.ArgumentException("Invalid negative argument of math.log function");
 
 			return log2EstP5(x) * 0.6931471805599453f; // 1/log2(e)
 		}
@@ -139,7 +139,7 @@ namespace calco
 		public static float logfast(float x)
 		{
 			if( x <= 0 )
-				return float.NaN;
+				throw new System.ArgumentException("Invalid negative argument of math.logfast function");
 
 			return log2EstP3(x) * 0.6931471805599453f; // 1/log2(e)
 		}
@@ -149,7 +149,7 @@ namespace calco
 		public static float log2(float x)
 		{
 			if( x <= 0 )
-				return float.NaN;
+				throw new System.ArgumentException("Invalid negative argument of math.log2 function");
 
 			return log2EstP5(x);
 		}
@@ -159,7 +159,7 @@ namespace calco
 		public static float log2fast(float x)
 		{
 			if( x <= 0 )
-				return float.NaN;
+				throw new System.ArgumentException("Invalid negative argument of math.log2fast function");
 
 			return log2EstP3(x);
 		}
@@ -169,7 +169,7 @@ namespace calco
 		public static float log10(float x)
 		{
 			if( x <= 0 )
-				return float.NaN;
+				throw new System.ArgumentException("Invalid negative argument of math.log10 function");
 
 			return log2EstP5(x) * 0.301029995664f; // 1/log2(10)
 		}
@@ -179,7 +179,7 @@ namespace calco
 		public static float log10fast(float x)
 		{
 			if( x <= 0 )
-				return float.NaN;
+				throw new System.ArgumentException("Invalid negative argument of math.log10fast function");
 
 			return log2EstP3(x) * 0.301029995664f; // 1/log2(10)
 		}
@@ -234,7 +234,7 @@ namespace calco
 		public static float pow(float x, float y)
 		{
 			if( x < 0 )
-				return float.NaN;
+				throw new System.ArgumentException("Invalid negative argument of math.pow function");
 
 			float ret = exp2EstP5(log2EstP5(x) * y);
 			ret = select(ret, 1, y == 0.0f);
@@ -249,7 +249,7 @@ namespace calco
 		public static float powfast(float x, float y)
 		{
 			if( x < 0 )
-				return float.NaN;
+				throw new System.ArgumentException("Invalid negative argument of math.powfast function");
 
 			float ret = exp2EstP3(log2EstP3(x) * y);
 			return ret;
