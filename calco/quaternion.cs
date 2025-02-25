@@ -416,11 +416,11 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static quaternion TiltRotationRobust(in float3a oldRight, in float3a oldForward, in float3a newUp)
         {
-			var right = normalize(cross(newUp, oldForward));
+			var right = normalizesafe(cross(newUp, oldForward));
 			var forwardFromForward = cross(right, newUp);
-			var forwardFromRight = normalize(cross(oldRight, newUp));
+			var forwardFromRight = normalizesafe(cross(oldRight, newUp));
 
-			right = normalize(cross(newUp, lerp(forwardFromForward, forwardFromRight, 0.5f))); // take the middle option of a forward restored from the original forward and from the original right
+			right = normalizesafe(cross(newUp, lerp(forwardFromForward, forwardFromRight, 0.5f))); // take the middle option of a forward restored from the original forward and from the original right
 			var forward = cross(right, newUp);
 
 			return quaternion(float3ax3(right, newUp, forward));
