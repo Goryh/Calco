@@ -5,8 +5,10 @@
 #include <immintrin.h>
 
 typedef __m128 Vec;
+typedef __m128 Vec1;
 typedef __m128i VecShufMask;
 typedef __m128i IntVec;
+typedef __m128i IntVec1;
 
 union Flt32UInt32Union
 {
@@ -24,12 +26,12 @@ FORCEINLINE Vec vec(Vec v)
 	return v;
 }
 
-FORCEINLINE Vec vec1(float v)
+FORCEINLINE Vec1 vec1(float v)
 {
 	return _mm_set1_ps(v);
 }
 
-FORCEINLINE Vec vec1(Vec v)
+FORCEINLINE Vec1 vec1(Vec v)
 {
 	return v;
 }
@@ -61,12 +63,22 @@ FORCEINLINE IntVec intVec(int x)
 
 FORCEINLINE IntVec intVec(unsigned int x)
 {
-	return _mm_set1_epi32((int)x);
+	return _mm_set1_epi32(*(int*)(&x));
 }
 
 FORCEINLINE IntVec intVec(int x, int y, int z, int w)
 {
 	return _mm_setr_epi32(x, y, z, w);
+}
+
+FORCEINLINE IntVec1 intVec1(int x)
+{
+	return _mm_set1_epi32(x);
+}
+
+FORCEINLINE IntVec1 intVec1(unsigned int x)
+{
+	return _mm_set1_epi32(*(int*)(&x));
 }
 
 FORCEINLINE Vec vecMask(bool val)
@@ -1540,12 +1552,12 @@ FORCEINLINE IntVec vecCastToIntVec(Vec xyzw)
 	return _mm_castps_si128(xyzw);
 }
 
-FORCEINLINE float vecStore1(Vec v)
+FORCEINLINE float vecStore1(Vec1 v)
 {
 	return _mm_cvtss_f32(v);
 }
 
-FORCEINLINE int vecStore1(IntVec v)
+FORCEINLINE int vecStore1(IntVec1 v)
 {
 	return _mm_cvtsi128_si32(v);
 }
@@ -1607,14 +1619,29 @@ FORCEINLINE Vec vecNeg(Vec r)
 	return _mm_sub_ps(vecZero(), r);
 }
 
+FORCEINLINE Vec1 vecNeg1(Vec1 r)
+{
+	return _mm_sub_ss(vecZero(), r);
+}
+
 FORCEINLINE Vec vecAdd(Vec r1, Vec r2)
 {
 	return _mm_add_ps(r1, r2);
 }
 
+FORCEINLINE Vec1 vecAdd1(Vec1 r1, Vec1 r2)
+{
+	return _mm_add_ss(r1, r2);
+}
+
 FORCEINLINE Vec vecSub(Vec r1, Vec r2)
 {
 	return _mm_sub_ps(r1, r2);
+}
+
+FORCEINLINE Vec1 vecSub1(Vec1 r1, Vec1 r2)
+{
+	return _mm_sub_ss(r1, r2);
 }
 
 FORCEINLINE IntVec vecAdd(IntVec r1, IntVec r2)
@@ -1632,9 +1659,19 @@ FORCEINLINE Vec vecMul(Vec r1, Vec r2)
 	return _mm_mul_ps(r1, r2);
 }
 
+FORCEINLINE Vec1 vecMul1(Vec1 r1, Vec1 r2)
+{
+	return _mm_mul_ss(r1, r2);
+}
+
 FORCEINLINE Vec vecDiv(Vec v1, Vec v2)
 {
 	return _mm_div_ps(v1, v2);
+}
+
+FORCEINLINE Vec1 vecDiv1(Vec1 v1, Vec1 v2)
+{
+	return _mm_div_ss(v1, v2);
 }
 
 FORCEINLINE Vec vecMulAdd(Vec mul1, Vec mul2, Vec add)
@@ -1642,9 +1679,19 @@ FORCEINLINE Vec vecMulAdd(Vec mul1, Vec mul2, Vec add)
 	return _mm_add_ps(_mm_mul_ps(mul1, mul2), add);
 }
 
+FORCEINLINE Vec1 vecMulAdd1(Vec1 mul1, Vec1 mul2, Vec1 add)
+{
+	return _mm_add_ss(_mm_mul_ss(mul1, mul2), add);
+}
+
 FORCEINLINE Vec vecMulSub(Vec subFrom, Vec mul1, Vec mul2)
 {
 	return _mm_sub_ps(subFrom, _mm_mul_ps(mul1, mul2));
+}
+
+FORCEINLINE Vec1 vecMulSub1(Vec1 subFrom, Vec1 mul1, Vec1 mul2)
+{
+	return _mm_sub_ss(subFrom, _mm_mul_ss(mul1, mul2));
 }
 
 FORCEINLINE Vec vecLerp(Vec a, Vec b, Vec t)
@@ -1653,14 +1700,14 @@ FORCEINLINE Vec vecLerp(Vec a, Vec b, Vec t)
 	return vecAdd(vecMul(a, one_minus_t), vecMul(b, t));
 }
 
-FORCEINLINE Vec vecNegMulSub(Vec v1, Vec v2, Vec sub)
-{
-	return _mm_sub_ps(sub, _mm_mul_ps(v1, v2));
-}
-
 FORCEINLINE Vec vecRecipNoNewtonRaphson(Vec r)
 {
 	return _mm_rcp_ps(r);
+}
+
+FORCEINLINE Vec1 vecRecipNoNewtonRaphson1(Vec1 r)
+{
+	return _mm_rcp_ss(r);
 }
 
 FORCEINLINE Vec vecRecipSqrtNoNewtonRaphson(Vec v)
@@ -1668,7 +1715,7 @@ FORCEINLINE Vec vecRecipSqrtNoNewtonRaphson(Vec v)
 	return _mm_rsqrt_ps(v);
 }
 
-FORCEINLINE Vec vecRecipSqrtNoNewtonRaphson1(Vec v)
+FORCEINLINE Vec1 vecRecipSqrtNoNewtonRaphson1(Vec1 v)
 {
 	return _mm_rsqrt_ss(v);
 }
@@ -1678,15 +1725,17 @@ FORCEINLINE Vec vecRecipEst(Vec r)
 	return vecRecipNoNewtonRaphson(r);
 }
 
+FORCEINLINE Vec1 vecRecipEst1(Vec1 r)
+{
+	return vecRecipNoNewtonRaphson1(r);
+}
+
 FORCEINLINE Vec vecRecipFast(Vec r)
 {
 	// Do one iteration of Newton-Raphson
 	const Vec two = vecTwo;
-
 	const Vec est = vecRecipNoNewtonRaphson(r);
-
 	const Vec twoMinusRMulEst = vecSub(two, vecMul(est, r));
-
 	return vecMul(twoMinusRMulEst, est);
 }
 
@@ -1694,12 +1743,18 @@ FORCEINLINE Vec vecRecip(Vec r)
 {
 	// Do two iterations of Newton-Raphson
 	const Vec two = vecTwo;
-
 	const Vec recipEst = vecRecipEst(r);
-
-	const Vec twoMinusRMulEst = vecNegMulSub(recipEst, r, two);
-
+	const Vec twoMinusRMulEst = vecMulSub(two, r, recipEst);
 	return vecMul(twoMinusRMulEst, recipEst);
+}
+
+FORCEINLINE Vec1 vecRecip1(Vec1 r)
+{
+	// Do two iterations of Newton-Raphson
+	const Vec1 two = vec1(vecHalf);
+	const Vec1 recipEst = vecRecipEst1(r);
+	const Vec1 twoMinusRMulEst = vecMulSub1(two, r, recipEst);
+	return vecMul1(twoMinusRMulEst, recipEst);
 }
 
 FORCEINLINE Vec vecRecipSqrtEst(Vec v)
@@ -1711,64 +1766,54 @@ FORCEINLINE Vec vecRecipSqrtFast(Vec v)
 {
 	// Do one iteration of Newton-Raphson
 	const Vec half = vecHalf;
-
 	const Vec estimate = vecRecipSqrtNoNewtonRaphson(v);
-
 	const Vec halfV = vecMul(v, half);
-
     const Vec estimateSqr = vecMul(estimate, estimate);
-
-	const Vec halfMinusEstSqrHalfV = vecNegMulSub(halfV, estimateSqr, half);
-
+	const Vec halfMinusEstSqrHalfV = vecMulSub(half, halfV, estimateSqr);
 	return vecMulAdd(estimate, halfMinusEstSqrHalfV, estimate);
+}
+
+FORCEINLINE Vec1 vecRecipSqrtFast1(Vec1 v)
+{
+	// Do one iteration of Newton-Raphson
+	const Vec1 half = vec1(vecHalf);
+	const Vec1 estimate = vecRecipSqrtNoNewtonRaphson1(v);
+	const Vec1 halfV = vecMul1(v, half);
+    const Vec1 estimateSqr = vecMul1(estimate, estimate);
+	const Vec1 halfMinusEstSqrHalfV = vecMulSub1(half, halfV, estimateSqr);
+	return vecMulAdd1(estimate, halfMinusEstSqrHalfV, estimate);
 }
 
 FORCEINLINE Vec vecRecipSqrt(Vec v)
 {
 	// Do two iterations of Newton-Raphson
 	const Vec half = vecHalf;
-
     const Vec estimate = vecRecipSqrtFast(v);
-
 	const Vec halfV = vecMul(v, half);
-
     const Vec estimateSqr = vecMul(estimate, estimate);
-
-	const Vec halfMinusEstSqrHalfV = vecNegMulSub(halfV, estimateSqr, half);
-
+	const Vec halfMinusEstSqrHalfV = vecMulSub(half, halfV, estimateSqr);
     return vecMulAdd(estimate, halfMinusEstSqrHalfV, estimate);
 }
 
-FORCEINLINE Vec vecRecipSqrtFast1(Vec v)
-{
-	// Do one iteration of Newton-Raphson
-	const Vec half = vecHalf;
-	const Vec estimate = vecRecipSqrtNoNewtonRaphson1(v);
-	const Vec halfV = _mm_mul_ss(v, half);
-    const Vec estimateSqr = _mm_mul_ss(estimate, estimate);
-	const Vec halfMinusEstSqrHalfV = _mm_sub_ss(half, _mm_mul_ss(halfV, estimateSqr));
-	return _mm_add_ss(_mm_mul_ss(estimate, halfMinusEstSqrHalfV), estimate);
-}
-
-FORCEINLINE Vec vecRecipSqrt1(Vec v)
+FORCEINLINE Vec1 vecRecipSqrt1(Vec1 v)
 {
 	// Do two iterations of Newton-Raphson
-	const Vec half = vecHalf;
-    const Vec estimate = vecRecipSqrtFast1(v);
-	const Vec halfV = _mm_mul_ss(v, half);
-    const Vec estimateSqr = _mm_mul_ss(estimate, estimate);
-	const Vec halfMinusEstSqrHalfV = _mm_sub_ss(half, _mm_mul_ss(halfV, estimateSqr));
-	return _mm_add_ss(_mm_mul_ss(estimate, halfMinusEstSqrHalfV), estimate);
+	const Vec1 half = vec1(vecHalf);
+    const Vec1 estimate = vecRecipSqrtFast1(v);
+	const Vec1 halfV = vecMul1(v, half);
+    const Vec1 estimateSqr = vecMul1(estimate, estimate);
+	const Vec1 halfMinusEstSqrHalfV = vecMulSub(half, halfV, estimateSqr);
+	return vecMulAdd(estimate, halfMinusEstSqrHalfV, estimate);
 }
 
-FORCEINLINE Vec vecSqrt1(Vec v1)
+FORCEINLINE Vec1 vecSqrt1(Vec1 v1)
 {
 	return _mm_sqrt_ss(v1);
 }
 
-FORCEINLINE Vec vecSqrt(Vec v1)
+FORCEINLINE Vec vecSqrt(Vec v)
 {
-	return _mm_sqrt_ps(v1);
+	return _mm_sqrt_ps(v);
 }
 
 FORCEINLINE Vec vecDivEst(Vec v1, Vec v2)
@@ -1886,7 +1931,7 @@ FORCEINLINE IntVec vecAbs(IntVec v)
 	return _mm_abs_epi32(v);
 }
 
-FORCEINLINE Vec vecDot2(Vec u, Vec v)
+FORCEINLINE Vec1 vecDot2(Vec u, Vec v)
 {
 	Vec prod = _mm_mul_ps(u, v);
 	Vec x = vecShuffle<VecMask::_xxxx>(prod);
@@ -1894,7 +1939,7 @@ FORCEINLINE Vec vecDot2(Vec u, Vec v)
 	return _mm_add_ps(x, y);
 }
 
-FORCEINLINE Vec vecDot3(Vec u, Vec v)
+FORCEINLINE Vec1 vecDot3(Vec u, Vec v)
 {
 	Vec mulR = _mm_mul_ps(u, v);
 	Vec vec1 = vecShuffle<VecMask::_xxxx>(mulR);
@@ -1903,7 +1948,7 @@ FORCEINLINE Vec vecDot3(Vec u, Vec v)
 	return _mm_add_ps(_mm_add_ps(vec1, vec2), vec3);
 }
 
-FORCEINLINE Vec vecDot4(Vec u, Vec v)
+FORCEINLINE Vec1 vecDot4(Vec u, Vec v)
 {
 	Vec mulR = vecMul(u, v);
 	Vec tmp0 = vecAdd(mulR, vecShuffle<VecMask::_yxwz>(mulR));

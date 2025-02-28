@@ -126,10 +126,9 @@ struct plane3d_internal
 		return vecUnaligned((float*)this);
 	}
 
-	void store(Vec n, Vec d)
+	void store(Vec nAndD)
 	{
-		vecStore3Unaligned(n, (float*)this);
-		dist = vecStore1(d);
+		vecStore4Unaligned(nAndD, (float*)this);
 	}
 };
 
@@ -370,9 +369,9 @@ FORCEINLINE void __cdecl vecILMathRigidTransformMulPlane(RigidTransforma_tE6F141
 	Vec pVec = p->load();
 	Vec normal = vecMathQuaternionTransformVec3(t->rot.load(), pVec);
 	Vec point = vecAdd(vecMul(normal, vecNeg(vecShuffle<VecMask::_wwww>(pVec))), t->pos.load());
-	Vec dist = vecDot3(vecNeg(normal), point);
+	Vec1 dist = vecDot3(vecNeg(normal), point);
 
-	res->store(normal, dist);
+	res->store(vecInsert<VecMask::_0001>(normal, vec(dist)));
 }
 
 FORCEINLINE void __cdecl vecILMathFloat3ax3FromQuat(quaternion_tF319262949BE7146C3BD7F6FF96A3BDED4A61CA0* RESTRICT inQ, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF0, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF1, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF2)
