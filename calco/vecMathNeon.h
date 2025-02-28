@@ -4,6 +4,7 @@ typedef float32x4_t Vec;
 typedef float32_t Vec1;
 typedef uint32x4_t VecShufMask;
 typedef int32x4_t IntVec;
+typedef int32_t IntVec1;
 
 FORCEINLINE Vec vec(float x)
 {
@@ -58,6 +59,16 @@ FORCEINLINE IntVec intVec(int x, int y, int z, int w)
 {
 	alignas(16) int i4[4] = {x, y, z, w};
 	return vld1q_s32(i4);
+}
+
+FORCEINLINE IntVec1 intVec1(int x)
+{
+	return x;
+}
+
+FORCEINLINE IntVec1 intVec1(unsigned int x)
+{
+	return *(int*)(&x);
 }
 
 FORCEINLINE Vec vecMask(bool val)
@@ -220,14 +231,29 @@ FORCEINLINE Vec vecNeg(Vec r)
 	return vsubq_f32(vecZero(), r);
 }
 
+FORCEINLINE Vec1 vecNeg(Vec1 r)
+{
+	return -r;
+}
+
 FORCEINLINE Vec vecAdd(Vec r1, Vec r2)
 {
 	return vaddq_f32(r1, r2);
 }
 
+FORCEINLINE Vec1 vecAdd(Vec1 r1, Vec1 r2)
+{
+	return r1 + r2;
+}
+
 FORCEINLINE Vec vecSub(Vec r1, Vec r2)
 {
 	return vsubq_f32(r1, r2);
+}
+
+FORCEINLINE Vec1 vecSub(Vec1 r1, Vec1 r2)
+{
+	return r1 - r2;
 }
 
 FORCEINLINE IntVec vecAdd(IntVec r1, IntVec r2)
@@ -245,9 +271,19 @@ FORCEINLINE Vec vecMul(Vec r1, Vec r2)
 	return vmulq_f32(r1, r2);
 }
 
+FORCEINLINE Vec1 vecMul(Vec1 r1, Vec1 r2)
+{
+	return r1 * r2;
+}
+
 FORCEINLINE Vec vecDiv(Vec r1, Vec r2)
 {
 	return vdivq_f32(r1, r2);
+}
+
+FORCEINLINE Vec1 vecDiv(Vec1 r1, Vec1 r2)
+{
+	return r1 / r2;
 }
 
 FORCEINLINE Vec vecMulAdd(Vec mul1, Vec mul2, Vec add)
@@ -255,9 +291,19 @@ FORCEINLINE Vec vecMulAdd(Vec mul1, Vec mul2, Vec add)
 	return vfmaq_f32(add, mul1, mul2);
 }
 
+FORCEINLINE Vec1 vecMulAdd(Vec1 mul1, Vec1 mul2, Vec1 add)
+{
+	return add + mul1 * mul2;
+}
+
 FORCEINLINE Vec vecMulSub(Vec subFrom, Vec mul1, Vec mul2)
 {
 	return vmlsq_f32(subFrom, mul1, mul2);
+}
+
+FORCEINLINE Vec1 vecMulSub(Vec1 subFrom, Vec1 mul1, Vec1 mul2)
+{
+	return subFrom - mul1 * mul2;
 }
 
 FORCEINLINE Vec vecRecipNoNewtonRaphson(Vec v)
@@ -266,13 +312,19 @@ FORCEINLINE Vec vecRecipNoNewtonRaphson(Vec v)
 	return vrecpeq_f32(v);
 }
 
+FORCEINLINE Vec1 vecRecipNoNewtonRaphson(Vec1 v)
+{
+	// Warning: VRECPE is only good for about 8 bits of precision on most ARM chips (compared to 12 bits on x86)
+	return vrecpes_f32(v);
+}
+
 FORCEINLINE Vec vecRecipSqrtNoNewtonRaphson(Vec v)
 {
 	// Warning: VRSQRTE is only good for about 8 bits of precision on most ARM chips (compared to 12 bits on x86)
 	return vrsqrteq_f32(v);
 }
 
-FORCEINLINE Vec1 vecRecipSqrtNoNewtonRaphson1(Vec1 v)
+FORCEINLINE Vec1 vecRecipSqrtNoNewtonRaphson(Vec1 v)
 {
 	// Warning: VRSQRTE is only good for about 8 bits of precision on most ARM chips (compared to 12 bits on x86)
 	return vrsqrtes_f32(v);
@@ -285,6 +337,17 @@ FORCEINLINE Vec vecRecipEst(Vec v)
 
 	// NEON has an intrinsic that does one step of Newton-Raphson
 	const Vec step = vrecpsq_f32(estimate, v);
+
+	return vecMul(estimate, step);
+}
+
+FORCEINLINE Vec1 vecRecipEst(Vec1 v)
+{
+	// Do one iteration of Newton-Raphson, because VRECPE is less accurate than x86 equivalent
+	const Vec1 estimate = vecRecipNoNewtonRaphson(v);
+
+	// NEON has an intrinsic that does one step of Newton-Raphson
+	const Vec1 step = vrecpss_f32(estimate, v);
 
 	return vecMul(estimate, step);
 }
@@ -311,6 +374,17 @@ FORCEINLINE Vec vecRecip(Vec v)
 	return vecMul(estimate, step);
 }
 
+FORCEINLINE Vec1 vecRecip(Vec1 v)
+{
+	// Do two iterations of Newton-Raphson
+	const Vec1 estimate = vecRecipEst(v);
+
+	// NEON has an intrinsic that does one step of Newton-Raphson
+	const Vec1 step = vrecpss_f32(estimate, v);
+
+	return vecMul(estimate, step);
+}
+
 FORCEINLINE Vec vecRecipSqrtEst(Vec v)
 {
 	// Do one iteration of Newton-Raphson, because VRSQRTE is less accurate than x86 equivalent
@@ -320,6 +394,17 @@ FORCEINLINE Vec vecRecipSqrtEst(Vec v)
 	// NEON has an intrinsic that does one step of Newton-Raphson
 	const Vec step = vrsqrtsq_f32(estimateSqr, v);
 	return vecMul(estimate, step);
+}
+
+FORCEINLINE Vec1 vecRecipSqrtEst(Vec1 v)
+{
+	// Do one iteration of Newton-Raphson, because VRSQRTE is less accurate than x86 equivalent
+	const Vec1 estimate = vecRecipSqrtNoNewtonRaphson(v);
+	const Vec1 estimateSqr = estimate * estimate;
+
+	// NEON has an intrinsic that does one step of Newton-Raphson
+	const Vec1 step = vrsqrtss_f32(estimateSqr, v);
+	return estimate * step;
 }
 
 FORCEINLINE Vec vecRecipSqrt(Vec v)
@@ -333,21 +418,10 @@ FORCEINLINE Vec vecRecipSqrt(Vec v)
 	return vecMul(estimate, step);
 }
 
-FORCEINLINE Vec1 vecRecipSqrtEst1(Vec1 v)
-{
-	// Do one iteration of Newton-Raphson, because VRSQRTE is less accurate than x86 equivalent
-	const Vec1 estimate = vecRecipSqrtNoNewtonRaphson1(v);
-	const Vec1 estimateSqr = estimate * estimate;
-
-	// NEON has an intrinsic that does one step of Newton-Raphson
-	const Vec1 step = vrsqrtss_f32(estimateSqr, v);
-	return estimate * step;
-}
-
-FORCEINLINE Vec1 vecRecipSqrt1(Vec1 v)
+FORCEINLINE Vec1 vecRecipSqrt(Vec1 v)
 {
 	// Do two iterations of Newton-Raphson
-	const Vec1 estimate = vecRecipSqrtEst1(v);
+	const Vec1 estimate = vecRecipSqrtEst(v);
 	const Vec1 estimateSqr = estimate * estimate;
 
 	// NEON has an intrinsic that does one step of Newton-Raphson
@@ -355,7 +429,7 @@ FORCEINLINE Vec1 vecRecipSqrt1(Vec1 v)
 	return estimate * step;
 }
 
-FORCEINLINE Vec1 vecSqrt1(Vec1 v1)
+FORCEINLINE Vec1 vecSqrt(Vec1 v1)
 {
     alignas(16) float f2[2] = {v1, 0};
 	return vget_lane_f32(vsqrt_f32(vld1_f32(f2)), 0);
@@ -396,6 +470,16 @@ FORCEINLINE IntVec vecBitSel(IntVec falseValue, IntVec trueValue, IntVec mask)
 FORCEINLINE Vec vecSel(Vec falseValue, Vec trueValue, Vec mask)
 {
 	return vecBitSel(falseValue, trueValue, mask);
+}
+
+FORCEINLINE Vec1 vecSel(Vec1 falseValue, Vec1 trueValue, Vec1 mask)
+{
+	const uint32_t falseValueAsUint = *(uint32_t*)(&falseValue);
+	const uint32_t trueValueAsUint  = *(uint32_t*)(&trueValue);
+	const uint32_t maskAsUint		= *(uint32_t*)(&mask);
+	const uint32_t result 			=  (maskAsUint & trueValueAsUint) | ((~maskAsUint) & falseValueAsUint);
+
+	return *(Vec1*)(&result);
 }
 
 // works with all-bits on Neon and MSB on SSE
@@ -531,25 +615,25 @@ FORCEINLINE IntVec vecAbs(IntVec v)
 	return vabsq_s32(v);
 }
 
-FORCEINLINE Vec vecDot2(Vec u, Vec v)
+FORCEINLINE Vec1 vecDot2(Vec u, Vec v)
 {
 	const float32x4_t product = vmulq_f32(u, v);
 	const float dot = vgetq_lane_f32(product, 0) + vgetq_lane_f32(product, 1);
-	return vdupq_n_f32(dot);
+	return dot;
 }
 
-FORCEINLINE Vec vecDot3(Vec u, Vec v)
+FORCEINLINE Vec1 vecDot3(Vec u, Vec v)
 {
 	const float32x4_t product = vmulq_f32(u, v);
 	const float dotResult = vgetq_lane_f32(product, 0) + vgetq_lane_f32(product, 1) + vgetq_lane_f32(product, 2);
-	return vdupq_n_f32(dotResult);
+	return dotResult;
 }
 
-FORCEINLINE Vec vecDot4(Vec u, Vec v)
+FORCEINLINE Vec1 vecDot4(Vec u, Vec v)
 {
 	const float32x4_t product = vmulq_f32(u, v);
 	const float32x4_t sum1 = vaddq_f32(product, vrev64q_f32(product));
-	return vaddq_f32(sum1, vcombine_f32(vget_high_f32(sum1), vget_low_f32(sum1)));
+	return vgetq_lane_f32(product, 0) + vgetq_lane_f32(product, 1);
 }
 
 FORCEINLINE Vec vecCross(Vec l, Vec r)

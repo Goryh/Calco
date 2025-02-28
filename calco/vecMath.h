@@ -6,17 +6,10 @@
 	#include "vecMathSse.h"
 #endif
 
-FORCEINLINE Vec vecRecipX(Vec r)
-{
-	const Vec ret = vecRecip(r);
-	return vecShuffle<VecMask::_xxxx>(ret);
-}
-
 FORCEINLINE Vec vecMathQuaternionInverse(Vec q)
 {
 	// s = 1.0f / Dot(q, q);
-	Vec s = vecDot4(q, q);
-	s = vecRecip(s);
+	Vec s = vec(vecRecip(vecDot4(q, q)));
 
 	// conj(q) * s;
 	Vec v = vecXor(q, vecSignMaskXYZ());
@@ -58,7 +51,7 @@ FORCEINLINE Vec vecMathQuaternionMul(Vec a, Vec b)
 FORCEINLINE void vecNormalizingQuatToMatrix(Vec& xAxis, Vec& yAxis, Vec& zAxis, Vec q)
 {
 	// Explanation of the math: https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Quaternion-derived_rotation_matrix
-	Vec xyz_2 = vecMul(vecAdd(q, q), vecRecipX(vecDot4(q, q)));
+	Vec xyz_2 = vecMul(vecAdd(q, q), vec(vecRecip(vecDot4(q, q))));
 	Vec www = vecShuffle<VecMask::_wwww>(q);
 	Vec yzx = vecShuffle<VecMask::_yzxy>(q);
 	Vec zxy = vecShuffle<VecMask::_zxyz>(q);
@@ -117,7 +110,7 @@ FORCEINLINE Vec vecMathMatrixToQuaternion(Vec u, Vec v, Vec w)
 
 	res = intVecCastToVec(intRes);
 	// do normalization
-	Vec invNorm = vecShuffle<VecMask::_xxxx>(vec(vecRecipSqrt1(vec1(vecDot4(res, res)))));
+	Vec invNorm = vec(vecRecipSqrt(vecDot4(res, res)));
 	return vecMul(res, invNorm); 
 }
 
@@ -151,12 +144,13 @@ FORCEINLINE void vecMatrix33Inverse(Vec& outX, Vec& outY, Vec& outZ,
 	Vec crossYZ = vecCross(inY, inZ);
 	Vec crossZX = vecCross(inZ, inX);
 	Vec crossXY = vecCross(inX, inY);
-	Vec det = vecDot3(inX, crossYZ);
 
 	Vec transposeX, transposeY, transposeZ;
 	vecTranspose3x3(transposeX, transposeY, transposeZ, crossYZ, crossZX, crossXY);
 
-	const Vec recipDet = vecDiv(vecOne, det);
+	Vec1 det = vecDot3(inX, crossYZ);
+	Vec recipDet = vec(vecRecip(det));
+
 	outX = vecMul(transposeX, recipDet);
 	outY = vecMul(transposeY, recipDet);
 	outZ = vecMul(transposeZ, recipDet);
@@ -295,7 +289,7 @@ FORCEINLINE void vecMatrix44Inverse(Vec& outX, Vec& outY, Vec& outZ, Vec& outW,
 	detM = vecMulAdd(detB, detC, detM);
 	// trace((A#B) * (D#C))
 	Vec trace = vecShuffle<VecMask::_xzyw>(adjDC);
-	trace = vecDot4(adjAB, trace);
+	trace = vec(vecDot4(adjAB, trace));
 	// |M| = |AD - BC| = |A||D| + |B||C| - tr(A#B * D#C)
 	detM = vecSub(detM, trace);
 

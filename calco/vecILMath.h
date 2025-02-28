@@ -126,10 +126,9 @@ struct plane3d_internal
 		return vecUnaligned((float*)this);
 	}
 
-	void store(Vec n, Vec d)
+	void store(Vec nAndD)
 	{
-		vecStore3Unaligned(n, (float*)this);
-		dist = vecStore1(d);
+		vecStore4Unaligned(nAndD, (float*)this);
 	}
 };
 
@@ -370,9 +369,9 @@ FORCEINLINE void __cdecl vecILMathRigidTransformMulPlane(RigidTransforma_tE6F141
 	Vec pVec = p->load();
 	Vec normal = vecMathQuaternionTransformVec3(t->rot.load(), pVec);
 	Vec point = vecAdd(vecMul(normal, vecNeg(vecShuffle<VecMask::_wwww>(pVec))), t->pos.load());
-	Vec dist = vecDot3(vecNeg(normal), point);
+	Vec1 dist = vecDot3(vecNeg(normal), point);
 
-	res->store(normal, dist);
+	res->store(vecInsert<VecMask::_0001>(normal, vec(dist)));
 }
 
 FORCEINLINE void __cdecl vecILMathFloat3ax3FromQuat(quaternion_tF319262949BE7146C3BD7F6FF96A3BDED4A61CA0* RESTRICT inQ, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF0, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF1, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF2)
@@ -1428,7 +1427,7 @@ FORCEINLINE void __cdecl vecILMathPowFast4(float4_tC63C89D1F1B7B6D22808075482704
 
 FORCEINLINE float __cdecl vecILMathSqrt(float x)
 {
-	return vecStore1(vecSqrt1(vec1(x)));
+	return vecStore1(vecSqrt(vec1(x)));
 }
 
 FORCEINLINE void __cdecl vecILMathSqrt2(float2_t24F58B676AEF68C4CB4133963D5E4176CDF95430* RESTRICT inX, float2_t24F58B676AEF68C4CB4133963D5E4176CDF95430* RESTRICT resF)
@@ -1457,7 +1456,7 @@ FORCEINLINE void __cdecl vecILMathSqrt4(float4_tC63C89D1F1B7B6D22808075482704BC9
 
 FORCEINLINE float __cdecl vecILMathRsqrt(float x)
 {
-	return vecStore1(vecRecipSqrt1(vec1(x)));
+	return vecStore1(vecRecipSqrt(vec1(x)));
 }
 
 FORCEINLINE void __cdecl vecILMathRsqrt2(float2_t24F58B676AEF68C4CB4133963D5E4176CDF95430* RESTRICT inX, float2_t24F58B676AEF68C4CB4133963D5E4176CDF95430* RESTRICT resF)
