@@ -152,6 +152,10 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathTrunc4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathAbs3a(in float3a x, out float3a s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathAbs4(in float4 x, out float4 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSign3a(in float3a x, out float3a s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSign4(in float4 x, out float4 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSignNoZero3a(in float3a x, out float3a s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSignNoZero4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathMin3a(in float3a a, in float3a b, out float3a s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathMin4(in float4 a, in float4 b, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathMax3a(in float3a a, in float3a b, out float3a s);
@@ -3039,13 +3043,29 @@ namespace calco
         /// <param name="x">Input value.</param>
         /// <returns>The componentwise sign of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a sign(in float3a x) { return new float3a(sign(x.x), sign(x.y), sign(x.z)); }
+        public static float3a sign(in float3a x)
+		{
+        #if ENABLE_IL2CPP
+            vecILMathSign3a(in x, out var res);
+            return res;
+        #else
+			return new float3a(sign(x.x), sign(x.y), sign(x.z));
+        #endif
+		}
 
         /// <summary>Returns the componentwise sign of a float4 value. 1.0f for positive components, 0.0f for zero components and -1.0f for negative components.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The componentwise sign of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 sign(in float4 x) { return new float4(sign(x.x), sign(x.y), sign(x.z), sign(x.w)); }
+        public static float4 sign(in float4 x)
+		{
+        #if ENABLE_IL2CPP
+            vecILMathSign4(in x, out var res);
+            return res;
+        #else
+			return new float4(sign(x.x), sign(x.y), sign(x.z), sign(x.w));
+        #endif
+		}
 
 
         /// <summary>Returns the sign of a float value. -1.0f if it is less than zero, 1.0f otherwise.</summary>
@@ -3058,11 +3078,27 @@ namespace calco
 
         /// <summary>Returns the componentwise sign of a float3 value. 1.0f for positive components, 1.0f otherwise.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a signnozero(in float3a x) { return new float3a(signnozero(x.x), signnozero(x.y), signnozero(x.z)); }
+        public static float3a signnozero(in float3a x)
+		{
+        #if ENABLE_IL2CPP
+            vecILMathSignNoZero3a(in x, out var res);
+            return res;
+        #else
+			return new float3a(signnozero(x.x), signnozero(x.y), signnozero(x.z));
+        #endif
+		}
 
         /// <summary>Returns the componentwise sign of a float4 value. 1.0f for positive components, 1.0f otherwise..</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 signnozero(in float4 x) { return new float4(signnozero(x.x), signnozero(x.y), signnozero(x.z), signnozero(x.w)); }
+        public static float4 signnozero(in float4 x)
+		{
+        #if ENABLE_IL2CPP
+            vecILMathSignNoZero4(in x, out var res);
+            return res;
+        #else
+			return new float4(signnozero(x.x), signnozero(x.y), signnozero(x.z), signnozero(x.w));
+        #endif
+		}
 
 
         /// pow(x, y) returns x raised to the power y

@@ -1668,6 +1668,38 @@ FORCEINLINE void __cdecl vecILMathAbs4(float4_tC63C89D1F1B7B6D22808075482704BC90
 	res->store(vecAbs(x->load()));
 }
 
+FORCEINLINE void __cdecl vecILMathSign3a(float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inX, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF)
+{
+	float3a_internal* x 	= (float3a_internal*)inX;
+	float3a_internal* res	= (float3a_internal*)resF;
+
+	res->store(vecSign(x->load()));
+}
+
+FORCEINLINE void __cdecl vecILMathSign4(float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inX, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT resF)
+{
+	float4_internal* x 	= (float4_internal*)inX;
+	float4_internal* res= (float4_internal*)resF;
+
+	res->store(vecSign(x->load()));
+}
+
+FORCEINLINE void __cdecl vecILMathSignNoZero3a(float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inX, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF)
+{
+	float3a_internal* x 	= (float3a_internal*)inX;
+	float3a_internal* res	= (float3a_internal*)resF;
+
+	res->store(vecSignNoZero(x->load()));
+}
+
+FORCEINLINE void __cdecl vecILMathSignNoZero4(float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inX, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT resF)
+{
+	float4_internal* x 	= (float4_internal*)inX;
+	float4_internal* res= (float4_internal*)resF;
+
+	res->store(vecSignNoZero(x->load()));
+}
+
 FORCEINLINE void __cdecl vecILMathFloat3aAdd3a(float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inA, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inB, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF)
 {
 	float3a_internal* a 	= (float3a_internal*)inA;

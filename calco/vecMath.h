@@ -963,3 +963,15 @@ FORCEINLINE Vec vecF16tof32(IntVec x)
 	);
 	return intVecCastToVec(vecOr(uf, vecShiftLeftLogical<31>(vecShiftRightLogical<15>(x)))); // move sign from 15th to 31th bit
 }
+
+FORCEINLINE Vec vecSign(Vec x)
+{
+	Vec signBit = vecAnd(x, vecSignMaskXYZW());
+	return vecSel(vecOr(vecOne, signBit), vecZero(), vecCmpEQ(x, vecZero()));
+}
+
+FORCEINLINE Vec vecSignNoZero(Vec x)
+{
+	Vec signBit = vecAnd(x, vecSignMaskXYZW());
+	return vecOr(vecOne, signBit);
+}
