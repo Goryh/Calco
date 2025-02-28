@@ -1438,7 +1438,7 @@ namespace calco
 
         /// Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide)
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float bimul(float x) { return x >= 0 ? (x + 1) : 1.0f / (-x + 1); }
+        public static float bimul(float x) { return x >= 0 ? (x + 1) : 1.0f / (1 - x); }
 
         /// Returns a multiplier factor that symmetrically scales a value based on the input: if x>0 - scales up (multiply), if x<0 - scales down (divide)
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
