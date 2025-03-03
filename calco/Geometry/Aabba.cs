@@ -144,30 +144,30 @@ namespace calco
 		public void Scale(float factor)
 		{
 			var c = center;
-			min = (min - c) * factor + c;
-			max = (max - c) * factor + c;
+			min = mad(min - c, factor, c);
+			max = mad(max - c, factor, c);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void Scale(float3a factor)
 		{
 			var c = center;
-			min = (min - c) * factor + c;
-			max = (max - c) * factor + c;
+			min = mad(min - c, factor, c);
+			max = mad(max - c, factor, c);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void Scale(float3a scaleOrigin, float factor)
 		{
-			min = (min - scaleOrigin) * factor + scaleOrigin;
-			max = (max - scaleOrigin) * factor + scaleOrigin;
+			min = mad(min - scaleOrigin, factor, scaleOrigin);
+			max = mad(max - scaleOrigin, factor, scaleOrigin);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void Scale(float3a scaleOrigin, float3a factor)
 		{
-			min = (min - scaleOrigin) * factor + scaleOrigin;
-			max = (max - scaleOrigin) * factor + scaleOrigin;
+			min = mad(min - scaleOrigin, factor, scaleOrigin);
+			max = mad(max - scaleOrigin, factor, scaleOrigin);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

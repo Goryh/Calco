@@ -282,7 +282,7 @@ namespace calco
 
 				var plane1ToPlane2 = pointOnThePlane1 - pointOnThePlane2;
 				float t = dot(plane1Normal, plane1ToPlane2) / denominator;
-				var resLinePoint = pointOnThePlane2 + t * ldir;
+				var resLinePoint = mad(ldir, t, pointOnThePlane2);
 
 				intersectionRay = new Ray3a(resLinePoint, resLineVec);
 				return true;

@@ -127,15 +127,15 @@ FORCEINLINE void vecTranspose4x4(Vec& outX, Vec& outY, Vec& outZ, Vec& outW,
 											Vec inX, Vec inY, Vec inZ, Vec inW)
 {
 	Vec xyXZ = vecMergeHighWord(inX, inZ);
-	 Vec xyYW = vecMergeHighWord(inY, inW);
+	Vec xyYW = vecMergeHighWord(inY, inW);
 
-	 Vec zwXZ = vecMergeLowWord(inX, inZ);
-	 Vec zwYW = vecMergeLowWord(inY, inW);
+	Vec zwXZ = vecMergeLowWord(inX, inZ);
+	Vec zwYW = vecMergeLowWord(inY, inW);
 
-	 outX = vecMergeHighWord(xyXZ, xyYW);
-	 outY = vecMergeLowWord(xyXZ, xyYW);
-	 outZ = vecMergeHighWord(zwXZ, zwYW);
-	 outW = vecMergeLowWord(zwXZ, zwYW);
+	outX = vecMergeHighWord(xyXZ, xyYW);
+	outY = vecMergeLowWord(xyXZ, xyYW);
+	outZ = vecMergeHighWord(zwXZ, zwYW);
+	outW = vecMergeLowWord(zwXZ, zwYW);
 }
 
 FORCEINLINE void vecMatrix33Inverse(Vec& outX, Vec& outY, Vec& outZ,

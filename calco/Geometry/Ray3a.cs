@@ -46,7 +46,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly float3a GetPoint(float distance)
 		{
-			return origin + dir * distance;
+			return mad(dir, distance, origin);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

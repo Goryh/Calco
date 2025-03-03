@@ -523,22 +523,6 @@ FORCEINLINE void __cdecl vecILMathFloat4x4LinearTransformNoScaleInverse(float4x4
 	res->c3.store(out3);
 }
 
-FORCEINLINE void __cdecl vecILMathFloat4x4MulFloat4(float4x4_tF0078536D08F43E8A991471E52D705E73BCBC566* RESTRICT inM, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inV, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT resF)
-{
-	float4x4_internal* m = (float4x4_internal*)inM;
-	float4_internal* vf  = (float4_internal*)inV;
-	float4_internal* res = (float4_internal*)resF;
-
-	Vec v = vf->load();
-
-	Vec result = vecMul(m->c0.load(), vecShuffle<VecMask::_xxxx>(v));
-	result  = vecMulAdd(m->c1.load(), vecShuffle<VecMask::_yyyy>(v), result);
-	result  = vecMulAdd(m->c2.load(), vecShuffle<VecMask::_zzzz>(v), result);
-	result  = vecMulAdd(m->c3.load(), vecShuffle<VecMask::_wwww>(v), result);
-
-	res->store(result);
-}
-
 FORCEINLINE void __cdecl vecILMathFloat4MulFloat4x4(float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inV, float4x4_tF0078536D08F43E8A991471E52D705E73BCBC566* RESTRICT inM, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT resF)
 {
 	float4x4_internal* m = (float4x4_internal*)inM;
@@ -555,10 +539,11 @@ FORCEINLINE void __cdecl vecILMathFloat4MulFloat4x4(float4_tC63C89D1F1B7B6D22808
 	vecTranspose4x4(c0t, c1t, c2t, c3t,
 					c0,  c1,  c2,  c3);
 
-	Vec result = vecMul(c0t, vecShuffle<VecMask::_xxxx>(v));
-	result  = vecMulAdd(c1t, vecShuffle<VecMask::_yyyy>(v), result);
-	result  = vecMulAdd(c2t, vecShuffle<VecMask::_zzzz>(v), result);
-	result  = vecMulAdd(c3t, vecShuffle<VecMask::_wwww>(v), result);
+	Vec result1 = vecMul(c0t, vecShuffle<VecMask::_xxxx>(v));
+	result1	 = vecMulAdd(c1t, vecShuffle<VecMask::_yyyy>(v), result1);
+	Vec result2 = vecMul(c2t, vecShuffle<VecMask::_zzzz>(v));
+	result2	 = vecMulAdd(c3t, vecShuffle<VecMask::_wwww>(v), result2);
+	Vec result = vecAdd(result1, result2);
 
 	res->store(result);
 }
@@ -1962,6 +1947,26 @@ FORCEINLINE void __cdecl vecILMathSelectIfLess4(float4_tC63C89D1F1B7B6D228080754
 	float4_internal* res	= (float4_internal*)resF;
 
 	res->store(vecSel(a->load(), b->load(), vecCmpLT(cmpA->load(), cmpB->load())));
+}
+
+FORCEINLINE void __cdecl vecILMad3a(float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inA, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inB, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inC, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF)
+{
+	float3a_internal* a 	= (float3a_internal*)inA;
+	float3a_internal* b 	= (float3a_internal*)inB;
+	float3a_internal* c 	= (float3a_internal*)inC;
+	float3a_internal* res	= (float3a_internal*)resF;
+
+	res->store(vecMulAdd(a->load(), b->load(), c->load()));
+}
+
+FORCEINLINE void __cdecl vecILMad4(float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inA, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inB, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inC, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT resF)
+{
+	float4_internal* a 		= (float4_internal*)inA;
+	float4_internal* b 		= (float4_internal*)inB;
+	float4_internal* c 		= (float4_internal*)inC;
+	float4_internal* res	= (float4_internal*)resF;
+
+	res->store(vecMulAdd(a->load(), b->load(), c->load()));
 }
 
 } // extern "C"

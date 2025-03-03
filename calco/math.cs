@@ -164,6 +164,8 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSelect4(in float4 a, in float4 b, in bool4 c, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSelectIfLess3a(in float3a a, in float3a b, in float3a cmpA, in float3a cmpB, out float3a s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathSelectIfLess4(in float4 a, in float4 b, in float4 cmpA, in float4 cmpB, out float4 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMad3a(in float3a mul1, in float3a mul2, in float3a add, out float3a s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMad4(in float4 mul1, in float4 mul2, in float4 add, out float4 s);
 
         /// <summary>Extrinsic rotation order. Specifies in which order rotations around the principal axes (x, y and z) are to be applied.</summary>
         public enum RotationOrder : byte
@@ -1473,155 +1475,70 @@ namespace calco
         public static float4 tobimul(float4 x) { return float4(tobimul(x.x), tobimul(x.y), tobimul(x.z), tobimul(x.w)); }
 
 
-        /// <summary>Returns the result of a multiply-add operation (a * b + c) on 3 int values.</summary>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int mad(int a, int b, int c) { return a * b + c; }
+        public static int mad(int mul1, int mul2, int add) { return mul1 * mul2 + add; }
 
-        /// <summary>Returns the result of a componentwise multiply-add operation (a * b + c) on 3 int2 vectors.</summary>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The componentwise multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int2 mad(int2 a, int2 b, int2 c) { return a * b + c; }
+        public static int2 mad(int2 mul1, int2 mul2, int2 add) { return mul1 * mul2 + add; }
 
-        /// <summary>Returns the result of a componentwise multiply-add operation (a * b + c) on 3 int3 vectors.</summary>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The componentwise multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int3 mad(int3 a, int3 b, int3 c) { return a * b + c; }
+        public static int3 mad(int3 mul1, int3 mul2, int3 add) { return mul1 * mul2 + add; }
 
-        /// <summary>Returns the result of a componentwise multiply-add operation (a * b + c) on 3 int4 vectors.</summary>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The componentwise multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int4 mad(int4 a, int4 b, int4 c) { return a * b + c; }
+        public static int4 mad(int4 mul1, int4 mul2, int4 add) { return mul1 * mul2 + add; }
 
 
-        /// <summary>Returns the result of a multiply-add operation (a * b + c) on 3 uint values.</summary>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint mad(uint a, uint b, uint c) { return a * b + c; }
+        public static uint mad(uint mul1, uint mul2, uint add) { return mul1 * mul2 + add; }
 
-        /// <summary>Returns the result of a componentwise multiply-add operation (a * b + c) on 3 uint2 vectors.</summary>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The componentwise multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint2 mad(uint2 a, uint2 b, uint2 c) { return a * b + c; }
+        public static uint2 mad(uint2 mul1, uint2 mul2, uint2 add) { return mul1 * mul2 + add; }
 
-        /// <summary>Returns the result of a componentwise multiply-add operation (a * b + c) on 3 uint3 vectors.</summary>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The componentwise multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint3 mad(uint3 a, uint3 b, uint3 c) { return a * b + c; }
+        public static uint3 mad(uint3 mul1, uint3 mul2, uint3 add) { return mul1 * mul2 + add; }
 
-        /// <summary>Returns the result of a componentwise multiply-add operation (a * b + c) on 3 uint4 vectors.</summary>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The componentwise multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint4 mad(uint4 a, uint4 b, uint4 c) { return a * b + c; }
+        public static uint4 mad(uint4 mul1, uint4 mul2, uint4 add) { return mul1 * mul2 + add; }
 
 
-        /// <summary>Returns the result of a multiply-add operation (a * b + c) on 3 long values.</summary>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static long mad(long a, long b, long c) { return a * b + c; }
+        public static long mad(long mul1, long mul2, long add) { return mul1 * mul2 + add; }
 
-
-        /// <summary>Returns the result of a multiply-add operation (a * b + c) on 3 ulong values.</summary>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ulong mad(ulong a, ulong b, ulong c) { return a * b + c; }
+        public static ulong mad(ulong mul1, ulong mul2, ulong add) { return mul1 * mul2 + add; }
 
 
-        /// <summary>Returns the result of a multiply-add operation (a * b + c) on 3 float values.</summary>
-        /// <remarks>
-        /// When Burst compiled with fast math enabled on some architectures, this could be converted to a fused multiply add (FMA).
-        /// FMA is more accurate due to rounding once at the end of the computation rather than twice that is required when
-        /// this computation is not fused.
-        /// </remarks>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float mad(float a, float b, float c) { return a * b + c; }
+        public static float mad(float mul1, float mul2, float add) { return mul1 * mul2 + add; }
 
-        /// <summary>Returns the result of a componentwise multiply-add operation (a * b + c) on 3 float2 vectors.</summary>
-        /// <remarks>
-        /// When Burst compiled with fast math enabled on some architectures, this could be converted to a fused multiply add (FMA).
-        /// FMA is more accurate due to rounding once at the end of the computation rather than twice that is required when
-        /// this computation is not fused.
-        /// </remarks>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The componentwise multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 mad(in float2 a, in float2 b, in float2 c) { return a * b + c; }
+        public static float2 mad(in float2 mul1, in float2 mul2, in float2 add) { return mul1 * mul2 + add; }
 
-        /// <summary>Returns the result of a componentwise multiply-add operation (a * b + c) on 3 float3 vectors.</summary>
-        /// <remarks>
-        /// When Burst compiled with fast math enabled on some architectures, this could be converted to a fused multiply add (FMA).
-        /// FMA is more accurate due to rounding once at the end of the computation rather than twice that is required when
-        /// this computation is not fused.
-        /// </remarks>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The componentwise multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a mad(in float3a a, in float3a b, in float3a c) { return a * b + c; }
+        public static float3a mad(in float3a mul1, in float3a mul2, in float3a add)
+        {
+        #if ENABLE_IL2CPP
+            vecILMad3a(in mul1, in mul2, in add, out var res);
+            return res;
+        #else
+            return mul1 * mul2 + add;
+        #endif
+        }
 
-        /// <summary>Returns the result of a componentwise multiply-add operation (a * b + c) on 3 float4 vectors.</summary>
-        /// <remarks>
-        /// When Burst compiled with fast math enabled on some architectures, this could be converted to a fused multiply add (FMA).
-        /// FMA is more accurate due to rounding once at the end of the computation rather than twice that is required when
-        /// this computation is not fused.
-        /// </remarks>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The componentwise multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 mad(in float4 a, in float4 b, in float4 c) { return a * b + c; }
+        public static float4 mad(in float4 mul1, in float4 mul2, in float4 add)
+        {
+        #if ENABLE_IL2CPP
+            vecILMad4(in mul1, in mul2, in add, out var res);
+            return res;
+        #else
+            return mul1 * mul2 + add;
+        #endif
+        }
 
 
-        /// <summary>Returns the result of a multiply-add operation (a * b + c) on 3 double values.</summary>
-        /// <remarks>
-        /// When Burst compiled with fast math enabled on some architectures, this could be converted to a fused multiply add (FMA).
-        /// FMA is more accurate due to rounding once at the end of the computation rather than twice that is required when
-        /// this computation is not fused.
-        /// </remarks>
-        /// <param name="a">First value to multiply.</param>
-        /// <param name="b">Second value to multiply.</param>
-        /// <param name="c">Third value to add to the product of a and b.</param>
-        /// <returns>The multiply-add of the inputs.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double mad(double a, double b, double c) { return a * b + c; }
+        public static double mad(double mul1, double mul2, double add) { return mul1 * mul2 + add; }
 
 
 
