@@ -677,12 +677,39 @@ const unsigned int FloatMantissaMask = 0x007FFFFF;
 const unsigned int FloatExponentSignOffset = 127;
 const unsigned int FloatMantissaBits = 23;
 
-#define POLY0(x, c0) vec(c0)
-#define POLY1(x, c0, c1) vecMulAdd(POLY0(x, c1), x, vec(c0))
-#define POLY2(x, c0, c1, c2) vecMulAdd(POLY1(x, c1, c2), x, vec(c0))
-#define POLY3(x, c0, c1, c2, c3) vecMulAdd(POLY2(x, c1, c2, c3), x, vec(c0))
-#define POLY4(x, c0, c1, c2, c3, c4) vecMulAdd(POLY3(x, c1, c2, c3, c4), x, vec(c0))
-#define POLY5(x, c0, c1, c2, c3, c4, c5) vecMulAdd(POLY4(x, c1, c2, c3, c4, c5), x, vec(c0))
+// Polynomials are inspired by the Vector-2 Class Library
+// Using Estrin's scheme to make shorter dependency chains and use FMA, starting longest dependency chains first.
+
+FORCEINLINE Vec Polynomial2(Vec x, float c0, float c1, float c2)
+{
+	Vec x2 = vecMul(x, x);
+	return vecMulAdd(x2, vec(c2), vecMulAdd(x, vec(c1), vec(c0)));
+}
+
+FORCEINLINE Vec Polynomial3(Vec x, float c0, float c1, float c2, float c3)
+{
+	Vec x2 = vecMul(x, x);
+	return vecMulAdd(vecMulAdd(vec(c3), x, vec(c2)), x2, 
+					 vecMulAdd(vec(c1), x, vec(c0)));
+}
+
+FORCEINLINE Vec Polynomial4(Vec x, float c0, float c1, float c2, float c3, float c4)
+{
+	Vec x2 = vecMul(x, x);
+	Vec x4 = vecMul(x2, x2);
+	return vecMulAdd(vecMulAdd(vec(c3), x, vec(c2)), x2, 
+					 vecAdd(vecMulAdd(vec(c1), x, vec(c0)), 
+							vecMul(vec(c4), x4)));
+}
+
+FORCEINLINE Vec Polynomial5(Vec x, float c0, float c1, float c2, float c3, float c4, float c5)
+{
+	Vec x2 = vecMul(x, x);
+	Vec x4 = vecMul(x2, x2);
+	return vecMulAdd(vecMulAdd(vec(c3), x, vec(c2)), x2, 
+					 vecMulAdd(vecMulAdd(vec(c5), x, vec(c4)), x4, 
+							   vecMulAdd(vec(c1), x, vec(c0))));
+}
 
 #define EXP_DEF_PART(bias)\
 	IntVec ipart;\
@@ -704,7 +731,7 @@ const float Exp2Poly5C6 = 1.8775767e-3f;
 FORCEINLINE Vec vecExp2EstP5Int(Vec x)
 {
 	EXP_DEF_PART(vec(0.5f - 1.192092896e-07f * 32)); // half minus some epsilon
-	expfpart = POLY5(fpart, Exp2Poly5C1, Exp2Poly5C2, Exp2Poly5C3, Exp2Poly5C4, Exp2Poly5C5, Exp2Poly5C6);
+	expfpart = Polynomial5(fpart, Exp2Poly5C1, Exp2Poly5C2, Exp2Poly5C3, Exp2Poly5C4, Exp2Poly5C5, Exp2Poly5C6);
 	return vecSel(vecMul(expipart, expfpart), expipart, vecCmpEQ(fpart, vecZero())); //ensure that exp2(int) = 2^int
 }
 
@@ -712,7 +739,7 @@ FORCEINLINE Vec vecExp2EstP5Int(Vec x)
 FORCEINLINE Vec vecExp2EstP5(Vec x)
 {
 	EXP_DEF_PART(vecHalf);
-	expfpart = POLY5(fpart, Exp2Poly5C1, Exp2Poly5C2, Exp2Poly5C3, Exp2Poly5C4, Exp2Poly5C5, Exp2Poly5C6);
+	expfpart = Polynomial5(fpart, Exp2Poly5C1, Exp2Poly5C2, Exp2Poly5C3, Exp2Poly5C4, Exp2Poly5C5, Exp2Poly5C6);
 	return vecMul(expipart, expfpart);
 }
 
@@ -726,7 +753,7 @@ const float Exp2Poly4C5 = 1.3534167e-2f;
 FORCEINLINE Vec vecExp2EstP4(Vec x)
 {
 	EXP_DEF_PART(vecHalf);
-	expfpart = POLY4(fpart, Exp2Poly4C1, Exp2Poly4C2, Exp2Poly4C3, Exp2Poly4C4, Exp2Poly4C5);
+	expfpart = Polynomial4(fpart, Exp2Poly4C1, Exp2Poly4C2, Exp2Poly4C3, Exp2Poly4C4, Exp2Poly4C5);
 	return vecMul(expipart, expfpart);
 }
 
@@ -739,7 +766,7 @@ const float Exp2Poly3C4 = 7.8024521e-2f;
 FORCEINLINE Vec vecExp2EstP3(Vec x)
 {
 	EXP_DEF_PART(vecHalf);
-	expfpart = POLY3(fpart, Exp2Poly3C1, Exp2Poly3C2, Exp2Poly3C3, Exp2Poly3C4);
+	expfpart = Polynomial3(fpart, Exp2Poly3C1, Exp2Poly3C2, Exp2Poly3C3, Exp2Poly3C4);
 	return vecMul(expipart, expfpart);
 }
 
@@ -751,7 +778,7 @@ const float Exp2Poly2C3 = 3.3718944e-1f;
 FORCEINLINE Vec vecExp2EstP2(Vec x)
 {
 	EXP_DEF_PART(vecHalf);
-	expfpart = POLY2(fpart, Exp2Poly2C1, Exp2Poly2C2, Exp2Poly2C3);
+	expfpart = Polynomial2(fpart, Exp2Poly2C1, Exp2Poly2C2, Exp2Poly2C3);
 	return vecMul(expipart, expfpart);
 }
 
@@ -773,7 +800,7 @@ const float Log2Poly5C6 = -3.4436006e-2f;
 FORCEINLINE Vec vecLog2EstP5(Vec x)
 {
 	LOG_DEF_PART
-	Vec p = POLY5(m, Log2Poly5C1, Log2Poly5C2, Log2Poly5C3, Log2Poly5C4, Log2Poly5C5, Log2Poly5C6);
+	Vec p = Polynomial5(m, Log2Poly5C1, Log2Poly5C2, Log2Poly5C3, Log2Poly5C4, Log2Poly5C5, Log2Poly5C6);
 	return vecMulAdd(p, vecSub(m, vecOne), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
 }
 
@@ -787,7 +814,7 @@ const float Log2Poly4C5 = 0.0596515482674574969533f;
 FORCEINLINE Vec vecLog2EstP4(Vec x)
 {
 	LOG_DEF_PART
-	Vec p = POLY4(m, Log2Poly4C1, Log2Poly4C2, Log2Poly4C3, Log2Poly4C4, Log2Poly4C5);
+	Vec p = Polynomial4(m, Log2Poly4C1, Log2Poly4C2, Log2Poly4C3, Log2Poly4C4, Log2Poly4C5);
 	return vecMulAdd(p, vecSub(m, vecOne), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
 }
 
@@ -800,7 +827,7 @@ const float Log2Poly3C4 = -0.107254423828329604454f;
 FORCEINLINE Vec vecLog2EstP3(Vec x)
 {
 	LOG_DEF_PART
-	Vec p = POLY3(m, Log2Poly3C1, Log2Poly3C2, Log2Poly3C3, Log2Poly3C4);
+	Vec p = Polynomial3(m, Log2Poly3C1, Log2Poly3C2, Log2Poly3C3, Log2Poly3C4);
 	return vecMulAdd(p, vecSub(m, vecOne), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
 }
 
@@ -812,7 +839,7 @@ const float Log2Poly2C3 = 0.204446009836232697516f;
 FORCEINLINE Vec vecLog2EstP2(Vec x)
 {
 	LOG_DEF_PART
-	Vec p = POLY2(m, Log2Poly2C1, Log2Poly2C2, Log2Poly2C3);
+	Vec p = Polynomial2(m, Log2Poly2C1, Log2Poly2C2, Log2Poly2C3);
 	return vecMulAdd(p, vecSub(m, vecOne), e); // this effectively increases the polynomial degree by one, but ensures that log2(1) == 0
 }
 
