@@ -14,6 +14,8 @@ namespace calco
 		public int callbackOrder { get { return 0; } }
 		public void OnPreprocessBuild(BuildReport report)
 		{
+			var baseIl2CppFlags = " --disable-array-bounds-check --disable-null-checks";
+			
 			var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForPackageName("com.flowers.calco");
 			string sourcePackagePath = packageInfo.resolvedPath;
 
@@ -24,18 +26,21 @@ namespace calco
 				{
 					var addlArgs = "--compiler-flags=\"/FI $(ProjectDir)Source\\il2cppOutput\\cppMath.h\"";
 					addlArgs += " --emit-comments";
+					addlArgs += baseIl2CppFlags;
 					System.Environment.SetEnvironmentVariable("IL2CPP_ADDITIONAL_ARGS", addlArgs);
 				}
 				else
 				{
 					var pchCppPath = Path.Combine(sourcePackagePath, "calco/pch-cpp.hpp").Replace('\\','/');
 					var addlArgs = $"--additional-cpp=\"{pchCppPath}\"";
+					addlArgs += baseIl2CppFlags;
 					PlayerSettings.SetAdditionalIl2CppArgs(addlArgs);
 				}
 			}
 			else if( report.summary.platform == BuildTarget.StandaloneOSX )
 			{
 				var addlArgs = "--compiler-flags=\"-include$PROJECT_DIR/Il2CppOutputProject/Source/il2cppOutput/cppMath.h\"";
+				addlArgs += baseIl2CppFlags;
 				PlayerSettings.SetAdditionalIl2CppArgs(addlArgs);
 			}
 			else if( report.summary.platform == BuildTarget.Android )
@@ -43,7 +48,12 @@ namespace calco
 				// the only way to properly include the cppMath.h file is to reference to its base location as on the temporal location it will be available with a delay so some files won't find it
 				var pchCppPath = Path.Combine(sourcePackagePath, "calco/pch-cpp.hpp").Replace('\\','/');
 				var addlArgs = $"--additional-cpp=\"{pchCppPath}\"";
+				addlArgs += baseIl2CppFlags;
 				PlayerSettings.SetAdditionalIl2CppArgs(addlArgs);
+			}
+			else if( report.summary.platform == BuildTarget.iOS )
+			{
+				PlayerSettings.SetAdditionalIl2CppArgs(baseIl2CppFlags);
 			}
 		}
 	}
