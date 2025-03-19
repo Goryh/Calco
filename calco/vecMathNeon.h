@@ -632,8 +632,8 @@ FORCEINLINE Vec1 vecDot3(Vec u, Vec v)
 FORCEINLINE Vec1 vecDot4(Vec u, Vec v)
 {
 	const float32x4_t product = vmulq_f32(u, v);
-	const float32x4_t sum1 = vaddq_f32(product, vrev64q_f32(product));
-	return vgetq_lane_f32(product, 0) + vgetq_lane_f32(product, 1);
+	const float32x4_t sum = vaddq_f32(product, vrev64q_f32(product));
+	return vgetq_lane_f32(sum, 0) + vgetq_lane_f32(sum, 2);
 }
 
 FORCEINLINE Vec vecCross(Vec l, Vec r)
