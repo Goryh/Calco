@@ -638,10 +638,22 @@ FORCEINLINE Vec1 vecDot4(Vec u, Vec v)
 
 FORCEINLINE Vec vecCross(Vec l, Vec r)
 {
-	return vec(
-		vgetq_lane_f32(l, 1) * vgetq_lane_f32(r, 2) - vgetq_lane_f32(r, 1) * vgetq_lane_f32(l, 2),
-		vgetq_lane_f32(l, 2) * vgetq_lane_f32(r, 0) - vgetq_lane_f32(r, 2) * vgetq_lane_f32(l, 0),
-		vgetq_lane_f32(l, 0) * vgetq_lane_f32(r, 1) - vgetq_lane_f32(r, 0) * vgetq_lane_f32(l, 1));
+//	return vec(
+//		vgetq_lane_f32(l, 1) * vgetq_lane_f32(r, 2) - vgetq_lane_f32(r, 1) * vgetq_lane_f32(l, 2),
+//		vgetq_lane_f32(l, 2) * vgetq_lane_f32(r, 0) - vgetq_lane_f32(r, 2) * vgetq_lane_f32(l, 0),
+//		vgetq_lane_f32(l, 0) * vgetq_lane_f32(r, 1) - vgetq_lane_f32(r, 0) * vgetq_lane_f32(l, 1));
+
+	float l0 = vgetq_lane_f32(l, 0), r0 = vgetq_lane_f32(r, 0);
+	float l1 = vgetq_lane_f32(l, 1), r1 = vgetq_lane_f32(r, 1);
+	float l2 = vgetq_lane_f32(l, 2), r2 = vgetq_lane_f32(r, 2);
+
+	float m0 = l1 * r2;
+	float m1 = l2 * r0;
+	float m2 = l0 * r1;
+
+	return vec(	vecMulSub(m0, l2, r1),
+				vecMulSub(m1, l0, r2),
+				vecMulSub(m2, l1, r0));
 }
 
 FORCEINLINE Vec vecFloor(Vec r)
