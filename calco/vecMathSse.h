@@ -1727,106 +1727,74 @@ FORCEINLINE Vec vecLerp(Vec a, Vec b, Vec t)
 	return vecAdd(vecMul(a, one_minus_t), vecMul(b, t));
 }
 
-FORCEINLINE Vec vecRecipNoNewtonRaphson(Vec r)
+// gives around 12 bits precision (less than 1.5*2^-12)
+FORCEINLINE Vec vecRecipEst(Vec r)
 {
 	return _mm_rcp_ps(r);
 }
 
-FORCEINLINE Vec1 vecRecipNoNewtonRaphson(Vec1 r)
+// gives around 12 bits precision (less than 1.5*2^-12)
+FORCEINLINE Vec1 vecRecipEst(Vec1 r)
 {
 	return Vec1(_mm_rcp_ss(r.v));
 }
 
-FORCEINLINE Vec vecRecipSqrtNoNewtonRaphson(Vec v)
-{
-	return _mm_rsqrt_ps(v);
-}
-
-FORCEINLINE Vec1 vecRecipSqrtNoNewtonRaphson(Vec1 v)
-{
-	return Vec1(_mm_rsqrt_ss(v.v));
-}
-
-FORCEINLINE Vec vecRecipEst(Vec r)
-{
-	return vecRecipNoNewtonRaphson(r);
-}
-
-FORCEINLINE Vec1 vecRecipEst(Vec1 r)
-{
-	return vecRecipNoNewtonRaphson(r);
-}
-
-FORCEINLINE Vec vecRecipFast(Vec r)
-{
-	// Do one iteration of Newton-Raphson
-	const Vec two = vecTwo;
-	const Vec est = vecRecipNoNewtonRaphson(r);
-	const Vec twoMinusRMulEst = vecSub(two, vecMul(est, r));
-	return vecMul(twoMinusRMulEst, est);
-}
-
+// gives full 23 bits precision
 FORCEINLINE Vec vecRecip(Vec r)
 {
-	// Do two iterations of Newton-Raphson
+	// do one iterations of Newton-Raphson
 	const Vec two = vecTwo;
 	const Vec recipEst = vecRecipEst(r);
 	const Vec twoMinusRMulEst = vecMulSub(two, r, recipEst);
 	return vecMul(twoMinusRMulEst, recipEst);
 }
 
+// gives full 23 bits precision
 FORCEINLINE Vec1 vecRecip(Vec1 r)
 {
-	// Do two iterations of Newton-Raphson
+	// do one iterations of Newton-Raphson
 	const Vec1 two = vec1(vecTwo);
 	const Vec1 recipEst = vecRecipEst(r);
 	const Vec1 twoMinusRMulEst = vecMulSub(two, r, recipEst);
 	return vecMul(twoMinusRMulEst, recipEst);
 }
 
+FORCEINLINE Vec vecDivEst(Vec v1, Vec v2)
+{
+	Vec inv = vecRecipEst(v2);
+	return vecMul(v1, inv);
+}
+
+// gives around 12 bits precision (less than 1.5*2^-12)
 FORCEINLINE Vec vecRecipSqrtEst(Vec v)
 {
-	return vecRecipSqrtNoNewtonRaphson(v);
+	return _mm_rsqrt_ps(v);
 }
 
-FORCEINLINE Vec vecRecipSqrtFast(Vec v)
+// gives around 12 bits precision (less than 1.5*2^-12)
+FORCEINLINE Vec1 vecRecipSqrtEst(Vec1 v)
 {
-	// Do one iteration of Newton-Raphson
-	const Vec half = vecHalf;
-	const Vec estimate = vecRecipSqrtNoNewtonRaphson(v);
-	const Vec halfV = vecMul(v, half);
-    const Vec estimateSqr = vecMul(estimate, estimate);
-	const Vec halfMinusEstSqrHalfV = vecMulSub(half, halfV, estimateSqr);
-	return vecMulAdd(estimate, halfMinusEstSqrHalfV, estimate);
+	return Vec1(_mm_rsqrt_ss(v.v));
 }
 
-FORCEINLINE Vec1 vecRecipSqrtFast(Vec1 v)
-{
-	// Do one iteration of Newton-Raphson
-	const Vec1 half = vec1(vecHalf);
-	const Vec1 estimate = vecRecipSqrtNoNewtonRaphson(v);
-	const Vec1 halfV = vecMul(v, half);
-    const Vec1 estimateSqr = vecMul(estimate, estimate);
-	const Vec1 halfMinusEstSqrHalfV = vecMulSub(half, halfV, estimateSqr);
-	return vecMulAdd(estimate, halfMinusEstSqrHalfV, estimate);
-}
-
+// gives full 23 bits precision
 FORCEINLINE Vec vecRecipSqrt(Vec v)
 {
-	// Do two iterations of Newton-Raphson
+	// do one iteration of Newton-Raphson
 	const Vec half = vecHalf;
-    const Vec estimate = vecRecipSqrtFast(v);
+	const Vec estimate = vecRecipSqrtEst(v);
 	const Vec halfV = vecMul(v, half);
     const Vec estimateSqr = vecMul(estimate, estimate);
 	const Vec halfMinusEstSqrHalfV = vecMulSub(half, halfV, estimateSqr);
-    return vecMulAdd(estimate, halfMinusEstSqrHalfV, estimate);
+	return vecMulAdd(estimate, halfMinusEstSqrHalfV, estimate);
 }
 
+// gives full 23 bits precision
 FORCEINLINE Vec1 vecRecipSqrt(Vec1 v)
 {
-	// Do two iterations of Newton-Raphson
+	// do one iteration of Newton-Raphson
 	const Vec1 half = vec1(vecHalf);
-    const Vec1 estimate = vecRecipSqrtFast(v);
+	const Vec1 estimate = vecRecipSqrtEst(v);
 	const Vec1 halfV = vecMul(v, half);
     const Vec1 estimateSqr = vecMul(estimate, estimate);
 	const Vec1 halfMinusEstSqrHalfV = vecMulSub(half, halfV, estimateSqr);
@@ -1841,12 +1809,6 @@ FORCEINLINE Vec1 vecSqrt(Vec1 v)
 FORCEINLINE Vec vecSqrt(Vec v)
 {
 	return _mm_sqrt_ps(v);
-}
-
-FORCEINLINE Vec vecDivEst(Vec v1, Vec v2)
-{
-	Vec inv = vecRecipEst(v2);
-	return vecMul(v1, inv);
 }
 
 FORCEINLINE Vec vecAnd(Vec r1, Vec r2)

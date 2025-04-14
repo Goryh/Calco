@@ -306,34 +306,11 @@ FORCEINLINE Vec1 vecMulSub(Vec1 subFrom, Vec1 mul1, Vec1 mul2)
 	return subFrom - mul1 * mul2;
 }
 
-FORCEINLINE Vec vecRecipNoNewtonRaphson(Vec v)
-{
-	// Warning: VRECPE is only good for about 8 bits of precision on most ARM chips (compared to 12 bits on x86)
-	return vrecpeq_f32(v);
-}
-
-FORCEINLINE Vec1 vecRecipNoNewtonRaphson(Vec1 v)
-{
-	// Warning: VRECPE is only good for about 8 bits of precision on most ARM chips (compared to 12 bits on x86)
-	return vrecpes_f32(v);
-}
-
-FORCEINLINE Vec vecRecipSqrtNoNewtonRaphson(Vec v)
-{
-	// Warning: VRSQRTE is only good for about 8 bits of precision on most ARM chips (compared to 12 bits on x86)
-	return vrsqrteq_f32(v);
-}
-
-FORCEINLINE Vec1 vecRecipSqrtNoNewtonRaphson(Vec1 v)
-{
-	// Warning: VRSQRTE is only good for about 8 bits of precision on most ARM chips (compared to 12 bits on x86)
-	return vrsqrtes_f32(v);
-}
-
+// gives around 16 bits precision
 FORCEINLINE Vec vecRecipEst(Vec v)
 {
-	// Do one iteration of Newton-Raphson, because VRECPE is less accurate than x86 equivalent
-	const Vec estimate = vecRecipNoNewtonRaphson(v);
+	// do one iteration of Newton-Raphson, because VRECPE is less accurate than x86 equivalent (8 bits vs 12 on x86)
+	const Vec estimate = vrecpeq_f32(v);
 
 	// NEON has an intrinsic that does one step of Newton-Raphson
 	const Vec step = vrecpsq_f32(estimate, v);
@@ -341,10 +318,11 @@ FORCEINLINE Vec vecRecipEst(Vec v)
 	return vecMul(estimate, step);
 }
 
+// gives around 16 bits precision
 FORCEINLINE Vec1 vecRecipEst(Vec1 v)
 {
-	// Do one iteration of Newton-Raphson, because VRECPE is less accurate than x86 equivalent
-	const Vec1 estimate = vecRecipNoNewtonRaphson(v);
+	// do one iteration of Newton-Raphson, because VRECPE is less accurate than x86 equivalent (8 bits vs 12 on x86)
+	const Vec1 estimate = vrecpes_f32(v);
 
 	// NEON has an intrinsic that does one step of Newton-Raphson
 	const Vec1 step = vrecpss_f32(estimate, v);
@@ -352,20 +330,10 @@ FORCEINLINE Vec1 vecRecipEst(Vec1 v)
 	return vecMul(estimate, step);
 }
 
-FORCEINLINE Vec vecRecipFast(Vec v)
-{
-	// Do two iterations of Newton-Raphson, because VRECPE is less accurate than x86 equivalent
-	const Vec estimate = vecRecipEst(v);
-
-	// NEON has an intrinsic that does one step of Newton-Raphson
-	const Vec step = vrecpsq_f32(estimate, v);
-
-	return vecMul(estimate, step);
-}
-
+// gives full 23 bits precision
 FORCEINLINE Vec vecRecip(Vec v)
 {
-	// Do two iterations of Newton-Raphson
+	// do two iterations of Newton-Raphson
 	const Vec estimate = vecRecipEst(v);
 
 	// NEON has an intrinsic that does one step of Newton-Raphson
@@ -374,9 +342,10 @@ FORCEINLINE Vec vecRecip(Vec v)
 	return vecMul(estimate, step);
 }
 
+// gives full 23 bits precision
 FORCEINLINE Vec1 vecRecip(Vec1 v)
 {
-	// Do two iterations of Newton-Raphson
+	// do two iterations of Newton-Raphson
 	const Vec1 estimate = vecRecipEst(v);
 
 	// NEON has an intrinsic that does one step of Newton-Raphson
@@ -385,10 +354,17 @@ FORCEINLINE Vec1 vecRecip(Vec1 v)
 	return vecMul(estimate, step);
 }
 
+FORCEINLINE Vec vecDivEst(Vec v1, Vec v2)
+{
+	const float32x4_t reciprocal = vrecpeq_f32(v2);
+	return vmulq_f32(v1, reciprocal);
+}
+
+// gives around 16 bits precision
 FORCEINLINE Vec vecRecipSqrtEst(Vec v)
 {
-	// Do one iteration of Newton-Raphson, because VRSQRTE is less accurate than x86 equivalent
-	const Vec estimate = vecRecipSqrtNoNewtonRaphson(v);
+	// do one iteration of Newton-Raphson, because VRSQRTE is less accurate than x86 equivalent (8 bits vs 12 on x86)
+	const Vec estimate = vrsqrteq_f32(v);
 	const Vec estimateSqr = vecMul(estimate, estimate);
 
 	// NEON has an intrinsic that does one step of Newton-Raphson
@@ -396,10 +372,11 @@ FORCEINLINE Vec vecRecipSqrtEst(Vec v)
 	return vecMul(estimate, step);
 }
 
+// gives around 16 bits precision
 FORCEINLINE Vec1 vecRecipSqrtEst(Vec1 v)
 {
-	// Do one iteration of Newton-Raphson, because VRSQRTE is less accurate than x86 equivalent
-	const Vec1 estimate = vecRecipSqrtNoNewtonRaphson(v);
+	// do one iteration of Newton-Raphson, because VRSQRTE is less accurate than x86 equivalent (8 bits vs 12 on x86)
+	const Vec1 estimate = vrsqrtes_f32(v);
 	const Vec1 estimateSqr = estimate * estimate;
 
 	// NEON has an intrinsic that does one step of Newton-Raphson
@@ -407,9 +384,10 @@ FORCEINLINE Vec1 vecRecipSqrtEst(Vec1 v)
 	return estimate * step;
 }
 
+// gives full 23 bits precision
 FORCEINLINE Vec vecRecipSqrt(Vec v)
 {
-	// Do two iterations of Newton-Raphson
+	// do two iterations of Newton-Raphson
 	const Vec estimate = vecRecipSqrtEst(v);
 	const Vec estimateSqr = vecMul(estimate, estimate);
 
@@ -418,9 +396,10 @@ FORCEINLINE Vec vecRecipSqrt(Vec v)
 	return vecMul(estimate, step);
 }
 
+// gives full 23 bits precision
 FORCEINLINE Vec1 vecRecipSqrt(Vec1 v)
 {
-	// Do two iterations of Newton-Raphson
+	// do two iterations of Newton-Raphson
 	const Vec1 estimate = vecRecipSqrtEst(v);
 	const Vec1 estimateSqr = estimate * estimate;
 
@@ -438,12 +417,6 @@ FORCEINLINE Vec1 vecSqrt(Vec1 v1)
 FORCEINLINE Vec vecSqrt(Vec v1)
 {
 	return vsqrtq_f32(v1);
-}
-
-FORCEINLINE Vec vecDivEst(Vec v1, Vec v2)
-{
-	const float32x4_t reciprocal = vrecpeq_f32(v2);
-	return vmulq_f32(v1, reciprocal);
 }
 
 FORCEINLINE Vec vecMaskSel(Vec falseValue, Vec trueValue, Vec mostSignificantBitMask)

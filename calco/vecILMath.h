@@ -1468,6 +1468,35 @@ FORCEINLINE void __cdecl vecILMathRsqrt4(float4_tC63C89D1F1B7B6D22808075482704BC
 	res->store(vecRecipSqrt(x->load()));
 }
 
+FORCEINLINE float __cdecl vecILMathRcp(float x)
+{
+	return vecStore1(vecRecip(vec1(x)));
+}
+
+FORCEINLINE void __cdecl vecILMathRcp2(float2_t24F58B676AEF68C4CB4133963D5E4176CDF95430* RESTRICT inX, float2_t24F58B676AEF68C4CB4133963D5E4176CDF95430* RESTRICT resF)
+{
+	float2_internal* x 	= (float2_internal*)inX;
+	float2_internal* res= (float2_internal*)resF;
+
+	res->store(vecRecip(x->load()));
+}
+
+FORCEINLINE void __cdecl vecILMathRcp3a(float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT inX, float3a_t925C03B5EB8C57EB0A1128AEBC894A487ABAFA2F* RESTRICT resF)
+{
+	float3a_internal* x 	= (float3a_internal*)inX;
+	float3a_internal* res	= (float3a_internal*)resF;
+
+	res->store(vecRecip(x->load()));
+}
+
+FORCEINLINE void __cdecl vecILMathRcp4(float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inX, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT resF)
+{
+	float4_internal* x 	= (float4_internal*)inX;
+	float4_internal* res= (float4_internal*)resF;
+
+	res->store(vecRecip(x->load()));
+}
+
 FORCEINLINE uint __cdecl vecILMathF32tof16(float x)
 {
 	return (uint)vecStore1(vecF32tof16(vec(x)));

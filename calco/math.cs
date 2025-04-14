@@ -127,6 +127,10 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRsqrt2(in float2 x, out float2 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRsqrt3a(in float3a x, out float3a s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRsqrt4(in float4 x, out float4 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern float vecILMathRcp(float x);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRcp2(in float2 x, out float2 s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRcp3a(in float3a x, out float3a s);
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathRcp4(in float4 x, out float4 s);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern uint  vecILMathF32tof16(float x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern uint  vecILMathF32tof16_2(in float2 x);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]        static extern void  vecILMathF32tof16_3(in float3a x, out uint2 s);
@@ -2887,35 +2891,49 @@ namespace calco
         public static double frac(double x) { return x - floor(x); }
 
 
-
-        /// <summary>Returns the reciprocal a float value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The reciprocal of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float rcp(float x) { return 1.0f / x; }
+        public static float rcp(float x)
+		{
+        #if ENABLE_IL2CPP
+            return vecILMathRcp(x);
+        #else
+            return 1.0f / x;
+        #endif
+		}
 
-        /// <summary>Returns the componentwise reciprocal a float2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise reciprocal of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 rcp(in float2 x) { return 1.0f / x; }
+        public static float2 rcp(in float2 x)
+		{
+        #if ENABLE_IL2CPP
+            vecILMathRcp2(in x, out var res);
+            return res;
+        #else
+            return 1.0f / x;
+        #endif
+		}
 
-        /// <summary>Returns the componentwise reciprocal a float3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise reciprocal of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3a rcp(in float3a x) { return 1.0f / x; }
+        public static float3a rcp(in float3a x)
+		{
+        #if ENABLE_IL2CPP
+            vecILMathRcp3a(in x, out var res);
+            return res;
+        #else
+            return 1.0f / x;
+        #endif
+		}
 
-        /// <summary>Returns the componentwise reciprocal a float4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise reciprocal of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 rcp(in float4 x) { return 1.0f / x; }
+        public static float4 rcp(in float4 x)
+		{
+        #if ENABLE_IL2CPP
+            vecILMathRcp4(in x, out var res);
+            return res;
+        #else
+            return 1.0f / x;
+        #endif
+		}
 
-
-        /// <summary>Returns the reciprocal a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The reciprocal of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double rcp(double x) { return 1.0 / x; }
 
@@ -3840,22 +3858,16 @@ namespace calco
 
 
 
-        /// <summary>Returns the reciprocal square root of a float value.</summary>
-        /// <param name="x">Value to use when computing reciprocal square root.</param>
-        /// <returns>The reciprocal square root.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float rsqrt(float x)
         {
         #if ENABLE_IL2CPP
             return vecILMathRsqrt(x);
         #else
-            return 1.0f / (float)System.Math.Sqrt((float)x);
+            return 1.0f / sqrt(x);
         #endif
         }
 
-        /// <summary>Returns the componentwise reciprocal square root of a float2 vector.</summary>
-        /// <param name="x">Value to use when computing reciprocal square root.</param>
-        /// <returns>The componentwise reciprocal square root.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 rsqrt(in float2 x)
         {
@@ -3867,9 +3879,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise reciprocal square root of a float3 vector.</summary>
-        /// <param name="x">Value to use when computing reciprocal square root.</param>
-        /// <returns>The componentwise reciprocal square root.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a rsqrt(in float3a x)
         {
@@ -3881,9 +3890,6 @@ namespace calco
         #endif
         }
 
-        /// <summary>Returns the componentwise reciprocal square root of a float4 vector</summary>
-        /// <param name="x">Value to use when computing reciprocal square root.</param>
-        /// <returns>The componentwise reciprocal square root.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 rsqrt(in float4 x)
         {
@@ -3895,10 +3901,6 @@ namespace calco
         #endif
         }
 
-
-        /// <summary>Returns the reciprocal square root of a double value.</summary>
-        /// <param name="x">Value to use when computing reciprocal square root.</param>
-        /// <returns>The reciprocal square root.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double rsqrt(double x) { return 1.0 / sqrt(x); }
 
