@@ -33,15 +33,4 @@ inline float __cdecl cppMathSinh(float x)
 
 } // extern "C"
 
-template<typename T>
-inline T* il2cpp_span_get_item(T* refPtrValue, int index, int length)
-{
-    return &refPtrValue[index];
-}
-
-// there is no other way to disable Spans bound checking in IL2CPP atm
-// so obscure the original il2cpp_span_get_item function by changing type of its first argument to redirect all calls to the above one
-// the 'refPtrValue' is uniquely used only at that place among the entire codebase (it might change in future Unity versions)
-#define refPtrValue **refPtrValue
-
 #endif
