@@ -35,11 +35,11 @@ namespace calco
 			this.max = max;
 		}
 
-		public float3 extents		{	[MethodImpl(MethodImplOptions.AggressiveInlining)] readonly get => max - min;
+		public float3a extents		{	[MethodImpl(MethodImplOptions.AggressiveInlining)] readonly get => float3a(max) - float3a(min);
 										[MethodImpl(MethodImplOptions.AggressiveInlining)] set {SetCenterAndHalfExtents(center, value / 2);} }
-		public float3 halfExtents	{	[MethodImpl(MethodImplOptions.AggressiveInlining)] readonly get => (max - min) * 0.5f;
+		public float3a halfExtents	{	[MethodImpl(MethodImplOptions.AggressiveInlining)] readonly get => (float3a(max) - float3a(min)) * 0.5f;
 										[MethodImpl(MethodImplOptions.AggressiveInlining)] set {SetCenterAndHalfExtents(center, value);}  }
-		public float3 center		{	[MethodImpl(MethodImplOptions.AggressiveInlining)] readonly get => (max + min) * 0.5f;
+		public float3a center		{	[MethodImpl(MethodImplOptions.AggressiveInlining)] readonly get => (float3a(max) + float3a(min)) * 0.5f;
 										[MethodImpl(MethodImplOptions.AggressiveInlining)] set {SetCenterAndHalfExtents(value, halfExtents);} }
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -77,9 +77,9 @@ namespace calco
 		public static Aabb Aabb(in Aabb xyz) { return new Aabb(xyz); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UnityEngine.Bounds Bounds(in Aabb b) { return new UnityEngine.Bounds(Vec3(b.center), Vec3(b.extents)); }
+        public static UnityEngine.Bounds Bounds(in Aabb b) { return new UnityEngine.Bounds(b.center, b.extents); }
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Aabb Aabb(in UnityEngine.Bounds b) { return new Aabb(float3(b.min), float3(b.max)); }
+        public static Aabb Aabb(in UnityEngine.Bounds b) { return new Aabb(b.min, b.max); }
 	}
 }

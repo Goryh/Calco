@@ -26,6 +26,15 @@ namespace calco
         public static implicit operator float2(Vector2 v)        { unsafe{ return *(float2*)&v; } }
     }
 
+    public partial struct float3
+    {
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator float3(Vector3 v)        { unsafe{ return *(float3*)&v; } }
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Vector3(float3 v)        { unsafe{ return *(Vector3*)&v; } }
+    }
+
     public partial struct float4
     {
         /// <summary>

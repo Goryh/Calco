@@ -345,10 +345,10 @@ namespace calco
 		public static Plane3 Plane3(in float3a vector1InPlane, in float3a vector2InPlane, in float3a pointInPlane) => new Plane3(vector1InPlane, vector2InPlane, pointInPlane);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Plane3 Plane3(in UnityEngine.Plane p) { return calco.Plane3.CreateFromUnitNormalAndDistance(float3(p.normal), p.distance); }
+        public static Plane3 Plane3(in UnityEngine.Plane p) { return calco.Plane3.CreateFromUnitNormalAndDistance(p.normal, p.distance); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UnityEngine.Plane Plane(in Plane3 p) { return new UnityEngine.Plane(Vec3(p.normal), p.distance); }
+        public static UnityEngine.Plane Plane(in Plane3 p) { return new UnityEngine.Plane(p.normal, p.distance); }
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Plane3 transform(in RigidTransforma transf, in Plane3 p)

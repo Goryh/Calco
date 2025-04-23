@@ -1683,9 +1683,6 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 float3(float3 xyz) { return xyz; }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UnityEngine.Vector3 Vec3(float3 v) { unsafe{ return *(UnityEngine.Vector3*)&v; } }
-
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 float3(UnityEngine.Vector3 v) { unsafe{ return *(float3*)&v; } }
 
