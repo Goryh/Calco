@@ -204,6 +204,18 @@ namespace calco
         #endif
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a operator * (in float3 lhs, in float3a rhs)
+        {
+            return (float3a)lhs * rhs;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a operator * (in float3a lhs, in float3 rhs)
+        {
+            return lhs * (float3a)rhs;
+        }
+
 
         /// <summary>Returns the result of a componentwise addition operation on two float3a vectors.</summary>
         /// <param name="lhs">Left hand side float3a to use to compute componentwise addition.</param>
@@ -220,11 +232,16 @@ namespace calco
         #endif
         }
 
-        // allow this operator to support "float3 += float3a" sentences
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a operator + (in float3 lhs, in float3a rhs)
         {
             return (float3a)lhs + rhs;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a operator + (in float3a lhs, in float3 rhs)
+        {
+            return lhs + (float3a)rhs;
         }
 
         /// <summary>Returns the result of a componentwise addition operation on a float3a vector and a float value.</summary>
@@ -296,6 +313,18 @@ namespace calco
         }
 
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a operator - (in float3 lhs, in float3a rhs)
+        {
+            return (float3a)lhs - rhs;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a operator - (in float3a lhs, in float3 rhs)
+        {
+            return lhs - (float3a)rhs;
+        }
+
         /// <summary>Returns the result of a componentwise division operation on two float3a vectors.</summary>
         /// <param name="lhs">Left hand side float3a to use to compute componentwise division.</param>
         /// <param name="rhs">Right hand side float3a to use to compute componentwise division.</param>
@@ -339,6 +368,18 @@ namespace calco
         #else
             return new float3a (lhs / rhs.x, lhs / rhs.y, lhs / rhs.z);
         #endif
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a operator / (in float3 lhs, in float3a rhs)
+        {
+            return (float3a)lhs / rhs;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a operator / (in float3a lhs, in float3 rhs)
+        {
+            return lhs / (float3a)rhs;
         }
 
 
