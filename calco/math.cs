@@ -5763,6 +5763,9 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float cmin(in float3 x) { return min(min(x.x, x.y), x.z); }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float cmin(in float3a x) { return min(min(x.x, x.y), x.z); }
+
         /// <summary>Returns the minimum component of a float4 vector.</summary>
         /// <param name="x">The vector to use when computing the minimum component.</param>
         /// <returns>The value of the minimum component of the vector.</returns>
@@ -5820,6 +5823,9 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float cmax(in float3 x) { return max(max(x.x, x.y), x.z); }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float cmax(in float3a x) { return max(max(x.x, x.y), x.z); }
+
         /// <summary>Returns the maximum component of a float4 vector.</summary>
         /// <param name="x">The vector to use when computing the maximum component.</param>
         /// <returns>The value of the maximum component of the vector.</returns>
@@ -5876,6 +5882,9 @@ namespace calco
         /// <returns>The horizontal sum of of components of the vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float csum(in float3 x) { return x.x + x.y + x.z; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float csum(in float3a x) { return x.x + x.y + x.z; }
 
         /// <summary>Returns the horizontal sum of components of a float4 vector.</summary>
         /// <param name="x">The vector to use when computing the horizontal sum.</param>
