@@ -627,6 +627,12 @@ namespace calco
             get { return new float3(x, x, y); }
         }
 
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public readonly float3a xxya
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get { return new float3a(x, x, y); }
+        }
 
         /// <summary>Swizzles the vector.</summary>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
@@ -636,6 +642,12 @@ namespace calco
             get { return new float3(x, y, x); }
         }
 
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public readonly float3a xyxa
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get { return new float3a(x, y, x); }
+        }
 
         /// <summary>Swizzles the vector.</summary>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
@@ -645,6 +657,12 @@ namespace calco
             get { return new float3(x, y, y); }
         }
 
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public readonly float3a xyya
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get { return new float3a(x, y, y); }
+        }
 
         /// <summary>Swizzles the vector.</summary>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
@@ -654,6 +672,12 @@ namespace calco
             get { return new float3(y, x, x); }
         }
 
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public readonly float3a yxxa
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get { return new float3a(y, x, x); }
+        }
 
         /// <summary>Swizzles the vector.</summary>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
@@ -663,6 +687,12 @@ namespace calco
             get { return new float3(y, x, y); }
         }
 
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public readonly float3a yxya
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get { return new float3a(y, x, y); }
+        }
 
         /// <summary>Swizzles the vector.</summary>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
@@ -672,6 +702,12 @@ namespace calco
             get { return new float3(y, y, x); }
         }
 
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public readonly float3a yyxa
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get { return new float3a(y, y, x); }
+        }
 
         /// <summary>Swizzles the vector.</summary>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
