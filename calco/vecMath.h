@@ -162,7 +162,7 @@ FORCEINLINE void vecLinearTransformNoScaleInverse(Vec& outX, Vec& outY, Vec& out
 	Vec transposeX, transposeY, transposeZ;
 	vecTranspose3x3(transposeX, transposeY, transposeZ, inX, inY, inZ);
 
-	const Vec negateTrans = vecSub(vecZero(), inW);
+	const Vec negateTrans = vecNeg(inW);
 
 	// [-Trans * transposeX, -Trans * tranposeY, -Trans * transposeZ]
 	const Vec X = vecShuffle<VecMask::_xxxx>(negateTrans);
@@ -172,7 +172,8 @@ FORCEINLINE void vecLinearTransformNoScaleInverse(Vec& outX, Vec& outY, Vec& out
 	Vec inverseTrans = vecMul(transposeX, X);
 	inverseTrans = vecMulAdd(transposeY, Y, inverseTrans);
 	inverseTrans = vecMulAdd(transposeZ, Z, inverseTrans);
-
+	inverseTrans = vecShuffle<VecMask::_xyz1>(inverseTrans);
+	
 	outX = transposeX;
 	outY = transposeY;
 	outZ = transposeZ;
@@ -185,7 +186,7 @@ FORCEINLINE void vecLinearTransformInverse(Vec& outX, Vec& outY, Vec& outZ, Vec&
 	Vec inverseX, inverseY, inverseZ;
 	vecMatrix33Inverse(inverseX, inverseY, inverseZ, inX, inY, inZ);
 
-	const Vec negateTrans = vecSub(vecZero(), inW);
+	const Vec negateTrans = vecNeg(inW);
 
 	// [-Trans * inverseX, -Trans * inverseY, -Trans * inverseZ]
 	const Vec X = vecShuffle<VecMask::_xxxx>(negateTrans);
@@ -195,6 +196,7 @@ FORCEINLINE void vecLinearTransformInverse(Vec& outX, Vec& outY, Vec& outZ, Vec&
 	Vec inverseTrans = vecMul(inverseX, X);
 	inverseTrans = vecMulAdd(inverseY, Y, inverseTrans);
 	inverseTrans = vecMulAdd(inverseZ, Z, inverseTrans);
+	inverseTrans = vecShuffle<VecMask::_xyz1>(inverseTrans);
 
 	outX = inverseX;
 	outY = inverseY;
