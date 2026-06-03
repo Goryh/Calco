@@ -6,14 +6,9 @@
 	#include "vecMathSse.h"
 #endif
 
-FORCEINLINE Vec vecMathQuaternionInverse(Vec q)
+FORCEINLINE Vec vecMathQuaternionConjugate(Vec q)
 {
-	// s = 1.0f / Dot(q, q);
-	Vec s = vec(vecRecip(vecDot4(q, q)));
-
-	// conj(q) * s;
-	Vec v = vecXor(q, vecSignMaskXYZ());
-	return vecMul(v, s);
+	return vecXor(q, vecSignMaskXYZ());
 }
 
 FORCEINLINE Vec vecMathQuaternionTransformVec3(Vec q, Vec v)

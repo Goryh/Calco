@@ -2002,6 +2002,16 @@ FORCEINLINE IntVec vecUnpackS16ToS32(IntVec a)
 	return _mm_unpacklo_epi16(a, sx);
 }
 
+FORCEINLINE Vec vecMathQuaternionInverse(Vec q)
+{
+	// s = 1.0f / Dot(q, q);
+	Vec s = vec(vecRecip(vecDot4(q, q)));
+
+	// conj(q) * s;
+	Vec v = vecXor(q, vecSignMaskXYZ());
+	return vecMul(v, s);
+}
+
 FORCEINLINE Vec vecMathQuaternionMul(Vec a, Vec b)
 {
 	Vec negA = vecNeg(b);

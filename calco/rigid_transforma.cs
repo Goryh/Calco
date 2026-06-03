@@ -156,7 +156,7 @@ namespace calco
             vecILMathRigidTransformaInverse(in t, out var res);
             return res;
         #else
-            quaternion invRotation = inverse(t.rot);
+            quaternion invRotation = inverseunit(t.rot);
             var invTranslation = mul(invRotation, -t.pos);
             return new RigidTransforma(invRotation, invTranslation);
         #endif

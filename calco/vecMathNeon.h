@@ -2018,6 +2018,25 @@ FORCEINLINE IntVec vecUnpackS16ToS32(IntVec a)
 	return vmovl_s16(vget_low_s16(vreinterpretq_s16_s32(a)));
 }
 
+FORCEINLINE Vec vecMathQuaternionInverse(Vec q)
+{
+	// |q|^2 broadcast to all lanes, staying in the vector unit (two FADDP).
+	Vec n = vmulq_f32(q, q);
+	n = vpaddq_f32(n, n);
+	n = vpaddq_f32(n, n); // {|q|^2, |q|^2, |q|^2, |q|^2}
+
+	// 1/|q|^2 via Newton-Raphson refinement of the estimate (stays vector-domain).
+	Vec inv = vrecpeq_f32(n);
+	inv = vmulq_f32(vrecpsq_f32(n, inv), inv);   // one NR step
+	inv = vmulq_f32(vrecpsq_f32(n, inv), inv);   // two -> ~full float precision
+
+	// conjugate: negate lanes 0,1,2 (vector part), keep lane 3.
+	const uint32x4_t conjMask = { 0x80000000u, 0x80000000u, 0x80000000u, 0u };
+	const Vec conj = vreinterpretq_f32_u32(veorq_u32(vreinterpretq_u32_f32(q), conjMask));
+
+	return vmulq_f32(conj, inv);
+}
+
 FORCEINLINE Vec vecMathQuaternionMul(Vec q1, Vec q2)
 {
 	const Vec r64 = vrev64q_f32(q2);		 // {y2, x2, w2, z2}

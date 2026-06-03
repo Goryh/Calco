@@ -296,7 +296,15 @@ FORCEINLINE float __cdecl vecILMathFloat4Dot(float4_tC63C89D1F1B7B6D228080754827
 
 	return vecStore1(vecDot4(a->load(), b->load()));
 }
-	
+
+FORCEINLINE void __cdecl vecILMathQuaternionConjugate(quaternion_tF319262949BE7146C3BD7F6FF96A3BDED4A61CA0* RESTRICT inQ, quaternion_tF319262949BE7146C3BD7F6FF96A3BDED4A61CA0* RESTRICT resQ)
+{
+	quaternion_internal* q = (quaternion_internal*)inQ;
+	quaternion_internal* res = (quaternion_internal*)resQ;
+
+	res->store(vecMathQuaternionConjugate(q->load()));
+}
+
 FORCEINLINE void __cdecl vecILMathQuaternionInverse(quaternion_tF319262949BE7146C3BD7F6FF96A3BDED4A61CA0* RESTRICT inQ, quaternion_tF319262949BE7146C3BD7F6FF96A3BDED4A61CA0* RESTRICT resQ)
 {
 	quaternion_internal* q = (quaternion_internal*)inQ;
@@ -338,7 +346,7 @@ FORCEINLINE void __cdecl vecILMathRigidTransformaInverse(RigidTransforma_tE6F141
 	rigidTransforma_internal* t = (rigidTransforma_internal*)inT;
 	rigidTransforma_internal* res = (rigidTransforma_internal*)resT;
 
-	Vec invRotation = vecMathQuaternionInverse(t->rot.load());
+	Vec invRotation = vecMathQuaternionConjugate(t->rot.load());
 	Vec invTranslation = vecMathQuaternionTransformVec3(invRotation, vecNeg(t->pos.load()));
 
 	res->rot.store(invRotation);

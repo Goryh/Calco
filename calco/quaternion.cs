@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Unity.IL2CPP.CompilerServices;
@@ -503,10 +504,30 @@ namespace calco
         {
             return string.Format("quaternion({0}f, {1}f, {2}f, {3}f)", value.x.ToString(format, formatProvider), value.y.ToString(format, formatProvider), value.z.ToString(format, formatProvider), value.w.ToString(format, formatProvider));
         }
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public readonly bool isunit()
+		{
+			float ll = lengthsq(this);
+			float tolerance = 0.002f;
+			float lowerBound = square(1.0f - tolerance);
+			float upperBound = square(1.0f + tolerance);
+
+			return ll >= lowerBound && ll <= upperBound;
+		}
+
+		[Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
+		public readonly void checkForUnit()
+		{
+			if( !isunit() )
+				throw new System.ArgumentException("The quaternion is not unit length.");
+		}
     }
 
     public static partial class math
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        static extern void vecILMathQuaternionConjugate(in quaternion q, out quaternion res);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         static extern void vecILMathQuaternionInverse(in quaternion q, out quaternion res);
         [MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
@@ -541,18 +562,23 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static quaternion quaternion(in float4x4 m) { return new quaternion(m); }
 
-       /// <summary>Returns the conjugate of a quaternion value.</summary>
-       /// <param name="q">The quaternion to conjugate.</param>
-       /// <returns>The conjugate of the input quaternion.</returns>
+        /// <summary>Returns the conjugate of a quaternion value.</summary>
+        /// <param name="q">The quaternion to conjugate.</param>
+        /// <returns>The conjugate of the input quaternion.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static quaternion conjugate(in quaternion q)
         {
+        #if ENABLE_IL2CPP
+            vecILMathQuaternionConjugate(in q, out var res);
+            return res;
+        #else
             return quaternion(q.value * float4(-1.0f, -1.0f, -1.0f, 1.0f));
+        #endif
         }
 
-       /// <summary>Returns the inverse of a quaternion value.</summary>
-       /// <param name="q">The quaternion to invert.</param>
-       /// <returns>The quaternion inverse of the input quaternion.</returns>
+        /// <summary>Returns the inverse of a quaternion value.</summary>
+        /// <param name="q">The quaternion to invert.</param>
+        /// <returns>The quaternion inverse of the input quaternion.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static quaternion inverse(in quaternion q)
         {
@@ -563,6 +589,14 @@ namespace calco
             float4 x = q.value;
             return quaternion(rcp(dot(x, x)) * x * float4(-1.0f, -1.0f, -1.0f, 1.0f));
         #endif
+        }
+
+        /// <summary>Returns the inverse of a unit quaternion.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static quaternion inverseunit(in quaternion q)
+        {
+            q.checkForUnit();
+            return conjugate(q);
         }
 
         /// <summary>Returns the dot product of two quaternions.</summary>
@@ -853,5 +887,5 @@ namespace calco
         /// <returns>The forward vector transformed by the input quaternion.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a forward(quaternion q) { return mul(q, float3a(0, 0, 1)); }  // for compatibility
-    }
+   }
 }
