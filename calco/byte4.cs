@@ -1,6 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Diagnostics;
+using UnityEngine.Bindings;
 using Unity.IL2CPP.CompilerServices;
 
 #pragma warning disable 0660, 0661
@@ -9,17 +11,21 @@ namespace calco
 {
     [DebuggerTypeProxy(typeof(byte4.DebuggerProxy))]
     [System.Serializable]
+	[StructLayout(LayoutKind.Explicit)]
     [Il2CppEagerStaticClassConstruction]
     public partial struct byte4 : System.IEquatable<byte4>, IFormattable
     {
-        public byte x;
-        public byte y;
-        public byte z;
-        public byte w;
+		[FieldOffset(0)] public uint dword;
+
+		[FieldOffset(0)] public byte x;
+		[FieldOffset(1)] public byte y;
+		[FieldOffset(2)] public byte z;
+		[FieldOffset(3)] public byte w;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte4(byte x, byte y, byte z, byte w)
         {
+			dword = 0;
             this.x = x;
             this.y = y;
             this.z = z;
@@ -29,6 +35,7 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte4(byte4 xyzw)
         {
+			dword = 0;
             this.x = xyzw.x;
             this.y = xyzw.y;
             this.z = xyzw.z;
@@ -36,8 +43,19 @@ namespace calco
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public byte4(uint xyzw)
+        {
+            this.x = 0;
+            this.y = 0;
+            this.z = 0;
+            this.w = 0;
+			dword = xyzw;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte4(byte v)
         {
+			dword = 0;
             this.x = v;
             this.y = v;
             this.z = v;
