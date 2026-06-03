@@ -535,15 +535,7 @@ FORCEINLINE void __cdecl vecILMathFloat4MulFloat4x4(float4_tC63C89D1F1B7B6D22808
 	Vec c2 = m->c2.load();
 	Vec c3 = m->c3.load();
 
-	Vec c0t, c1t, c2t, c3t;
-	vecTranspose4x4(c0t, c1t, c2t, c3t,
-					c0,  c1,  c2,  c3);
-
-	Vec result1 = vecMul(c0t, vecShuffle<VecMask::_xxxx>(v));
-	result1	 = vecMulAdd(c1t, vecShuffle<VecMask::_yyyy>(v), result1);
-	Vec result2 = vecMul(c2t, vecShuffle<VecMask::_zzzz>(v));
-	result2	 = vecMulAdd(c3t, vecShuffle<VecMask::_wwww>(v), result2);
-	Vec result = vecAdd(result1, result2);
+	Vec result = vecFloat4Matrix44Mul(v, c0, c1, c2, c3);
 
 	res->store(result);
 }

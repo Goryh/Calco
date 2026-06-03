@@ -1219,7 +1219,7 @@ struct VecMask
 		static FORCEINLINE Vec apply(Vec v, Vec constReg)
 		{
 			Vec retValue;
-			retValue = _mm_shuffle_ps(v,        constReg, (T >> 16) & 0xff);
+			retValue = _mm_shuffle_ps(v,		constReg, (T >> 16) & 0xff);
 			retValue = _mm_shuffle_ps(retValue, retValue, (T >>  8) & 0xff);
 			return retValue;
 		}
@@ -1230,7 +1230,7 @@ struct VecMask
 		static FORCEINLINE Vec apply(Vec v, Vec constReg)
 		{
 			Vec retValue;
-			retValue = _mm_shuffle_ps(v,        constReg, (T >> 16) & 0xff);
+			retValue = _mm_shuffle_ps(v,		constReg, (T >> 16) & 0xff);
 			retValue = _mm_shuffle_ps(retValue, retValue, (T >>  8) & 0xff);
 			return retValue;
 		}
@@ -1267,7 +1267,7 @@ struct VecMask
 		static FORCEINLINE Vec apply(Vec v, Vec constReg)
 		{
 			Vec retValue;
-			retValue = _mm_shuffle_ps(v,        constReg, (T >> 16) & 0xff);
+			retValue = _mm_shuffle_ps(v,		constReg, (T >> 16) & 0xff);
 			retValue = _mm_shuffle_ps(retValue, retValue, (T >>  8) & 0xff);
 			return retValue;
 		}
@@ -1278,7 +1278,7 @@ struct VecMask
 		static FORCEINLINE Vec apply(Vec v, Vec constReg)
 		{
 			Vec retValue;
-			retValue = _mm_shuffle_ps(v,        constReg, (T >> 16) & 0xff);
+			retValue = _mm_shuffle_ps(v,		constReg, (T >> 16) & 0xff);
 			retValue = _mm_shuffle_ps(retValue, retValue, (T >>  8) & 0xff);
 			return retValue;
 		}
@@ -1289,7 +1289,7 @@ struct VecMask
 		static FORCEINLINE Vec apply(Vec v, Vec constReg)
 		{
 			Vec retValue;
-			retValue = _mm_shuffle_ps(v,        constReg, (T >> 16) & 0xff);
+			retValue = _mm_shuffle_ps(v,		constReg, (T >> 16) & 0xff);
 			retValue = _mm_shuffle_ps(retValue, retValue, (T >>  8) & 0xff);
 			return retValue;
 		}
@@ -1308,7 +1308,7 @@ struct VecMask
 		static FORCEINLINE Vec apply(Vec v, Vec constReg)
 		{
 			Vec retValue;
-			retValue = _mm_shuffle_ps(v,        constReg, (T >> 16) & 0xff);
+			retValue = _mm_shuffle_ps(v,		constReg, (T >> 16) & 0xff);
 			retValue = _mm_shuffle_ps(retValue, retValue, (T >>  8) & 0xff);
 			return retValue;
 		}
@@ -1319,7 +1319,7 @@ struct VecMask
 		static FORCEINLINE Vec apply(Vec v, Vec constReg)
 		{
 			Vec retValue;
-			retValue = _mm_shuffle_ps(v,        constReg, (T >> 16) & 0xff);
+			retValue = _mm_shuffle_ps(v,		constReg, (T >> 16) & 0xff);
 			retValue = _mm_shuffle_ps(retValue, retValue, (T >>  8) & 0xff);
 			return retValue;
 		}
@@ -1784,7 +1784,7 @@ FORCEINLINE Vec vecRecipSqrt(Vec v)
 	const Vec half = vecHalf;
 	const Vec estimate = vecRecipSqrtEst(v);
 	const Vec halfV = vecMul(v, half);
-    const Vec estimateSqr = vecMul(estimate, estimate);
+	const Vec estimateSqr = vecMul(estimate, estimate);
 	const Vec halfMinusEstSqrHalfV = vecMulSub(half, halfV, estimateSqr);
 	return vecMulAdd(estimate, halfMinusEstSqrHalfV, estimate);
 }
@@ -1796,7 +1796,7 @@ FORCEINLINE Vec1 vecRecipSqrt(Vec1 v)
 	const Vec1 half = vec1(vecHalf);
 	const Vec1 estimate = vecRecipSqrtEst(v);
 	const Vec1 halfV = vecMul(v, half);
-    const Vec1 estimateSqr = vecMul(estimate, estimate);
+	const Vec1 estimateSqr = vecMul(estimate, estimate);
 	const Vec1 halfMinusEstSqrHalfV = vecMulSub(half, halfV, estimateSqr);
 	return vecMulAdd(estimate, halfMinusEstSqrHalfV, estimate);
 }
@@ -2000,4 +2000,162 @@ FORCEINLINE IntVec vecUnpackS16ToS32(IntVec a)
 {
 	IntVec sx = _mm_cmplt_epi16(a, vecZeroInt());
 	return _mm_unpacklo_epi16(a, sx);
+}
+
+FORCEINLINE Vec vecMathQuaternionMul(Vec a, Vec b)
+{
+	Vec negA = vecNeg(b);
+	Vec xxxx = vecShuffle<VecMask::_xxxx>(a);
+	Vec yyyy = vecShuffle<VecMask::_yyyy>(a);
+	Vec zzzz = vecShuffle<VecMask::_zzzz>(a);
+	Vec wwww = vecShuffle<VecMask::_wwww>(a);
+
+	Vec wcya = vecPermute<VecMask::_wyzx>(b, negA);
+	Vec zwab = vecPermute<VecMask::_zwxy>(b, negA);
+	wcya = vecShuffle<VecMask::_xzyw>(wcya);
+	Vec bxwc = vecPermute<VecMask::_yzxw>(negA, b);
+	bxwc = vecShuffle<VecMask::_xzwy>(bxwc);
+
+	Vec res = vecMul(xxxx, wcya);
+	res = vecMulAdd(yyyy, zwab, res);
+	res = vecMulAdd(zzzz, bxwc, res);
+	res = vecMulAdd(wwww, b, res);
+
+	return res;
+}
+
+FORCEINLINE void vecTranspose3x3(Vec& outX, Vec& outY, Vec& outZ, 
+								 Vec inX, Vec inY, Vec inZ)
+{
+	outX = inX; outY = inY; outZ = inZ;
+	Vec w = _mm_setzero_ps();
+	_MM_TRANSPOSE4_PS(outX, outY, outZ, w);
+}
+
+FORCEINLINE void vecTranspose4x4(Vec& outX, Vec& outY, Vec& outZ, Vec& outW,
+									Vec inX, Vec inY, Vec inZ, Vec inW)
+{
+	outX = inX; outY = inY; outZ = inZ; outW = inW;
+	_MM_TRANSPOSE4_PS(outX, outY, outZ, outW);
+}
+
+FORCEINLINE Vec vecFloat4Matrix44Mul(Vec v, Vec c0, Vec c1, Vec c2, Vec c3)
+{
+	// _mm_dp_ps(a, b, 0xF1): multiply all 4 lanes (high nibble 0xF),
+	// sum them, write the scalar result to lane 0 only (low nibble 0x1).
+	const Vec d0 = _mm_dp_ps(v, c0, 0xF1);  // dot(v,c0) in lane 0
+	const Vec d1 = _mm_dp_ps(v, c1, 0xF1);  // dot(v,c1) in lane 0
+	const Vec d2 = _mm_dp_ps(v, c2, 0xF1);
+	const Vec d3 = _mm_dp_ps(v, c3, 0xF1);
+
+	// Assemble {r0, r1, r2, r3} from four lane-0 scalars.
+	const Vec r01 = _mm_unpacklo_ps(d0, d1);	// {r0, r1, _, _}
+	const Vec r23 = _mm_unpacklo_ps(d2, d3);	// {r2, r3, _, _}
+	return _mm_movelh_ps(r01, r23);		   		// {r0, r1, r2, r3}
+}
+
+FORCEINLINE void vecMatrix44Inverse(Vec& outX, Vec& outY, Vec& outZ, Vec& outW,
+									Vec inX, Vec inY, Vec inZ, Vec inW)
+{
+	// We do 2x2 Sub Block Matrix Inverse on the incoming 4x4 Matrix
+	// https://en.wikipedia.org/wiki/Determinant#Relation_to_eigenvalues_and_trace
+	// https://en.wikipedia.org/wiki/Invertible_matrix#Blockwise_inversion
+	// Terminology:
+	// |M| = determinant of Matrix M
+	// 4x4 Matrix M can be represented as 4 2x2 sub matrices, which we call A B C D.
+	// M = (A B | C D), from top to bottom and left to right; | denotes a new row in the matrix M
+	// adjugate(A) = adj(A) = A#, for some 2x2 sub matrix A
+	// trace(AB) = tr(AB) = AxBx + AyBz + AzBy + AwBw, for some 2x2 sub matrix A an B
+	// inverse(A) = A^ = 1 / |A| * A#, for some 2x2 sub matrix A
+	// We store a 2x2 matrix in a single vector register, left to right, top to botom so
+	// x component is the top left and w component is the bottom right
+	//
+	// Properties:
+	// Adjugate of 2x2 sub Matrices:
+	// (AB)# = B#A#, (A#)# = A, (cA)# = cA#
+	// Determinnt of 2x2 sub Matrices:
+	// |A| = AxBw - AyBz, |-A| = |A|, |AB| = |A||B|, |A + B| = |A| + |B| + tr(A#B)
+	// Trace of 2x2 sub Matrices:
+	// tr(AB) = tr(BA), tr(-A) = -tr(A)
+	//
+	// For M = (A B | C D), |M| = |AD - BC| = |A||D| + |B||C| - tr(A#B * D#C)
+	// Let (A B | C D)^ = (X Y | Z W)
+	// M^ = (X Y | Z W) = 1 / |M| * ( (|D|A - B(D#C))#  (|B|C - D(A#B)#)# )
+	//										( (|C|B - A(D#C)#)# (|A|D - C(A#B))#  )
+	// NOTE: Notice that the |M| and calculations for X Y Z W, have been derived to use A#B and D#C wherever possible,
+	//		 to save on register usage
+
+	Vec detA, detB, detC, detD;
+	{
+		// detAll = (|A| |B| |C| |D|)
+		const Vec v0 = vecPermute<VecMask::_xzxz>(inX, inZ);
+		const Vec v2 = vecPermute<VecMask::_ywyw>(inX, inZ);
+		const Vec v1 = vecPermute<VecMask::_ywyw>(inY, inW);
+		const Vec v3 = vecPermute<VecMask::_xzxz>(inY, inW);
+		Vec detAll = vecSub(vecMul(v0, v1), vecMul(v2, v3));
+
+		detA = vecShuffle<VecMask::_xxxx>(detAll);
+		detB = vecShuffle<VecMask::_yyyy>(detAll);
+		detC = vecShuffle<VecMask::_zzzz>(detAll);
+		detD = vecShuffle<VecMask::_wwww>(detAll);
+	}
+
+	// 2x2 sub block matrices
+	Vec A = vecPermute<VecMask::_xyxy>(inX, inY);
+	Vec B = vecPermute<VecMask::_zwzw>(inX, inY);
+	Vec C = vecPermute<VecMask::_xyxy>(inZ, inW);
+	Vec D = vecPermute<VecMask::_zwzw>(inZ, inW);
+
+	// X Y Z W are the 2x2 inverse of A B C D; before determinant mul
+	Vec adjDC, adjAB, X, Y, Z, W, detM;
+	adjDC = vecSub(vecMul(vecShuffle<VecMask::_wwxx>(D), C),
+					vecMul(vecShuffle<VecMask::_yyzz>(D), vecShuffle<VecMask::_zwxy>(C)));
+	adjAB = vecSub(vecMul(vecShuffle<VecMask::_wwxx>(A), B),
+					vecMul(vecShuffle<VecMask::_yyzz>(A), vecShuffle<VecMask::_zwxy>(B)));
+
+	{
+		const Vec adjDCShuf = vecShuffle<VecMask::_zyzy>(adjDC);
+		// (|D|A - B(D#C))
+		Vec temp0 = vecAdd(vecMul(B, vecShuffle<VecMask::_xwxw>(adjDC)),
+							vecMul(vecShuffle<VecMask::_yxwz>(B), adjDCShuf));
+		X = vecSub(vecMul(detD, A), temp0);
+
+		// (|C|B - A(D#C)#)
+		Vec temp3 = vecSub(vecMul(A, vecShuffle<VecMask::_wxwx>(adjDC)),
+							vecMul(vecShuffle<VecMask::_yxwz>(A), adjDCShuf));
+		Z = vecSub(vecMul(detC, B), temp3);
+
+		const Vec adjABShuf = vecShuffle<VecMask::_zyzy>(adjAB);
+		// (|A|D - C(A#B))
+		Vec temp1 = vecAdd(vecMul(C, vecShuffle<VecMask::_xwxw>(adjAB)),
+							vecMul(vecShuffle<VecMask::_yxwz>(C), adjABShuf));
+		W = vecSub(vecMul(detA, D), temp1);
+
+		// (|B|C - D(A#B)#)
+		Vec temp2 = vecSub(vecMul(D, vecShuffle<VecMask::_wxwx>(adjAB)),
+							vecMul(vecShuffle<VecMask::_yxwz>(D), adjABShuf));
+		Y = vecSub(vecMul(detB, C), temp2);
+	}
+
+	detM = vecMul(detA, detD);
+	detM = vecMulAdd(detB, detC, detM);
+	// trace((A#B) * (D#C))
+	Vec trace = vecShuffle<VecMask::_xzyw>(adjDC);
+	trace = vec(vecDot4(adjAB, trace));
+	// |M| = |AD - BC| = |A||D| + |B||C| - tr(A#B * D#C)
+	detM = vecSub(detM, trace);
+
+	const Vec detDiv = vec(1.0f, -1.0f, -1.0f, 1.0f);
+	const Vec recipDetM = vecDiv(detDiv, detM);
+
+	X = vecMul(X, recipDetM);
+	Y = vecMul(Y, recipDetM);
+	Z = vecMul(Z, recipDetM);
+	W = vecMul(W, recipDetM);
+
+	// These permutes do the final Adjugation of the sub block matrices
+	outX = vecPermute<VecMask::_wywy>(X, Y);
+	outY = vecPermute<VecMask::_zxzx>(X, Y);
+	outZ = vecPermute<VecMask::_wywy>(Z, W);
+	outW = vecPermute<VecMask::_zxzx>(Z, W);
 }

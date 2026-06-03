@@ -13,12 +13,12 @@ FORCEINLINE Vec vec(float x)
 
 FORCEINLINE Vec1 vec1(float x)
 {
-    return float32_t(x);
+	return float32_t(x);
 }
 
 FORCEINLINE Vec1 vec1(Vec v)
 {
-    return vgetq_lane_f32(v, 0);
+	return vgetq_lane_f32(v, 0);
 }
 
 FORCEINLINE Vec vec(float x, float y)
@@ -94,7 +94,7 @@ FORCEINLINE float vecStore1(Vec v)
 
 FORCEINLINE float vecStore1(Vec1 v)
 {
-    return (float)v;
+	return (float)v;
 }
 
 FORCEINLINE int vecStore1(IntVec v)
@@ -410,7 +410,7 @@ FORCEINLINE Vec1 vecRecipSqrt(Vec1 v)
 
 FORCEINLINE Vec1 vecSqrt(Vec1 v1)
 {
-    alignas(16) float f2[2] = {v1, 0};
+	alignas(16) float f2[2] = {v1, 0};
 	return vget_lane_f32(vsqrt_f32(vld1_f32(f2)), 0);
 }
 
@@ -588,45 +588,37 @@ FORCEINLINE IntVec vecAbs(IntVec v)
 	return vabsq_s32(v);
 }
 
-FORCEINLINE Vec1 vecDot2(Vec u, Vec v)
+FORCEINLINE Vec1 vecDot2(Vec a, Vec b)
 {
-	const float32x4_t product = vmulq_f32(u, v);
-	const float dot = vgetq_lane_f32(product, 0) + vgetq_lane_f32(product, 1);
-	return dot;
+	// only lanes 0,1 -> work on the low 64-bit half, pairwise add
+	return vaddv_f32(vmul_f32(vget_low_f32(a), vget_low_f32(b))); // fmul.2s + faddp
 }
 
-FORCEINLINE Vec1 vecDot3(Vec u, Vec v)
+FORCEINLINE Vec1 vecDot3(Vec a, Vec b)
 {
-	const float32x4_t product = vmulq_f32(u, v);
-	const float dotResult = vgetq_lane_f32(product, 0) + vgetq_lane_f32(product, 1) + vgetq_lane_f32(product, 2);
-	return dotResult;
+	Vec p = vmulq_f32(a, b);
+	p = vsetq_lane_f32(0.0f, p, 3); // kill lane-3 product so it doesn't enter the sum
+	return vaddvq_f32(p);
 }
 
-FORCEINLINE Vec1 vecDot4(Vec u, Vec v)
+FORCEINLINE Vec1 vecDot4(Vec a, Vec b)
 {
-	const float32x4_t product = vmulq_f32(u, v);
-	const float32x4_t sum = vaddq_f32(product, vrev64q_f32(product));
-	return vgetq_lane_f32(sum, 0) + vgetq_lane_f32(sum, 2);
+	return vaddvq_f32(vmulq_f32(a, b));
 }
 
-FORCEINLINE Vec vecCross(Vec l, Vec r)
+FORCEINLINE Vec vecCross(Vec a, Vec b)
 {
-//	return vec(
-//		vgetq_lane_f32(l, 1) * vgetq_lane_f32(r, 2) - vgetq_lane_f32(r, 1) * vgetq_lane_f32(l, 2),
-//		vgetq_lane_f32(l, 2) * vgetq_lane_f32(r, 0) - vgetq_lane_f32(r, 2) * vgetq_lane_f32(l, 0),
-//		vgetq_lane_f32(l, 0) * vgetq_lane_f32(r, 1) - vgetq_lane_f32(r, 0) * vgetq_lane_f32(l, 1));
+	static const uint8_t kYZX[16] = { 4,5,6,7, 8,9,10,11, 0,1,2,3, 12,13,14,15 };
+	const uint8x16_t yzx = vld1q_u8(kYZX);
 
-	float l0 = vgetq_lane_f32(l, 0), r0 = vgetq_lane_f32(r, 0);
-	float l1 = vgetq_lane_f32(l, 1), r1 = vgetq_lane_f32(r, 1);
-	float l2 = vgetq_lane_f32(l, 2), r2 = vgetq_lane_f32(r, 2);
+	const Vec a_yzx = vreinterpretq_f32_u8(vqtbl1q_u8(vreinterpretq_u8_f32(a), yzx));
+	const Vec b_yzx = vreinterpretq_f32_u8(vqtbl1q_u8(vreinterpretq_u8_f32(b), yzx));
 
-	float m0 = l1 * r2;
-	float m1 = l2 * r0;
-	float m2 = l0 * r1;
+	// t = a*b.yzx - a.yzx*b  ->  a permuted cross product {c.z, c.x, c.y, 0}
+	const Vec t = vfmsq_f32(vmulq_f32(a, b_yzx), a_yzx, b);
 
-	return vec(	vecMulSub(m0, l2, r1),
-				vecMulSub(m1, l0, r2),
-				vecMulSub(m2, l1, r0));
+	// return t.yzx, lane 3 stays 0 if inputs' lane 3 is 0.
+	return vreinterpretq_f32_u8(vqtbl1q_u8(vreinterpretq_u8_f32(t), yzx));
 }
 
 FORCEINLINE Vec vecFloor(Vec r)
@@ -649,8 +641,8 @@ FORCEINLINE Vec vecCeil(Vec r)
 	// find truncated value and one less.
 	Vec inrange = vecCmpGT(vreinterpretq_f32_s32(intVec(0x4b000000)), vecAbs(r));
 
-    IntVec xi = vcvtq_s32_f32(r);
-    IntVec xi1 = vaddq_s32(xi, intVec(1));
+	IntVec xi = vcvtq_s32_f32(r);
+	IntVec xi1 = vaddq_s32(xi, intVec(1));
 
 	Vec truncated  = vecSel(r, vcvtq_f32_s32(xi), inrange);
 	Vec truncated1 = vecSel(r, vcvtq_f32_s32(xi1), inrange);
@@ -1816,22 +1808,22 @@ FORCEINLINE Vec vecShuffle(Vec v)
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_xxxx>(Vec v)
 {
-	return vdupq_lane_f32(vget_low_f32(v), 0);
+	return vdupq_laneq_f32(v, 0);
 }
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_yyyy>(Vec v)
 {
-	return vdupq_lane_f32(vget_low_f32(v), 1);
+	return vdupq_laneq_f32(v, 1);
 }
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_zzzz>(Vec v)
 {
-	return vdupq_lane_f32(vget_high_f32(v), 0);
+	return vdupq_laneq_f32(v, 2);
 }
 
 template<> FORCEINLINE Vec vecShuffle<VecMask::_wwww>(Vec v)
 {
-	return vdupq_lane_f32(vget_high_f32(v), 1);
+	return vdupq_laneq_f32(v, 3);
 }
 
 template<VecMask::InsertMask T>
@@ -2024,4 +2016,111 @@ FORCEINLINE IntVec vecUnpackU16ToU32(IntVec a)
 FORCEINLINE IntVec vecUnpackS16ToS32(IntVec a)
 {
 	return vmovl_s16(vget_low_s16(vreinterpretq_s16_s32(a)));
+}
+
+FORCEINLINE Vec vecMathQuaternionMul(Vec q1, Vec q2)
+{
+	const Vec r64 = vrev64q_f32(q2);		 // {y2, x2, w2, z2}
+	const Vec e2  = vextq_f32(q2,  q2,  2);  // {z2, w2, x2, y2}
+	const Vec rev = vextq_f32(r64, r64, 2);  // {w2, z2, y2, x2}
+
+	const uint32x4_t sZ = { 0x80000000u, 0u, 0u, 0x80000000u }; // {-,+,+,-}
+
+	const Vec px = vreinterpretq_f32_f64(vnegq_f64(vreinterpretq_f64_f32(rev))); 	 // { w2,-z2, y2,-x2}
+	const Vec py = vcombine_f32(vget_low_f32(e2), vneg_f32(vget_high_f32(e2))); 	 // { z2, w2,-x2,-y2}
+	const Vec pz = vreinterpretq_f32_u32(veorq_u32(vreinterpretq_u32_f32(r64), sZ)); // {-y2, x2, w2,-z2}
+
+	Vec r = vmulq_laneq_f32(q2, q1, 3);  // * w1
+	r = vfmaq_laneq_f32(r, px, q1, 0);   // * x1
+	r = vfmaq_laneq_f32(r, py, q1, 1);   // * y1
+	r = vfmaq_laneq_f32(r, pz, q1, 2);   // * z1
+	return r;
+}
+
+FORCEINLINE void vecTranspose3x3(Vec& outX, Vec& outY, Vec& outZ,
+								 Vec inX, Vec inY, Vec inZ)
+{
+	Vec inW = vecZero(); // output zeroes in .w (required by some internal routines)
+	const float32x4x2_t A = vtrnq_f32(inX, inY);   // TRN1/TRN2
+	const float32x4x2_t B = vtrnq_f32(inZ, inW);
+	outX = vcombine_f32(vget_low_f32 (A.val[0]), vget_low_f32 (B.val[0]));
+	outY = vcombine_f32(vget_low_f32 (A.val[1]), vget_low_f32 (B.val[1]));
+	outZ = vcombine_f32(vget_high_f32(A.val[0]), vget_high_f32(B.val[0]));
+}
+
+FORCEINLINE void vecTranspose4x4(Vec& outX, Vec& outY, Vec& outZ, Vec& outW,
+								Vec inX, Vec inY, Vec inZ, Vec inW)
+{
+	const float32x4x2_t A = vtrnq_f32(inX, inY);   // TRN1/TRN2
+	const float32x4x2_t B = vtrnq_f32(inZ, inW);
+	outX = vcombine_f32(vget_low_f32 (A.val[0]), vget_low_f32 (B.val[0]));
+	outY = vcombine_f32(vget_low_f32 (A.val[1]), vget_low_f32 (B.val[1]));
+	outZ = vcombine_f32(vget_high_f32(A.val[0]), vget_high_f32(B.val[0]));
+	outW = vcombine_f32(vget_high_f32(A.val[1]), vget_high_f32(B.val[1]));
+}
+
+FORCEINLINE Vec vecFloat4Matrix44Mul(Vec v, Vec c0, Vec c1, Vec c2, Vec c3)
+{
+	const Vec p0 = vmulq_f32(v, c0);   // lanes -> v.* * col0.*
+	const Vec p1 = vmulq_f32(v, c1);
+	const Vec p2 = vmulq_f32(v, c2);
+	const Vec p3 = vmulq_f32(v, c3);
+
+	// Sum each product vector into its own lane, using pairwise adds (FADDP).
+	// vpaddq(a,b) = {a0+a1, a2+a3, b0+b1, b2+b3}
+	const float32x4_t t0 = vpaddq_f32(p0, p1);   // {Slo p0, Shi p0, Slo p1, Shi p1}
+	const float32x4_t t1 = vpaddq_f32(p2, p3);
+	return vpaddq_f32(t0, t1);					// {dot(v,c0), dot(v,c1), dot(v,c2), dot(v,c3)}
+}
+
+FORCEINLINE void vecMatrix44Inverse(Vec& outX, Vec& outY, Vec& outZ, Vec& outW,
+									Vec inX, Vec inY, Vec inZ, Vec inW)
+{
+	const Vec a = inX, b = inY, c = inZ, d = inW;
+	const Vec X = vdupq_laneq_f32(inX, 3);
+	const Vec Y = vdupq_laneq_f32(inY, 3);
+	const Vec Z = vdupq_laneq_f32(inZ, 3);
+	const Vec W = vdupq_laneq_f32(inW, 3);
+
+	Vec s = vecCross(a, b);
+	Vec t = vecCross(c, d);
+
+	// --- re-establish the lane-3 == 0 invariant exactly here, once. ---
+	// s and t are the only cross results that get horizontally summed
+	// (det + the four dots). Two INS; everything below is then exact.
+	s = vsetq_lane_f32(0.0f, s, 3);
+	t = vsetq_lane_f32(0.0f, t, 3);
+
+	Vec u = vfmsq_f32(vmulq_f32(a, Y), b, X);   // a*y - b*x  (lane3 unused)
+	Vec v = vfmsq_f32(vmulq_f32(c, W), d, Z);   // c*w - d*z  (lane3 unused)
+
+	// det = dot3(s,v) + dot3(t,u). With s.w=t.w=0, lane3 of det4 is 0*v.w + 0*u.w = 0,
+	// so the full-width horizontal add is exact -- no masking needed.
+	const Vec det4 = vfmaq_f32(vmulq_f32(s, v), t, u);
+	const float det = vaddvq_f32(det4);
+	const Vec id = vdupq_n_f32(1.0f / det);
+
+	s = vmulq_f32(s, id);  t = vmulq_f32(t, id);   // lane3 stays 0 (0*id == 0)
+	u = vmulq_f32(u, id);  v = vmulq_f32(v, id);
+
+	// Top 3 lanes of each inverse row; lane3 garbage from vecCross is overwritten below.
+	Vec r0 = vfmaq_f32(vecCross(b, v), t, Y);	 // cross(b,v) + t*y
+	Vec r1 = vfmsq_f32(vecCross(v, a), t, X);	 // cross(v,a) - t*x
+	Vec r2 = vfmaq_f32(vecCross(d, u), s, W);	 // cross(d,u) + s*w
+	Vec r3 = vfmsq_f32(vecCross(u, c), s, Z);	 // cross(u,c) - s*z
+
+	// Scalar entries -> lane3. These dots are now clean because s.w=t.w=0:
+	//   b.w*t.w == 0, etc., so vaddvq over all 4 lanes == dot3.
+	r0 = vsetq_lane_f32(-vaddvq_f32(vmulq_f32(b, t)), r0, 3); // -dot(b,t)
+	r1 = vsetq_lane_f32( vaddvq_f32(vmulq_f32(a, t)), r1, 3); //  dot(a,t)
+	r2 = vsetq_lane_f32(-vaddvq_f32(vmulq_f32(d, s)), r2, 3); // -dot(d,s)
+	r3 = vsetq_lane_f32( vaddvq_f32(vmulq_f32(c, s)), r3, 3); //  dot(c,s)
+
+	// r0..r3 are the ROWS of the inverse -> transpose to column-major output.
+	const float32x4x2_t A = vtrnq_f32(r0, r1); // A.val[0]={r0.0,r1.0,r0.2,r1.2}, A.val[1]={r0.1,r1.1,r0.3,r1.3}
+	const float32x4x2_t B = vtrnq_f32(r2, r3);
+	outX = vcombine_f32(vget_low_f32 (A.val[0]), vget_low_f32 (B.val[0]));
+	outY = vcombine_f32(vget_low_f32 (A.val[1]), vget_low_f32 (B.val[1]));
+	outZ = vcombine_f32(vget_high_f32(A.val[0]), vget_high_f32(B.val[0]));
+	outW = vcombine_f32(vget_high_f32(A.val[1]), vget_high_f32(B.val[1]));
 }
