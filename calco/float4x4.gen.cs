@@ -422,7 +422,7 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a rotate(in float4x4 a, in float3a b)
         {
-            return a.c0.xyza * b.x + a.c1.xyza * b.y + a.c2.xyza * b.z;
+			return mad(a.c0.xyza, b.x, a.c1.xyza * b.y) + a.c2.xyza * b.z;
         }
 
         /// <summary>Return the result of transforming a float3 point by a float4x4 matrix</summary>
@@ -432,13 +432,13 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3a transform(in float4x4 a, in float3a b)
         {
-            return a.c0.xyza * b.x + a.c1.xyza * b.y + a.c2.xyza * b.z + a.c3.xyza;
+			return mad(a.c0.xyza, b.x, a.c1.xyza * b.y) + mad(a.c2.xyza, b.z, a.c3.xyza);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 transform(in float4x4 a, in float4 b)
         {
-            return (a.c0 * b.x + a.c1 * b.y + a.c2 * b.z + a.c3 * b.w);
+            return mad(a.c0, b.x, a.c1 * b.y) + mad(a.c2, b.z, a.c3 * b.w);
         }
 
         /// <summary>Return the float4x4 transpose of a float4x4 matrix.</summary>

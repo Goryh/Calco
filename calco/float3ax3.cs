@@ -92,6 +92,13 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining), DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
 		static extern void vecILMathFloat3ax3Inverse(in float3ax3 m, out float3ax3 res);
 
+        /// <summary>Return the result of rotating a float3 vector by a float3x3 matrix</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3a rotate(in float3ax3 a, in float3a b)
+        {
+			return mul(a, b);
+        }
+
 		/// <summary>Return the float3x3 transpose of a float3x3 matrix.</summary>
 		/// <param name="v">Value to transpose.</param>
 		/// <returns>Transposed value.</returns>

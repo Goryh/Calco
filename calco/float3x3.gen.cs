@@ -377,6 +377,13 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3x3 float3x3(uint v) { return new float3x3(v); }
 
+        /// <summary>Return the result of rotating a float3 vector by a float3x3 matrix</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 rotate(in float3x3 a, in float3 b)
+        {
+			return mul(a, b);
+        }
+
         /// <summary>Return the float3x3 transpose of a float3x3 matrix.</summary>
         /// <param name="v">Value to transpose.</param>
         /// <returns>Transposed value.</returns>
