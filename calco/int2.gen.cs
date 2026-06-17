@@ -777,6 +777,7 @@ namespace calco
         /// <summary>Returns the int element at a specified index.</summary>
         unsafe public int this[int index]
         {
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
@@ -785,6 +786,7 @@ namespace calco
 #endif
                 fixed (int2* array = &this) { return ((int*)array)[index]; }
             }
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS

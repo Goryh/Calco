@@ -3391,6 +3391,7 @@ namespace calco
         /// <summary>Returns the half element at a specified index.</summary>
         unsafe public half this[int index]
         {
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
@@ -3399,6 +3400,7 @@ namespace calco
 #endif
                 fixed (half4* array = &this) { return ((half*)array)[index]; }
             }
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS

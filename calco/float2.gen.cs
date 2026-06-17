@@ -804,6 +804,7 @@ namespace calco
         /// <summary>Returns the float element at a specified index.</summary>
         unsafe public float this[int index]
         {
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
@@ -812,6 +813,7 @@ namespace calco
 #endif
                 fixed (float2* array = &this) { return ((float*)array)[index]; }
             }
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS

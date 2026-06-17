@@ -1670,6 +1670,7 @@ namespace calco
 
         unsafe public byte this[int index]
         {
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
@@ -1678,6 +1679,7 @@ namespace calco
 #endif
                 fixed (byte4* array = &this) { return ((byte*)array)[index]; }
             }
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS

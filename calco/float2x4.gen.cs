@@ -275,6 +275,7 @@ namespace calco
         /// <summary>Returns the float2 element at a specified index.</summary>
         unsafe public ref float2 this[int index]
         {
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS

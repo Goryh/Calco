@@ -86,6 +86,7 @@ namespace calco
 
         unsafe public short this[int index]
         {
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
@@ -94,6 +95,7 @@ namespace calco
 #endif
                 fixed (short2* array = &this) { return ((short*)array)[index]; }
             }
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
