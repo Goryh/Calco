@@ -81,7 +81,7 @@ namespace calco
         /// <param name="m">Matrix4x4 to convert.</param>
         /// <returns>The converted float4x4.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator float4x4(Matrix4x4 m) { unsafe{ return new float4x4(*(float4*)&m.m00, *(float4*)&m.m01, *(float4*)&m.m02, *(float4*)&m.m03); } }
+        public static implicit operator float4x4(Matrix4x4 m) { unsafe{ return *(float4x4*)&m; } }
 
         /// <summary>
         /// Converts a float4x4 to Matrix4x4.
@@ -89,7 +89,7 @@ namespace calco
         /// <param name="m">float4x4 to convert.</param>
         /// <returns>The converted Matrix4x4.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Matrix4x4(in float4x4 m) { return new Matrix4x4(m.c0, m.c1, m.c2, m.c3); }
+        public static implicit operator Matrix4x4(float4x4 m) { unsafe{ return *(Matrix4x4*)&m; } }
     }
 }
 #endif
