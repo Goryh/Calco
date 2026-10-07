@@ -140,9 +140,25 @@ namespace calco
 			max = max(max, point);
 		}
 
+		[System.Diagnostics.Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
+		static void CheckScaleFactor(float factor)
+		{
+			if( !(factor >= 0.0f) )
+				throw new System.ArgumentException("The scale factor must not be negative, otherwise min and max get swapped.");
+		}
+
+		[System.Diagnostics.Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
+		static void CheckScaleFactor(float3a factor)
+		{
+			if( !all(factor >= 0.0f) )
+				throw new System.ArgumentException("The scale factor must not be negative, otherwise min and max get swapped.");
+		}
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void Scale(float factor)
 		{
+			CheckScaleFactor(factor);
+
 			var c = center;
 			min = mad(min - c, factor, c);
 			max = mad(max - c, factor, c);
@@ -151,6 +167,8 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void Scale(float3a factor)
 		{
+			CheckScaleFactor(factor);
+
 			var c = center;
 			min = mad(min - c, factor, c);
 			max = mad(max - c, factor, c);
@@ -159,6 +177,8 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void Scale(float3a scaleOrigin, float factor)
 		{
+			CheckScaleFactor(factor);
+
 			min = mad(min - scaleOrigin, factor, scaleOrigin);
 			max = mad(max - scaleOrigin, factor, scaleOrigin);
 		}
@@ -166,6 +186,8 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void Scale(float3a scaleOrigin, float3a factor)
 		{
+			CheckScaleFactor(factor);
+
 			min = mad(min - scaleOrigin, factor, scaleOrigin);
 			max = mad(max - scaleOrigin, factor, scaleOrigin);
 		}
@@ -322,12 +344,13 @@ namespace calco
 
 		public static Aabba transform(in float3ax3 transf, in Aabba aabb)
 		{
+			var center = mul(transf, aabb.center);
 			var halfExt = aabb.halfExtents;
 			halfExt =	halfExt.x * abs(transf.c0) + 
 						halfExt.y * abs(transf.c1) + 
 						halfExt.z * abs(transf.c2);
 
-			return Aabba.CreateFromCenterAndHalfExtents(aabb.center, halfExt);
+			return Aabba.CreateFromCenterAndHalfExtents(center, halfExt);
 		}
 	}
 }
