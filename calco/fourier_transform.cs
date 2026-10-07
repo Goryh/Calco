@@ -14,6 +14,8 @@ namespace calco
 		Inverse = -1
 	}
 
+	// X[k] = sum(x[n] * exp(-direction * 2*PI*i * k*n / N)), the forward one is additionally divided by N
+	// (the sign and the scale conventions are the same as FastFourierTransform uses, so both give the same results)
 	public static class DiscreteFourierTransform
 	{
 		// one dimensional Discrete Fourier Transform with fast sin-cos
@@ -51,7 +53,7 @@ namespace calco
 			{
 				complexOut[i] = float2c.zero;
 
-				float arg = - (int)direction * PI2 * i / n;
+				float arg = -(int)direction * PI2 * i / n;
 
 				// sum source elements
 				for( int j = 0; j < n; j++ )
@@ -81,12 +83,12 @@ namespace calco
 				{
 					auxiliary[i, j] = float2c.zero;
 
-					float arg = - (int)direction * PI2 * j / m;
+					float arg = -(int)direction * PI2 * j / m;
 
 					// sum source elements
 					for( int k = 0; k < m; k++ )
 					{
-						sincos(j * arg, out float s, out float c);
+						sincos(k * arg, out float s, out float c);
 
 						auxiliary[i, j].x += complexInOut[i, k].x * c - complexInOut[i, k].y * s;
 						auxiliary[i, j].y += complexInOut[i, k].x * s + complexInOut[i, k].y * c;
@@ -105,12 +107,12 @@ namespace calco
 				{
 					complexInOut[i, j] = float2c.zero;
 
-					float arg = - (int)direction * PI2 * j / m;
+					float arg = -(int)direction * PI2 * i / n;
 
 					// sum source elements
 					for( int k = 0; k < n; k++ )
 					{
-						sincos(j * arg, out float s, out float c);
+						sincos(k * arg, out float s, out float c);
 
 						complexInOut[i, j].x += auxiliary[k, j].x * c - auxiliary[k, j].y * s;
 						complexInOut[i, j].y += auxiliary[k, j].x * s + auxiliary[k, j].y * c;
@@ -136,12 +138,12 @@ namespace calco
 				{
 					auxiliary[i, j] = float2c.zero;
 
-					float arg = - (int)direction * PI2 * j / m;
+					float arg = -(int)direction * PI2 * j / m;
 
 					// sum source elements
 					for( int k = 0; k < m; k++ )
 					{
-						sincosprecise(j * arg, out float s, out float c);
+						sincosprecise(k * arg, out float s, out float c);
 
 						auxiliary[i, j].x += complexInOut[i, k].x * c - complexInOut[i, k].y * s;
 						auxiliary[i, j].y += complexInOut[i, k].x * s + complexInOut[i, k].y * c;
@@ -160,12 +162,12 @@ namespace calco
 				{
 					complexInOut[i, j] = float2c.zero;
 
-					float arg = - (int)direction * PI2 * j / m;
+					float arg = -(int)direction * PI2 * i / n;
 
 					// sum source elements
 					for( int k = 0; k < n; k++ )
 					{
-						sincosprecise(j * arg, out float s, out float c);
+						sincosprecise(k * arg, out float s, out float c);
 
 						complexInOut[i, j].x += auxiliary[k, j].x * c - auxiliary[k, j].y * s;
 						complexInOut[i, j].y += auxiliary[k, j].x * s + auxiliary[k, j].y * c;
@@ -224,7 +226,7 @@ namespace calco
 			int		n = 1 << (numberOfBits - 1);
 			float	uR = 1.0f;
 			float	uI = 0.0f;
-			float	angle = PI / n * (int)direction;
+			float	angle = -PI / n * (int)direction;
 			sincosprecise(angle, out float wI, out float wR);
 			float2[]	rotations = new float2[n];
 
