@@ -365,6 +365,8 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Plane3 transform(in float4x4 transf, in Plane3 p)
 		{
+			transf.CheckUniformScale(); // the normal is transformed as a direction, that is only valid for a uniformly scaled matrix
+
 			var pp = p.normal * -p.distance;
 			return new Plane3(rotate(in transf, p.normal), transform(in transf, pp));
 		}

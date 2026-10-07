@@ -1486,6 +1486,28 @@ namespace calco
             return length(c0.xyza);
         }
 
+        // is the upper left 3x3 a rotation with a uniform scale: all axes have the same length and are perpendicular to each other
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly bool HasUniformScale(float tolerance = 0.002f)
+        {
+            var x = c0.xyza;
+            var y = c1.xyza;
+            var z = c2.xyza;
+
+            var lensq = float3(lengthsq(x), lengthsq(y), lengthsq(z));
+            var maxLensq = cmax(lensq);
+
+            return cmin(lensq) >= maxLensq * square(1.0f - tolerance)
+                && cmax(abs(float3(dot(x, y), dot(y, z), dot(z, x)))) <= maxLensq * tolerance;
+        }
+
+        [System.Diagnostics.Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
+        public readonly void CheckUniformScale()
+        {
+            if( !HasUniformScale() )
+                throw new System.ArgumentException("The matrix must have a uniform scale and no shear.");
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetTranslation(float3a translation)
         {
@@ -1619,12 +1641,22 @@ namespace calco
             return new float4x3(transform);
         }
 
-        /// <summary>Returns an orthonormalized version of a float3x3 matrix.</summary>
+        [System.Diagnostics.Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
+        static void CheckIsUnitLength(in float3a v, float tolerance = 0.002f)
+        {
+            float ll = lengthsq(v);
+            if( ll < square(1.0f - tolerance) || ll > square(1.0f + tolerance) )
+                throw new System.ArgumentException("The vector must be unit length.");
+        }
+
+        /// <summary>Returns an orthonormalized version of a float3x3 matrix. The first column (c0) must be unit length.</summary>
         /// <param name="i">The float3x3 to be orthonormalized.</param>
         /// <returns>The orthonormalized float3x3 matrix.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3ax3 orthonormalize(in float3ax3 i)
         {
+            CheckIsUnitLength(i.c0); // c1 is made perpendicular to c0 without dividing by c0's squared length
+
             float3ax3 o;
 
             var u = i.c0;
