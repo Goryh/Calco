@@ -1941,7 +1941,8 @@ FORCEINLINE void __cdecl vecILMathSelect3a(float3a_t925C03B5EB8C57EB0A1128AEBC89
 	bool3_internal* s	 	= (bool3_internal*)inS;
 	float3a_internal* res	= (float3a_internal*)resF;
 
-	Vec bits = vecCmpNE(intVecCastToVec(intVec((int)s->x, (int)s->y, (int)s->z, 0)), vecZero());
+	// integer compare: a float compare of the raw bool bits would see denormals, which are treated as zero when FTZ/DAZ is enabled
+	Vec bits = intVecCastToVec(vecNot(vecCmpEQ(intVec((int)s->x, (int)s->y, (int)s->z, 0), vecZeroInt())));
 	res->store(vecSel(a->load(), b->load(), (Vec)bits));
 }
 
@@ -1952,7 +1953,8 @@ FORCEINLINE void __cdecl vecILMathSelect4(float4_tC63C89D1F1B7B6D22808075482704B
 	bool4_internal* s	 	= (bool4_internal*)inS;
 	float4_internal* res	= (float4_internal*)resF;
 
-	Vec bits = vecCmpNE(intVecCastToVec(intVec((int)s->x, (int)s->y, (int)s->z, (int)s->w)), vecZero());
+	// integer compare: a float compare of the raw bool bits would see denormals, which are treated as zero when FTZ/DAZ is enabled
+	Vec bits = intVecCastToVec(vecNot(vecCmpEQ(intVec((int)s->x, (int)s->y, (int)s->z, (int)s->w), vecZeroInt())));
 	res->store(vecSel(a->load(), b->load(), (Vec)bits));
 }
 
