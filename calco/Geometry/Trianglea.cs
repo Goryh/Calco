@@ -100,7 +100,7 @@ namespace calco
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly override string ToString()
 		{
-			return string.Format("Triangle({0}, {1}, {1})", float3(v0), float3(v1), float3(v2));
+			return string.Format("Triangle({0}, {1}, {2})", float3(v0), float3(v1), float3(v2));
 		}
 	}
 

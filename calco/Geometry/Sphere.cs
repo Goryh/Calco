@@ -56,7 +56,7 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public readonly float3a ClosestPoint(float3a point) => normalize(point - position) * radius;
+		public readonly float3a ClosestPoint(float3a point) => position + normalize(point - position) * radius;
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly float ClosestPointDist(float3a point) => abs(distance(position, point) - radius);

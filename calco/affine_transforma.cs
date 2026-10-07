@@ -132,7 +132,7 @@ namespace calco
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AffineTransforma mul(in AffineTransforma a, in float3ax3 b)
         {
-            return new AffineTransforma(a.t, mul(b, a.rs));
+            return new AffineTransforma(a.t, mul(a.rs, b));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
