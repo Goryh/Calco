@@ -808,7 +808,7 @@ FORCEINLINE IntVec vecF32tof16(Vec x)
 	IntVec uux = vecAnd(ux, msk);
 
 	// Clamp to signed infinity if overflowed
-	IntVec h = vecCastToIntVec(vecMin(vecMul(intVecCastToVec(uux), vec(1.92592994e-34f)), vec(260042752.0f)));
+	IntVec h = vecCastToIntVec(vecMin(vecMul(intVecCastToVec(uux), vec(1.92592994e-34f)), vec(1.2618693e-29f)));
 	h = vecShiftRightLogical<13>(vecAdd(h, intVec(0x1000u)));
 
 	// NaN->qNaN and Inf->Inf

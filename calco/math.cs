@@ -6208,7 +6208,7 @@ namespace calco
 
             uint ux = asuint(x);
             uint uux = ux & msk;
-            uint h = (uint)(asuint(min(asfloat(uux) * 1.92592994e-34f, 260042752.0f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
+            uint h = (uint)(asuint(min(asfloat(uux) * 1.92592994e-34f, 1.2618693e-29f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
             h = select(h, select(0x7c00u, 0x7e00u, (int)uux > infinity_32), (int)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
             return (ushort)(h | (ux & ~msk) >> 16);
         #endif
@@ -6228,7 +6228,7 @@ namespace calco
 
             uint2 ux = asuint(x);
             uint2 uux = ux & msk;
-            uint2 h = (uint2)(asint(min(asfloat(uux) * 1.92592994e-34f, 260042752.0f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
+            uint2 h = (uint2)(asint(min(asfloat(uux) * 1.92592994e-34f, 1.2618693e-29f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
             h = select(h, select(0x7c00u, 0x7e00u, (int2)uux > infinity_32), (int2)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
             return ushort2(h | (ux & ~msk) >> 16);
         #endif
@@ -6249,7 +6249,7 @@ namespace calco
 
             uint3 ux = asuint(x);
             uint3 uux = ux & msk;
-            uint3 h = (uint3)(asint(min(asfloat(uux) * 1.92592994e-34f, 260042752.0f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
+            uint3 h = (uint3)(asint(min(asfloat(uux) * 1.92592994e-34f, 1.2618693e-29f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
             h = select(h, select(0x7c00u, 0x7e00u, (int3)uux > infinity_32), (int3)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
             return ushort4(uint4(h | (ux & ~msk) >> 16, 0));
         #endif
@@ -6270,7 +6270,7 @@ namespace calco
 
             uint4 ux = asuint(x);
             uint4 uux = ux & msk;
-            uint4 h = (uint4)(asint(min(asfloat(uux) * 1.92592994e-34f, 260042752.0f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
+            uint4 h = (uint4)(asint(min(asfloat(uux) * 1.92592994e-34f, 1.2618693e-29f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
             h = select(h, select(0x7c00u, 0x7e00u, (int4)uux > infinity_32), (int4)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
             return ushort4(h | (ux & ~msk) >> 16);
         #endif
@@ -6289,7 +6289,7 @@ namespace calco
 
             uint4 ux = asuint(x);
             uint4 uux = ux & msk;
-            uint4 h = (uint4)(asint(min(asfloat(uux) * 1.92592994e-34f, 260042752.0f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
+            uint4 h = (uint4)(asint(min(asfloat(uux) * 1.92592994e-34f, 1.2618693e-29f)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
             h = select(h, select(0x7c00u, 0x7e00u, (int4)uux > infinity_32), (int4)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
 
             return ushort4(h | (ux & ~msk) >> 16);
