@@ -185,7 +185,7 @@ namespace calco
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		readonly float ClosestPointDist(float3a point) => square(ClosestPointDist(point));
+		readonly float ClosestPointDist(float3a point) => sqrt(ClosestPointDistSq(point));
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public readonly bool Intersects(in Sphere sphere)
