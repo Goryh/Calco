@@ -2578,7 +2578,7 @@ namespace calco
         public static uint4 floortoui(float4 x) { return uint4(floortoui(x.x), floortoui(x.y), floortoui(x.z), floortoui(x.w)); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int floortoi(float x) { return x >= 0 ? (int)x : ((int)x - 1); }
+        public static int floortoi(float x) { int i = (int)x; return i > x ? i - 1 : i; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int2 floortoi(float2 x) { return int2(floortoi(x.x), floortoi(x.y)); }
@@ -2647,10 +2647,10 @@ namespace calco
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint ceiltoui(float x) { return (uint)(x + (1 - 1e-5f)); }
+        public static uint ceiltoui(float x) { uint i = (uint)x; return i < x ? i + 1 : i; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int ceiltoi(float x) { return (int)(x + (1 - 1e-5f)); }
+        public static int ceiltoi(float x) { int i = (int)x; return i < x ? i + 1 : i; }
 
         /// <summary>Returns the result of rounding a double value up to the nearest greater integral value greater or equal to the original value.</summary>
         /// <param name="x">Input value.</param>

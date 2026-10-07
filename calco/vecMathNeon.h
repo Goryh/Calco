@@ -659,7 +659,7 @@ FORCEINLINE Vec vecFraction(Vec r)
 
 FORCEINLINE Vec vecRound(Vec v)
 {
-	return vcvtq_f32_s32(vcvtnq_s32_f32(v));
+	return vrndnq_f32(v);
 }
 
 FORCEINLINE IntVec vecRoundToInt(Vec v)
@@ -669,7 +669,7 @@ FORCEINLINE IntVec vecRoundToInt(Vec v)
 
 FORCEINLINE Vec vecTrunc(Vec v)
 {
-	return vcvtq_f32_s32(vcvtq_s32_f32(v));
+	return vrndq_f32(v);
 }
 
 FORCEINLINE IntVec vecTruncToInt(Vec v)

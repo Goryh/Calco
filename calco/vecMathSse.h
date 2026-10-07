@@ -1541,7 +1541,7 @@ FORCEINLINE IntVec vecRoundToInt(Vec v)
 
 FORCEINLINE Vec vecTrunc(Vec v)
 {
-	return _mm_cvtepi32_ps(_mm_cvttps_epi32(v));
+	return _mm_round_ps(v, _MM_FROUND_TO_ZERO|_MM_FROUND_NO_EXC);
 }
 
 FORCEINLINE IntVec vecTruncToInt(Vec v)
