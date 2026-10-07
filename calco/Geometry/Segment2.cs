@@ -96,9 +96,12 @@ namespace calco
 								intersection = p0;
 							return true;
 						}
-						else if( test > 0.0f ) // intersection of parallel segments
+						else if( test > 0.0f )
 						{
-							intersection = (p0 + p1 + other.p0 + other.p1) / 4.0f;
+							if( a3 != a4 ) // not parallel: an end point of this segment lies on the other one (T-junction)
+								intersection = p0 + saturate(a3 / (a3 - a4)) * (p1 - p0);
+							else // intersection of parallel segments
+								intersection = (p0 + p1 + other.p0 + other.p1) / 4.0f;
 							return true;
 						}
 						// else - no intersection of parallel segments
@@ -114,9 +117,12 @@ namespace calco
 								intersection = p0;
 							return true;
 						}
-						else if( test > 0.0f ) // intersection of parallel segments
+						else if( test > 0.0f )
 						{
-							intersection = (p0 + p1 + other.p0 + other.p1) / 4.0f;
+							if( a3 != a4 ) // not parallel: an end point of this segment lies on the other one (T-junction)
+								intersection = p0 + saturate(a3 / (a3 - a4)) * (p1 - p0);
+							else // intersection of parallel segments
+								intersection = (p0 + p1 + other.p0 + other.p1) / 4.0f;
 							return true;
 						}
 						// else - no intersection of parallel segments
