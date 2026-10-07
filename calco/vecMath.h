@@ -431,16 +431,17 @@ FORCEINLINE Vec vecATan(Vec x)
 	return vecXor(tmp, signBit);
 }
 
-const float ATAN_EST_T0 = 0.91646118527267623468e-1f;
-const float ATAN_EST_T1 = 0.13956945682312098640e1f;
-const float ATAN_EST_T2 = 0.94393926122725531747e2f;
+// T0..T2 have to be negative: atan(x) ~= T3*x / (x^2 + S3 + T2 / (x^2 + S2 + T1 / (x^2 + S1 + T0 / (x^2 + S0))))
+const float ATAN_EST_T0 = -0.91646118527267623468e-1f;
+const float ATAN_EST_T1 = -0.13956945682312098640e1f;
+const float ATAN_EST_T2 = -0.94393926122725531747e2f;
 const float ATAN_EST_T3 = 0.12888383034157279340e2f;
 const float ATAN_EST_S0 = 0.12797564625607904396e1f;
 const float ATAN_EST_S1 = 0.21972168858277355914e1f;
 const float ATAN_EST_S2 = 0.68193064729268275701e1f;
 const float ATAN_EST_S3 = 0.28205206687035841409e2f;
 
-// approximate atan_est |error| is < 0.00045
+// approximate atan_est |error| is < 7e-6 on Neon (the continued fraction itself gives 6.5e-6, the rest comes from vecRecipEst)
 // calculates 4 in ~2.81x speed of win libc implementation for 1, with same precision
 FORCEINLINE Vec vecATanEst(Vec x)  // any x
 {
@@ -492,7 +493,10 @@ FORCEINLINE Vec vecATan2(Vec y, Vec x)
 	return vecAdd(atan, val);
 }
 
-// fast approx atan version. |error| is < 0.0004
+// fast approx atan version. |error| is < 1.5e-3 on Neon
+// the error comes from vecDivEst: Neon's unrefined reciprocal estimate has a relative error up to 2.9e-3 (1/350)
+// and atan turns a relative argument error r into an absolute one up to r/2 (at |y/x| = 1)
+// (with a vecRecipEst based division the error would be < 1.1e-5)
 // ~40% faster then vecATan2
 // NOTE: does not handle any of the following inputs:
 // (+0, +0), (+0, -0), (-0, +0), (-0, -0)
