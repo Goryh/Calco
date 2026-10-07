@@ -698,7 +698,7 @@ FORCEINLINE Vec vecLog2EstP2(Vec x)
 
 const float Log2OfE = 1.4426950408889634073599f; // log2(e)
 const float Log2Of10 = 3.321928094887f; // log2(10)
-const float InvLog2OfE = 2.28330284476918490682f; // 1/log2(e)
+const float InvLog2OfE = 0.6931471805599453f; // 1/log2(e)
 const float InvLog2Of10 = 0.301029995664f; // 1/log2(10)
 
 // relative error is < 1e-5

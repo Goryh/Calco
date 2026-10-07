@@ -560,26 +560,26 @@ FORCEINLINE float __cdecl vecILMathSin(float x)
 
 FORCEINLINE void __cdecl vecILMathSin2(float2_t24F58B676AEF68C4CB4133963D5E4176CDF95430* RESTRICT inX, float2_t24F58B676AEF68C4CB4133963D5E4176CDF95430* RESTRICT resF)
 {
-	float2_internal* x 	= (float2_internal*)inX;
+	float2_internal* x 		= (float2_internal*)inX;
 	float2_internal* res	= (float2_internal*)resF;
 
-	x->store(vecSin(x->load()));
+	res->store(vecSin(x->load()));
 }
 
 FORCEINLINE void __cdecl vecILMathSin3(float3_t6AA3147528097F78953A47B9192D58883F3F08FB* RESTRICT inX, float3_t6AA3147528097F78953A47B9192D58883F3F08FB* RESTRICT resF)
 {
-	float3_internal* x 	= (float3_internal*)inX;
+	float3_internal* x 		= (float3_internal*)inX;
 	float3_internal* res	= (float3_internal*)resF;
 
-	x->store(vecSin(x->load()));
+	res->store(vecSin(x->load()));
 }
 
 FORCEINLINE void __cdecl vecILMathSin4(float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inX, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT resF)
 {
-	float4_internal* x 	= (float4_internal*)inX;
+	float4_internal* x 		= (float4_internal*)inX;
 	float4_internal* res	= (float4_internal*)resF;
 
-	x->store(vecSin(x->load()));
+	res->store(vecSin(x->load()));
 }
 
 FORCEINLINE float __cdecl vecILMathCos(float x)
@@ -589,18 +589,18 @@ FORCEINLINE float __cdecl vecILMathCos(float x)
 
 FORCEINLINE void __cdecl vecILMathCos2(float2_t24F58B676AEF68C4CB4133963D5E4176CDF95430* RESTRICT inX, float2_t24F58B676AEF68C4CB4133963D5E4176CDF95430* RESTRICT resF)
 {
-	float2_internal* x 	= (float2_internal*)inX;
+	float2_internal* x 		= (float2_internal*)inX;
 	float2_internal* res	= (float2_internal*)resF;
 
-	x->store(vecCos(x->load()));
+	res->store(vecCos(x->load()));
 }
 
 FORCEINLINE void __cdecl vecILMathCos3(float3_t6AA3147528097F78953A47B9192D58883F3F08FB* RESTRICT inX, float3_t6AA3147528097F78953A47B9192D58883F3F08FB* RESTRICT resF)
 {
-	float3_internal* x 	= (float3_internal*)inX;
+	float3_internal* x		= (float3_internal*)inX;
 	float3_internal* res	= (float3_internal*)resF;
 
-	x->store(vecCos(x->load()));
+	res->store(vecCos(x->load()));
 }
 
 FORCEINLINE void __cdecl vecILMathCos4(float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT inX, float4_tC63C89D1F1B7B6D22808075482704BC90FAF9871* RESTRICT resF)
@@ -608,7 +608,7 @@ FORCEINLINE void __cdecl vecILMathCos4(float4_tC63C89D1F1B7B6D22808075482704BC90
 	float4_internal* x 	= (float4_internal*)inX;
 	float4_internal* res	= (float4_internal*)resF;
 
-	x->store(vecCos(x->load()));
+	res->store(vecCos(x->load()));
 }
 
 FORCEINLINE void __cdecl vecILMathSinCos(float x, float* s, float* c)
@@ -1145,7 +1145,7 @@ FORCEINLINE void __cdecl vecILMathLog10_4(float4_tC63C89D1F1B7B6D22808075482704B
 
 FORCEINLINE float __cdecl vecILMathLog10Fast(float x)
 {
-	return vecStore1(vecLog10(vec(x)));
+	return vecStore1(vecLog10Fast(vec(x)));
 }
 
 FORCEINLINE void __cdecl vecILMathLog10Fast_2(float2_t24F58B676AEF68C4CB4133963D5E4176CDF95430* RESTRICT inX, float2_t24F58B676AEF68C4CB4133963D5E4176CDF95430* RESTRICT resF)
