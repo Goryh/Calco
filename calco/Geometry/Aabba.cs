@@ -271,24 +271,56 @@ namespace calco
 			return abs(dist) <= projSize;
 		}
 
+		// are the triangle (given relative to the box center) and the box separated along the axis
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		static bool IsSeparatedOnAxis(in float3a axis, in float3a v0, in float3a v1, in float3a v2, in float3a halfExtents)
+		{
+			float p0 = dot(axis, v0);
+			float p1 = dot(axis, v1);
+			float p2 = dot(axis, v2);
+			float projSize = dot(halfExtents, abs(axis));
+
+			return min(min(p0, p1), p2) > projSize || max(max(p0, p1), p2) < -projSize;
+		}
+
+		// exact separating axis test (Akenine-Moller), a touch is considered as an intersection
 		public readonly bool Intersects(in Trianglea triangle)
 		{
-			var trianglePlane = triangle.plane;
+			var c = center;
+			var h = halfExtents;
 
-			if( !Intersects(trianglePlane) )
+			// move the triangle to the box's space
+			var v0 = triangle.v0 - c;
+			var v1 = triangle.v1 - c;
+			var v2 = triangle.v2 - c;
+
+			// 3 axes of the box: the box against the bounds of the triangle
+			if( any(min(min(v0, v1), v2) > h) || any(max(max(v0, v1), v2) < -h) )
 				return false;
 
-			if( triangle.Contains(trianglePlane.ClosestPoint(center)) )
-				return true;
+			var e0 = v1 - v0;
+			var e1 = v2 - v1;
+			var e2 = v0 - v2;
 
-			if( Intersects(Segmenta(triangle.v0, triangle.v1)) )
-				return true;
-			if( Intersects(Segmenta(triangle.v1, triangle.v2)) )
-				return true;
-			if( Intersects(Segmenta(triangle.v2, triangle.v0)) )
-				return true;
+			// the triangle's normal: the box against the triangle's plane
+			var n = cross(e0, e1);
+			if( abs(dot(n, v0)) > dot(h, abs(n)) )
+				return false;
 
-			return false;
+			// 9 axes: cross products of the box's axes and the triangle's edges
+			if( IsSeparatedOnAxis(float3a(0, -e0.z, e0.y), v0, v1, v2, h) ) return false;
+			if( IsSeparatedOnAxis(float3a(0, -e1.z, e1.y), v0, v1, v2, h) ) return false;
+			if( IsSeparatedOnAxis(float3a(0, -e2.z, e2.y), v0, v1, v2, h) ) return false;
+
+			if( IsSeparatedOnAxis(float3a(e0.z, 0, -e0.x), v0, v1, v2, h) ) return false;
+			if( IsSeparatedOnAxis(float3a(e1.z, 0, -e1.x), v0, v1, v2, h) ) return false;
+			if( IsSeparatedOnAxis(float3a(e2.z, 0, -e2.x), v0, v1, v2, h) ) return false;
+
+			if( IsSeparatedOnAxis(float3a(-e0.y, e0.x, 0), v0, v1, v2, h) ) return false;
+			if( IsSeparatedOnAxis(float3a(-e1.y, e1.x, 0), v0, v1, v2, h) ) return false;
+			if( IsSeparatedOnAxis(float3a(-e2.y, e2.x, 0), v0, v1, v2, h) ) return false;
+
+			return true;
 		}
 
 		// gives some false-positives
